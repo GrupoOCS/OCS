@@ -1,0 +1,12 @@
+a.car {
+    width: 100%;
+    max-width:1000px;
+    margin:auto;
+    margin: 15px 100px 15px 100px;
+}
+
+div.carousel-inner {
+    width: 100%;
+    max-width:1000px;
+    margin:auto; 
+}

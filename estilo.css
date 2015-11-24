@@ -1,0 +1,399 @@
+/* Webfont: Lato-Regular */@font-face {
+    font-family: 'Lato';
+    src: url('fonts/Lato-Regular.eot'); /* IE9 Compat Modes */
+    src: url('fonts/Lato-Regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+         url('fonts/Lato-Regular.woff2') format('woff2'), /* Modern Browsers */
+         url('fonts/Lato-Regular.woff') format('woff'), /* Modern Browsers */
+         url('fonts/Lato-Regular.ttf') format('truetype');
+    font-style: normal;
+    font-weight: normal;
+    text-rendering: optimizeLegibility;
+}
+h3{
+
+	color:#99a4a0;
+}
+header{
+	width: 88%;
+	height: 30px;
+	margin-left:5%;
+	background-color: #1abc9c;
+	padding: 1%;
+	text-align: right;
+	color: white;
+	font-family: 'lato';	
+
+	font-weight: bold;
+	
+
+}
+div.navg{
+	width: 90%;
+	height:20%;
+	margin-left: 5%;
+	background-color:  #34495e;
+	position: relative;
+	z-index: 100;	
+}
+
+
+div.logo{
+	float: left;
+	width: 20%;
+	height: 100%;
+
+	background-color: #34495e;
+	position: relative;
+	/*fuente*/
+	font-family: 'lato';
+	font-size: 45pt;
+	color:white;
+	text-align: center;
+}
+	
+div.busqueda{
+	width: 80%;
+	height: 50%;
+	background-color: #34495e;
+	float: right;
+	text-align: right;
+	position: relative;
+}
+.btn-buscar
+{
+	height: 100%;
+	width: 65px;
+  	background-color: #1abc9c;
+  	border-color: #1abc9c;
+  	border-radius: 3px;
+  	color: white;
+	font-family: 'arial';
+	font-weight: bold;
+	position: relative;
+	margin: 1%;
+}
+.tx_buscar{
+	width: 20%;
+	height: 20%;
+	position: relative;
+	float: right;
+	padding-top: 1%;
+}
+.b_buscar{
+	width: 7%;
+	height: 50%;
+	position: relative;
+	float: right;
+	padding-right: 1%;
+	padding-top: 1%;
+}
+.menu{
+	
+	width: 80%;
+	height: 50%;
+	color: white;
+	float: left;
+	text-align: center;
+	background-color: #34495e;
+	position: relative;
+}
+
+.menu_enlace{
+
+	width: 18%;
+	height: 38%;
+	padding: 2%;
+	color: white;
+	float: left;
+	text-align: center;
+	background-color: #34495e;
+	position: relative;
+	border-right: solid;
+
+
+}
+.menu_enlace_icon{
+	position: relative;
+	padding: 1%;
+	background-color: #34495e;
+	height: 70%;
+	width: 5%;
+	float: left;
+}
+
+a.enlace{
+	width: 100%;
+	height: 100%;
+	color:white;
+	text-decoration: none;
+	font-family: 'lato';
+	font-size:14pt;
+	position: relative;
+}
+a.enlace:hover{
+	color:#2a7fa4;
+	text-decoration: none;
+}
+img.enlace.icono{
+	width: 20%;
+	height:70%;
+	position: relative;
+
+
+}
+img.enlace.icono:hover{
+	width: 28%;
+	height:80%;
+}
+img.producto{
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
+div.contenido{
+	
+	overflow: auto;
+	background-color: white;
+	height: 70%;
+	width: 88%;
+	font-family: 'lato';
+	border-color:#34495e;
+	margin-left:5%;
+	border-color: gray;
+	color: gray;
+	padding:1%;
+	margin-top: 0 auto;
+	margin-bottom: 0 auto;
+	border:solid;
+	border-width: 1px;
+
+}
+div.producto{
+	width: 22%;
+	height: 50%;
+	background-color: yellow;
+	float: left;
+	border: solid;
+	border-width: 1px;
+	margin: 1%;
+
+}
+
+
+input[type="search"] {
+  -webkit-box-sizing: content-box;
+     -moz-box-sizing: content-box;
+          box-sizing: content-box;
+  -webkit-appearance: textfield;
+}
+
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+div.contactt{
+	width:50%;
+	height:100%;
+	float:left;
+	
+}
+
+div.tabla_carrito{
+	float:left;
+	width: 50%;
+	top:50%;
+	position: relative;
+	left: 10%
+
+}
+img.carro_compra{
+	width:100px;
+	height: 60px;
+}
+div.wholeCarrito{
+	position: relative;
+	width: 80%;
+	height: 50%;
+
+	margin-left: 10%;
+}
+div.wholeDireccion{
+	position: relative;
+	width: 30%;
+	height: 70%;
+	background-color: #dadada;
+	margin-left: 35%;
+	top: 15%;
+	border-radius: 10px;
+}
+div.wholeRegistro{
+	position: relative;
+	width: 30%;
+	height: 125%;
+	background-color: #dadada;
+	margin-left: 32%;
+	top: 5%;
+	border-radius: 10px;
+	padding: 3%;
+}
+div.wholeSesion{
+	position: relative;
+	width: 20%;
+	height: 40%;
+	background-color: #dadada;
+	margin-left: 38%;
+	top: 25%;
+	border-radius: 10px;
+	padding: 2%
+}
+table.carrito,td,tr{
+	
+	border: none;
+
+}
+.btn
+{
+	height: 30px;
+	width: 80px;
+  	background-color: #34495e;
+  	border-color: #34495e;
+  	border-radius: 3px;
+  	color: white;
+	font-family: 'arial';
+	font-weight: bold;
+}
+
+.btn.mediano
+{
+	height: 35px;
+	width: 100px;
+
+}
+.btn.grande
+{
+	height: 40px;
+	width: 150px;
+
+
+}
+.contacto{
+	width:20px;
+	height:18px;
+
+
+}
+
+.icono_sesion{
+	width:30px;
+	height:25px;
+	background-color: #1abc9c;
+
+
+}
+
+.logo-icon{
+	width: 45px;
+	height: 45px;
+
+
+}
+span.log{
+	font-size: 14pt;
+	font-family: 'lato';
+}
+.form-control {
+  display: block;
+  width: 100%;
+  height: 34px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+  -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+       -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+          transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+footer{
+	background-color: #617071;
+	height: 20%;
+	width: 88%;
+	font-family: 'lato';
+	color:white;
+	padding: 1%;
+	margin-left:5%;
+	font-weight: normal;
+	font-size: 12pt;
+
+}
+
+.nav ul, ol {
+				list-style:none;   /*hace que no se vea el punto */
+			}
+			
+			.nav > li {
+				float:left;  /*da el efecto */
+			}
+			
+			.nav li a { 				/*diseño de los bloques  */
+					width: 200px;
+				height: 48px;
+				color: white;
+				margin: .5%;
+				text-decoration: none;
+				background-color: #2a80a3;		
+				display:block;
+				
+				font-family: 'lato';
+			}
+			.nav li a.principal{ 				/*diseño de los bloques  */
+				width: 200px;
+				height: 48px;
+				color: white;
+				text-decoration: none;
+				background-color: #34495e;		
+				display:block;
+				overflow: visible;
+				text-decoration: none;
+				font-family: 'lato';
+				font-size:14pt;
+				position: relative;
+
+			}
+
+			.nav li a.principal:hover {				/*hover diseño de los bloques  */
+				background-color: transparent;
+				color:#3dc8db;
+				text-decoration: none;
+			}
+			
+			.nav li a:hover {				/*hover diseño de los bloques  */
+				background-color:#1abc9c;
+			}
+			
+			.nav li ul {
+				display:none;
+				position:absolute;		/*esconde  los bloques  */
+				min-width:140px;
+			}
+			
+			.nav li:hover > ul {  /*muestra  los bloques  */
+				display:block;
+
+			}
+			
+			.nav li ul li {
+				position:relative;
+			}
+			
+			.nav li ul li ul {
+				right:-202px;
+				top:0px;
+			}
