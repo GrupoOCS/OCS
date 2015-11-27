@@ -18,7 +18,7 @@ $(document).ready(function(){
 	        	$('#boton').attr("disabled", false);
            		$('#boton').css("background", "#3498DB");
            		if(response=="true")
-	            	location.href = "consola.html";
+	            	location.href = "consola.php";
 	            else
 	            	$("#error").html("<center><span class='texterror'>"+response+"</span></center>");
 	            	setInterval(function(){$("#error").html("");},5000);

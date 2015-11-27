@@ -138,7 +138,7 @@ div.fakefile {
 
 /*Encabezaqdo de pagina*/
 .encabezado{
-	background: #34495E url(img/logo.png) top left no-repeat;
+	background: #34495E url(../img/logo.png) top left no-repeat;
 	background-size: 300px ;
 	height: 100px;
 	width: 100%;
