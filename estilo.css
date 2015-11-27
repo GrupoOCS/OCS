@@ -462,7 +462,7 @@ footer{
 			.nav li a.principal-active{ 				/*diseño de los bloques  */
 				width: 200px;
 				height: 28px;
-				color: white;
+				color: #1abc9c;
 				text-decoration: none;
 				background-color: #34495e;		
 				display:block;
@@ -474,7 +474,7 @@ footer{
 				border-bottom: solid;
 
 				border-width: 3px;
-				border-color: yellow;
+				border-color: #1abc9c;
 
 			}
 
