@@ -1,12 +1,21 @@
 a.car {
     width: 100%;
+    height: 105%;
     max-width:1000px;
     margin:auto;
-    margin: 15px 100px 15px 100px;
+
+    margin-left: -15px;
+    margin-right: -12px;
+    margin-top: -12px;
+    margin-bottom: 0px;
 }
 
 div.carousel-inner {
     width: 100%;
+    height: 100%;
     max-width:1000px;
     margin:auto; 
+
+    /*margin: -15px -15px 0px 0px;*/
+    /*margin-right: 15px;*/
 }
