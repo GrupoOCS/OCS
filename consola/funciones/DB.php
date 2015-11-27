@@ -11,20 +11,29 @@
 			return $db;	
 		} 
 		catch (PDOException $e) {
-			echo $e->getMessage();
+			//echo $e->getMessage();
     		return null;
 		}		
 	}
 	
 	function verificausuario($datos)
 	{
+		//session_start();
 		$db=conectar();
 		if($db!=null)
 		{
-			$query="SELECT nombre,usuario,contrasena FROM administrador WHERE usuario='".$datos['usuario']."' and contrasena='".$datos['contra']."'";
-			$res=$db->$query($query);
-			if($res->rowCount()>0)
+			$prepared = array(
+				'usuario' => $datos['usuario'],
+				'contra' => $datos['contra']
+				);
+			$query = $db->prepare("SELECT nombre,usuario FROM administrador WHERE usuario=:usuario AND contrasena=:contra");
+		    $query->execute($prepared);
+			while( $row=($query->fetch(PDO::FETCH_NUM)) )
+			{
+				$_SESSION['nom_usu']=$row[0];
+				$_SESSION['usu']=$row[1];
 				return "true";
+			}
 			return "Usuario y/o contraseña incorrectos";
 		}
 		else
