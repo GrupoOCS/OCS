@@ -1,0 +1,246 @@
+$azul = #34495E;
+$azulcalro=#3498DB;
+$gris = #DADADA;
+
+*:focus { 
+	outline: none; 
+}
+
+/*ERROR*/
+.texterror{
+	color:#ff0000;
+	font-size: 120%;
+}
+
+.fondo {
+	background: #34495E;
+}
+
+/*Acciones*/
+.ico-acciones{
+	width: 25px;
+	height: 25px;
+}
+
+.titulo a{
+	color:#ffffff;
+	float:right;
+	text-decoration:none; 
+	margin-right: 15px;
+}
+
+/*Lista*/
+.lista{
+	margin-left: 1%;
+	margin-top: 1%;
+	width: 82%;
+	float:left;
+}
+
+.titulo{
+	background: #3498DB;
+	width: 100%;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.titulo span{
+	color:#ffffff;
+	font-size: 150%;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	margin-left: 40%;
+}
+
+.contenido{
+	margin-top: 1%;
+	width: 100%;
+	height:300px;
+	background: #DADADA;
+}
+
+.contenido span{
+	color:#000000;
+	font-size: 120%;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	margin-right: 10px;
+	float: right;
+}
+
+.contenido textarea{
+	font-size: 100%;
+	width: 90%;
+	padding-bottom: 5px;
+	padding-top: 5px;
+	padding-left: 5px;
+}
+
+.contenido select{
+	font-size: 100%;
+	width: 90%;
+	padding-bottom: 5px;
+	padding-top: 5px;
+	padding-left: 5px;
+}
+
+.contenido table td
+{
+	width: 400px;
+}
+
+div.fileinputs {
+	position: relative;
+}
+
+div.fakefile {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	z-index: 1;
+}
+
+
+/*MENU*/
+.menu{
+	width: 15%;
+	background: #34495E;
+	margin-top: 1%;
+	margin-left: 1%;
+	padding-bottom: 10px;
+	float:left;
+}
+
+.menu a{
+	color:#ffffff;
+	font-size: 130%;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	padding-left: 20px;
+	text-decoration:none; 
+	display: block;
+}
+
+.menu label{
+	color:#ffffff;
+	font-size: 150%;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	text-align: center;
+	display: block;
+	background-color: #3498DB;
+}
+
+.menu a:hover{
+	color:#ff4444;
+	font-size: 140%;
+}
+
+/*Encabezaqdo de pagina*/
+.encabezado{
+	background: #34495E url(img/logo.png) top left no-repeat;
+	background-size: 300px ;
+	height: 100px;
+	width: 100%;
+}
+
+.encabezado a{
+	color:#ffffff;
+	font-size: 100%;
+	text-align: right;
+	padding-right: 40px;
+}
+.encabezado a:hover{
+	color:#ff4444;
+	font-size: 110%;
+}
+
+.encabezado-table{
+	margin-top: 20px;
+	padding-right: 10px;
+}
+
+.encabezado-ico{
+	width: 20px;
+	height: 20px;
+	color: #ffffff;
+}
+
+.encabezado label{
+	color:#ffffff;
+	font-size: 130%;
+	text-align: right;
+	padding-right: 50px;
+}
+
+
+.logo{
+	margin-top: 3%;
+	margin-left: 35%;
+}
+
+/*Logueo del administrador*/
+.login{
+	width: 30%;
+	height: 250px;
+	margin-top: 3%;
+	margin-left: 35%;
+	background: #DADADA;
+}
+
+.login-table{
+	margin-left: 10%;
+	margin-left: 10%;
+	width: 82%;
+}
+
+.login-text{
+	font-size: 150%;
+	color: #000000;
+	text-align: center;
+	width: 100%;
+	padding-top: 5%;
+}
+
+.login-ico{
+	width: 23px;
+	height: 23px;
+	background: #34495E;
+	padding-bottom: 5px;
+	padding-top: 5px;
+	padding-right: 10px;
+	padding-left: 10px;
+}
+
+.entrada-texto {
+	font-size: 100%;
+	width: 90%;
+	padding-bottom: 5px;
+	padding-top: 5px;
+	padding-left: 5px;
+}
+
+.boton
+{
+	font-size: 110%;
+	color: #ffffff;
+	width: 30%;
+	margin-top: 5%;
+	margin-left: 35%;
+	background-color: #3498DB;
+	padding-bottom: 5px;
+	padding-top: 5px;
+	border: 0px;
+}
+.boton:hover
+{
+	font-size: 120%;
+	color: #ffffff;
+	width: 32%;
+	margin-top: 5%;
+	margin-left: 34%;
+	background-color: #3498DB;
+	padding-bottom: 5px;
+	padding-top: 5px;
+	border: 0px;
+}
