@@ -53,11 +53,83 @@
 			</div>
 			<!-- .......................................................... -->
 			<!-- MENÚ PRINCIPAL DE NAVEGACIÓN -->
-			<div class="menu">
+			<?php if ($_SERVER["REQUEST_URI"] == "/ocs/carrito.php"
+			|| $_SERVER["REQUEST_URI"] == "/ocs/direccion.php"
+			|| $_SERVER["REQUEST_URI"] == "/ocs/pago.php")
+			{
+			ECHO'<div class="menu">
 				<ul class="nav">
-					<li>
+					 ';
 
-							<?php 
+							 
+								//printf($_SERVER["REQUEST_URI"]);
+							
+						
+						ECHO'	
+
+					<li> '; 
+						
+								
+
+							if ($_SERVER["REQUEST_URI"] == "/ocs/carrito.php")
+							{
+							ECHO'<a class="principal-active" href="carrito.php"> 
+								<img class="enlace icono" src="Iconos/CAR.png">
+							</a> 
+							';
+						}
+						else{
+							ECHO'<a class="principal" href="carrito.php"> 
+								<img class="enlace icono" src="Iconos/CAR.png">
+							</a> 
+							';
+						}
+
+							if ($_SERVER["REQUEST_URI"] == "/ocs/direccion.php")
+							{
+								echo'
+							<li>
+							<a class="principal-active" href="direccion.php"> Datos de Envío </a>
+							</li> 
+							 ';}
+
+							 else
+							 {
+							 	echo'<li>
+							<a class="principal" href="direccion.php"> Datos de Envío </a>
+							</li> ';
+							 }
+
+							 if ($_SERVER["REQUEST_URI"] == "/ocs/pago.php")
+							{
+								echo'
+							<li>
+							<a class="principal-active" href="pago.php"> Formas de Pago </a>
+							</li> 
+							 ';}
+
+							 else
+							 {
+							 	echo'<li>
+							<a class="principal" href="pago.php"> Formas de Pago</a>
+							</li> ';
+							 }
+
+
+						
+
+							
+							}
+
+
+
+							else
+							{
+								ECHO'<div class="menu">
+				<ul class="nav">
+					<li> ';
+
+							 
 								//printf($_SERVER["REQUEST_URI"]);
 							if ($_SERVER["REQUEST_URI"] == "/ocs/ventas.php" ||
 							 $_SERVER["REQUEST_URI"] == "/ocs/almacenamiento.php" || 
@@ -70,9 +142,8 @@
 							else
 								ECHO'<a class="principal" href="ventas.php">Productos  </a> ';
 
-							?>
 						
-							<ul>
+						ECHO'	<ul>
 								<li><a  href="almacenamiento.php"><br>Almacenamiento</a></li>	
 								<li><a  href="accesorios.php"><br>Accesorios </a></li>	
 								<li><a  href=""><br>Computadoras </a>
@@ -87,21 +158,19 @@
 					
 				
 
-					<li>
-						<?php 
+					<li> '; 
+						
 								//printf($_SERVER["REQUEST_URI"]);
-							if ($_SERVER["REQUEST_URI"] == "/ocs/carrito.php" ) 
+							 
 
-							ECHO'<a class="principal-active" href="carrito.php"> 
-								<img class="enlace icono" src="Iconos/CAR.png">
-							</a>  ';
-							else
+							
 								ECHO'<a class="principal" href="carrito.php"> 
 								<img class="enlace icono" src="Iconos/CAR.png">
 							</a>  ';
 
+							
+							}
 							?>
-							 
 					</li>	
 				</ul>
 			</div> 
