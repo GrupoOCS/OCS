@@ -18,17 +18,24 @@
 	
 	function verificausuario($datos)
 	{
+		//session_start();
 		$db=conectar();
 		if($db!=null)
 		{
-			$query="SELECT nombre,usuario,contrasena FROM administrador WHERE usuario='".$datos['usuario']."' and contrasena='".$datos['contra']."'";
-			$res=$db->$query($query);
-			if($res->rowCount()>0)
+			$prepared = array(
+				'correo' => $datos['correo'],
+				'contra' => $datos['contrasena']
+				);
+			$query = $db->prepare("SELECT nombre,email FROM cliente WHERE email=:correo AND contrasena=:contra");
+		    $query->execute($prepared);
+			while( $row=($query->fetch(PDO::FETCH_NUM)) )
+			{
+				$_SESSION['nom_usu']=$row[0];
+				$_SESSION['usu']=$row[1];
 				return "true";
+			}
 			return "Usuario y/o contraseña incorrectos";
 		}
 		else
 			return "ERROR:No se pudo conectar a la base de datos";
 	}
-
-?>

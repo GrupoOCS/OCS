@@ -2,7 +2,7 @@ $(document).ready(function(){
     $('#login').submit(function(){
      
        var datos= {
-			"usuario" : $('#usuario').val(),
+			"correo" : $('#correo').val(),
 			"contrasena" : $('#contrasena').val(),
 		};
 
