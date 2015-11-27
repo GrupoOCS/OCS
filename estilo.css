@@ -221,9 +221,10 @@ div.wholeCarrito{
 	margin-left: 10%;
 }
 div.wholeDireccion{
+	align: center;
 	position: relative;
 	width: 30%;
-	height: 70%;
+	height: 85%;
 	background-color: #dadada;
 	margin-left: 35%;
 	top: 15%;

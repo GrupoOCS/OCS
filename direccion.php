@@ -20,7 +20,7 @@
                 <tr>
                     <td align="right">Colonia:</td>                         
                     <td><input name="Colonia" class="form-control" placeholder="Colonia" ></td>
-                </tr> 
+                </tr>
 			    <tr>
 			      	<td align="right">Estado: </td>
 			      	<td>
@@ -56,7 +56,11 @@
 			      	<td><input  placeholder="Código Postal" class="form-control"  name="CP" type="text" /></td>
 			    </tr>
 				<tr>
-			     	<td></td> <td align="right"><input id="campo3"  name="Guardar" class="btn-mediano" type="submit" value="Guardar" /></td>
+                    <td align="right">Destinatario:</td>                         
+                    <td><input name="Colonia" class="form-control" placeholder="Destinatario" ></td>
+                </tr>
+				<tr>
+			     <td></td><td align="right"><input id="campo3"  name="Guardar" class="btn mediano" type="submit" value="Guardar" /></td>
 			    </tr>
 			    </form>
 			</table>
