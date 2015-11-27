@@ -35,8 +35,38 @@ div.navg{
 	position: relative;
 	z-index: 100;	
 }
+div.precio_producto{
+	font-family: 'lato';
+	color:#1abc9c;
+	font-size: 16pt;
+	width: 45%;
+	height: 15%;
+	margin-left: 5%;
+	float: left;
+}
+div.nombre_producto{
+	font-family: 'lato';
+	font-weight:bold;
+	font-size: 12pt;
+	width: 75%;
+	height: 10%;
+	margin-left: 5%;
+		float: left;
 
+}
+a.agrega_carrito{
 
+	width: 15%;
+	height: 20%;
+	float: left;
+	margin-right: 5%;
+
+}
+.add_car{
+
+	width: 100%;
+	height: 100%;
+}
 div.logo{
 	float: left;
 	width: 20%;
@@ -173,7 +203,7 @@ div.contenido{
 div.producto{
 	width: 22%;
 	height: 50%;
-	background-color: yellow;
+	background-color: transparent;
 	float: left;
 	border: solid;
 	border-width: 1px;
