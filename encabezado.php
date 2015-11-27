@@ -13,11 +13,23 @@
 
 		<!-- INCIAR SESION | REGISTRARSE  O    NOMBRE DE USUARIO -->
 		<header>
-			<a class="enlace" href="inicioSesion.php">Iniciar Sesión</a> | <a class="enlace" href="Registrarse.php">Registrarse</a>  
+			<?php 
+								//printf($_SERVER["REQUEST_URI"]);
+							if ($_SERVER["REQUEST_URI"] == "/ocs/Registrarse.php" ) 
+
+							ECHO'<a class="enlace" href="inicioSesion.php">Iniciar Sesión</a>  ';
+							else if($_SERVER["REQUEST_URI"] == "/ocs/inicioSesion.php")
+							ECHO'<a class="enlace" href="Registrarse.php">Registrarse</a> ';
+							else
+							ECHO'<a class="enlace" href="inicioSesion.php">Iniciar Sesión</a> | <a class="enlace" href="Registrarse.php">Registrarse</a> ';
+
+							?>
+			  
 		</header> 
 	<!--..........................INICIA NAVEGACIÓN....................................... -->
 	
 		<div class="navg">
+
 			<!-- LOGO OCS ONLINE COMPUTER SHOP -->
 			<a href="index.php"><div class="logo">OCS<img class="logo-icon" src="Iconos/etiqueta.png">
 				<br><span class='log'>Online Computer Shop</span>
@@ -41,7 +53,21 @@
 			<div class="menu">
 				<ul class="nav">
 					<li>
-							<a class="principal" href="ventas.php">Productos </a> 
+
+							<?php 
+								//printf($_SERVER["REQUEST_URI"]);
+							if ($_SERVER["REQUEST_URI"] == "/ocs/ventas.php" ||
+							 $_SERVER["REQUEST_URI"] == "/ocs/almacenamiento.php" || 
+							  $_SERVER["REQUEST_URI"] == "/ocs/accesorios.php" ||
+							   $_SERVER["REQUEST_URI"] == "/ocs/desktop.php" ||
+							    $_SERVER["REQUEST_URI"] == "/ocs/laptop.php" ||
+							   	 $_SERVER["REQUEST_URI"] == "/ocs/impresoras.php" ) 
+
+							ECHO'<a class="principal-active" href="ventas.php">Productos  </a> ';
+							else
+								ECHO'<a class="principal" href="ventas.php">Productos  </a> ';
+
+							?>
 						
 							<ul>
 								<li><a  href="almacenamiento.php"><br>Almacenamiento</a></li>	
@@ -55,17 +81,24 @@
 								<li><a  href="impresoras.php"><br>Impresoras </a></li>	
 							</ul>
 					</li>
-					<li>
-							<a class="principal" href=""> Ofertas </a> 
-						
-					</li>
+					
 				
 
 					<li>
+						<?php 
+								//printf($_SERVER["REQUEST_URI"]);
+							if ($_SERVER["REQUEST_URI"] == "/ocs/carrito.php" ) 
 
-							<a class="principal" href="carrito.php"> 
+							ECHO'<a class="principal-active" href="carrito.php"> 
 								<img class="enlace icono" src="Iconos/CAR.png">
-							</a>  
+							</a>  ';
+							else
+								ECHO'<a class="principal" href="carrito.php"> 
+								<img class="enlace icono" src="Iconos/CAR.png">
+							</a>  ';
+
+							?>
+							 
 					</li>	
 				</ul>
 			</div> 

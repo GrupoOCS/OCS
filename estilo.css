@@ -160,6 +160,15 @@ a.enlace{
 	font-size:14pt;
 	position: relative;
 }
+a.enlace-active{
+	width: 100%;
+	height: 100%;
+	color:white;
+	text-decoration: none;
+	font-family: 'lato';
+	font-size:14pt;
+	position: relative;
+}
 a.enlace:hover{
 	color:#2a7fa4;
 	text-decoration: none;
@@ -419,7 +428,31 @@ footer{
 
 			}
 
+			.nav li a.principal-active{ 				/*diseño de los bloques  */
+				width: 200px;
+				height: 28px;
+				color: white;
+				text-decoration: none;
+				background-color: #34495e;		
+				display:block;
+				overflow: visible;
+				text-decoration: none;
+				font-family: 'lato';
+				font-size:14pt;
+				position: relative;
+				border-bottom: solid;
+
+				border-width: 3px;
+				border-color: yellow;
+
+			}
+
 			.nav li a.principal:hover {				/*hover diseño de los bloques  */
+				background-color: transparent;
+				color:#3dc8db;
+				text-decoration: none;
+			}
+			.nav li a.principal-active:hover {				/*hover diseño de los bloques  */
 				background-color: transparent;
 				color:#3dc8db;
 				text-decoration: none;
