@@ -1,15 +1,12 @@
+
 <?php include('encabezado.php'); ?>
 	<!--.............................TERMINA NAVEGACIÓN...............................-->
 	<div class="contenido">
 
-		<div class="wholeDireccion">
+		<div align="center">
+		   	<center><p colspan="2" ><h2>Agregar dirección de envio</h2></p></center>	
 			<table class="carrito">
-			 	<form id="formulario" action="#" method="post">
-
-			     <tr>
-			     	<td colspan="2" align="center"><h3>Agregar dirección</h3></td>
-			     </tr>
-			     <tr>
+			 	<form id="formulario" action="Pedido.php" method="post">
                     <td align="right">Calle:</td>                         
                     <td><input name="calle" class="form-control" placeholder="Calle" ></td>
                 </tr>
@@ -66,6 +63,17 @@
 			</table>
 		</div>
 	</div>
+
+
+
+
+
 	<!--................................................................. -->
 <?php include('pie_pagina.php'); ?>
+
+
+
+
+
+
 
