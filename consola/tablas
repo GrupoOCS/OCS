@@ -1,5 +1,5 @@
 nueva categoria
-
+		<form id="formcategoria" action="" method="post" enctype="multipart/form-data">
 			<table >
 				<tr>					
 					<td>
@@ -10,12 +10,15 @@ nueva categoria
 					</td>
 			   	</tr>
 			</table>
+		</form>
 
-			<form action="" method="post" enctype="multipart/form-data">
-				
-			</form>
+			
+			
+
 nuevo producto
-			<table >
+		
+			<form action="" method="post" enctype="multipart/form-data">
+				<table >
 					<tr>					
 						<td>
 							<span>Nombre: </span>
@@ -70,3 +73,4 @@ nuevo producto
 						</td>
 				   	</tr>
 				</table>
+			</form>
