@@ -44,15 +44,15 @@
 							<a class="principal" href="ventas.php">Productos </a> 
 						
 							<ul>
-								<li><a  href=""><br>Almacenamiento</a></li>	
-								<li><a  href=""><br>Accesorios </a></li>	
+								<li><a  href="almacenamiento.php"><br>Almacenamiento</a></li>	
+								<li><a  href="accesorios.php"><br>Accesorios </a></li>	
 								<li><a  href=""><br>Computadoras </a>
 									<ul>
-										<li><a href=""><br>Escritorio</a> </li>
-										<li><a href=""><br>Portátiles</a></li>
+										<li><a href="desktop.php"><br>Escritorio</a> </li>
+										<li><a href="laptop.php"><br>Portátiles</a></li>
 									</ul>
 									</li>	
-								<li><a  href=""><br>Impresoras </a></li>	
+								<li><a  href="impresoras.php"><br>Impresoras </a></li>	
 							</ul>
 					</li>
 					<li>

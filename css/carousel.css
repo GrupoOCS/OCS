@@ -1,13 +1,13 @@
 a.car {
     width: 100%;
-    height: 105%;
+    height: 106%;
     max-width:1000px;
     margin:auto;
 
     margin-left: -15px;
     margin-right: -12px;
-    margin-top: -12px;
-    margin-bottom: 0px;
+    margin-top: -15px;
+    margin-bottom: -15px;
 }
 
 div.carousel-inner {
@@ -15,7 +15,59 @@ div.carousel-inner {
     height: 100%;
     max-width:1000px;
     margin:auto; 
-
     /*margin: -15px -15px 0px 0px;*/
     /*margin-right: 15px;*/
+}
+
+div.contenido_car{
+	overflow: auto;
+	background-color: white;
+	height: 65%;
+	width: 88%;
+	font-family: 'lato';
+	border-color:#34495e;
+	margin-left:5%;
+	border-color: gray;
+	color: gray;
+	padding:1%;
+	margin-top: 0 auto;
+	margin-bottom: 0 auto;
+	border:solid;
+	border-width: 0px;
+}
+
+
+
+
+.paginacion {
+	/*margin:20px 20;*/
+	margin-top: 20px;
+}
+ 
+.paginacion ul {
+	list-style:none;
+	text-align: center;
+}
+ 
+.paginacion ul li {
+	display:inline-block;
+	margin-right:5px;
+	padding-top: 35px;
+}
+ 
+.paginacion ul li a {
+	display:block;
+	padding:10px 20px;
+	color:#fff;
+	background:#024959;
+	text-decoration: none;
+}
+ 
+.paginacion ul li a:hover {
+	background:#037E8C;
+}
+ 
+.paginacion ul li .active {
+	background:#037E8C;
+	font-weight:bold;
 }
