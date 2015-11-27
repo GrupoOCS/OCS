@@ -156,7 +156,7 @@ div.contenido{
 	
 	overflow: auto;
 	background-color: white;
-	height: 70%;
+	height: 90%;
 	width: 88%;
 	font-family: 'lato';
 	border-color:#34495e;
@@ -172,7 +172,7 @@ div.contenido{
 }
 div.producto{
 	width: 22%;
-	height: 50%;
+	height: 40%;
 	background-color: yellow;
 	float: left;
 	border: solid;
