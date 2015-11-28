@@ -254,7 +254,7 @@ div.tabla_carrito{
 div.tabla_descripcion{
 	overflow: auto;
 	float: left;
-	width: 650px;
+	width: 600px;
 	height: 400px;
 	top:15%;
 	position: relative;

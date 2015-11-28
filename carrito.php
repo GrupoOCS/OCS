@@ -24,7 +24,63 @@
 							<td>$ 17 549.00</td>
 							<td>$ 17 549.00</td>
 							<td><button type="submit"><img class="carro_compra" src="eliminar.png"></button></td>
+						</tr>
+						<tr class="fondo">
+							<td><input type="number" value="1"></td>
+							<td><img class="carro_compra"src="Productos/6lap.jpg"></td>
+							<td>COMPUTADORA PORTATIL</td>
+							<td>$ 13 543.00</td>
+							<td>$ 13 543.00</td>
+							<td><button type="submit"><img class="carro_compra" src="eliminar.png"></button></td>
+						</tr>
+						<tr class="fondo">
+							<td><input type="number" value="1"></td>
+							<td><img class="carro_compra"src="Productos/1imp.jpg"></td>
+							<td>IMPRESORA A COLOR</td>
+							<td>$ 3, 754.00</td>
+							<td>$ 3, 754.00</td>
+							<td><button type="submit"><img class="carro_compra" src="eliminar.png"></button></td>
+						</tr>
+						<tr class="fondo">
+							<td><input type="number" value="1"></td>
+							<td><img class="carro_compra"src="Productos/2acces.jpg"></td>
+							<td>AUDIFONOS PARA PC</td>
+							<td>$ 540.00</td>
+							<td>$ 540.00</td>
+							<td><button type="submit"><img class="carro_compra" src="eliminar.png"></button></td>
+						</tr>
+						<tr class="fondo">
+							<td><input type="number" value="1"></td>
+							<td><img class="carro_compra"src="Productos/2alm.jpg"></td>
+							<td>MEMORIA USB DE 32 GB</td>
+							<td>$ 250.00</td>
+							<td>$ 250.00</td>
+							<td><button type="submit"><img class="carro_compra" src="eliminar.png"></button></td>
 						</tr>	
+						<tr class="fondo">
+							<td><input type="number" value="1"></td>
+							<td><img class="carro_compra"src="Productos/5acces.jpg"></td>
+							<td>MOUSE INALAMBRICO</td>
+							<td>$ 320.00</td>
+							<td width="100">$ 320.00</td>
+							<td><button type="submit"><img class="carro_compra" src="eliminar.png"></button></td>
+						</tr>
+						<tr class="fondo">
+							<td><input type="number" value="1"></td>
+							<td><img class="carro_compra"src="Productos/6acces.jpg"></td>
+							<td>AUDIFONOS PARA CELULAR</td>
+							<td>$ 290.00</td>
+							<td>$ 290.00</td>
+							<td><button type="submit"><img class="carro_compra" src="eliminar.png"></button></td>
+						</tr>	
+						<tr class="fondo">
+							<td><input type="number" value="1"></td>
+							<td><img class="carro_compra"src="Productos/6imp.jpg"></td>
+							<td>IMPRESORA LASER</td>
+							<td>$ 890.00</td>
+							<td>$ 890.00</td>
+							<td><button type="submit"><img class="carro_compra" src="eliminar.png"></button></td>
+						</tr>
 					</tbody>
 				</table>
 			</div>
