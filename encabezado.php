@@ -6,7 +6,10 @@
 	    	<link href="css/bootstrap.min.css" rel="stylesheet" media="screen"> <!-- Bootstrap necesario para carrusel only -->
 	    	<link rel="stylesheet" type="text/css" href="css/carousel.css">
 	    	<link rel="stylesheet" type="text/css" href="estilo.css"> <!-- Hoja de estilos -->
-		<!--<link rel="stylesheet" type="text/css" href="bootstrap.css"> -->
+		<!--<link rel="stylesheet" type="text/css" href="bootstrap.css"> 
+ 			<link href="css_carrito/bootstrap.min.css" rel="stylesheet"> -->
+  			<script src="css_carrito/jquery.min.js" type="text/javascript"></script>
+  			<script src="css_carrito/bootstrap.min.js" type="text/javascript"></script>
 			<meta charset="utf-8"> <!-- no problem con palabras acentuadas -->
 	</head>
 	<body>
