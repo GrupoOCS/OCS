@@ -27,4 +27,35 @@ $(document).ready(function(){
         return false;
  
     });
+
+    $('#registrarse').submit(function(){
+     
+       var valores= {
+			"nombre" : $('#nombre').val()+" "+$('#apellidoP').val()+" "+$('#apellidoM').val(),
+			"correo" : $('#correo').val(),
+			"contrasena" : $('#pass').val(),
+			"calle" : $('#calle').val()+" "+ $('#numero').val(),
+			"colonia" : $('#colonia').val(),
+			"estado" : $('#estado').val(),
+			"ciudad" : $('#ciudad').val(),
+			"municipio" : $('#municipio').val(),
+			"codigo" : $('#cp').val(),
+			"telefono" : $('#telefono').val(),
+				};
+
+			$.ajax({
+			data:  valores, //aqui mando  la  varible
+	    	url:   'js/agregausu.php',
+	        type:  'post', //metodo  como acceder a  la  variable
+	 
+	        success:  function (response) {
+		    	$('#adduser').html(response);    		  
+	        }
+
+		});
+
+		return false;
+	});
 });
+
+	     

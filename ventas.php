@@ -52,6 +52,11 @@
 			<a href="#	" class="agrega_carrito"><img class="add_car" src="Iconos/agregar.png"></a>
 		</div>
 
+<<<<<<< HEAD
+=======
+
+		<div class="pagina-cion">
+>>>>>>> origin/master
 		<section class="paginacion">
 			<ul>
 				<li class="previous-off">«Previous</li>
@@ -63,7 +68,14 @@
 				<li class="next">Next »</li>
 			</ul>
 		</section>
+<<<<<<< HEAD
 	</div> -->
 <!--................................................................. -->
+=======
+		</div>
+
+	</div>
+	<!--................................................................. -->
+>>>>>>> origin/master
 <?php include('pie_pagina.php'); ?>
 

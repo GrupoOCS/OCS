@@ -3,25 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-        <script src="js/login.js"></script>
-        <script languaje="JavaScript"> 
-            <!--FUNCION QUE VALIDA  LA  EXPRESON REGULAR-->
-
-            function direccionEmail(theElement, nombre_del_elemento )
-            {
-                var evaluar = theElement.value;
-                var filter=/^[A-Za-z][A-Za-z0-9_]*@[A-Za-z0-9_]+\.[A-Za-z0-9_.]+[A-za-z]$/;
-                if (evaluar.length == 0 ) 
-                    return true;
-                if (filter.test(evaluar))
-                    return true;
-                else
-                    alert("E-mail incorrecto");
-                        theElement.focus();
-                    return false;
-        }
-        </script> 
-        
+        <script src="js/login.js"></script>    
     </head>
 	<div class="contenido">
     <form id="login">
