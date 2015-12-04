@@ -1,3 +1,4 @@
 <?php
-	echo "true";
+	include('funciones/DB.php');
+	getCategorias();
 ?>

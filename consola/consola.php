@@ -36,6 +36,7 @@
 		<a href="" id="productos">Productos</a>
 		<a href="" id="usuarios">Usuarios</a>
 		<a href="" id="pedidos">Pedidos</a>
+		<a href="" id="reportes">Reportess</a>
 	</div>
 	<div class="lista">
 		<div id="titulo" class="titulo">
