@@ -25,7 +25,7 @@
 				<tr>
 					<td>
 						<table  id="tabla_a_desplegar" style="display: none;">		
-							<form action="efectivo.php" method="POST">
+							<form action="Efectivo.php" method="post" enctype="multipart/form-data">
 								<tr>
 									<th align="center">
 										<h5>CuentaX: 1548-64       CuentaY:65498-5</h5>
@@ -40,8 +40,12 @@
 									<td><input type="text" class="form-control" name="referencia" value="numReferencia"></td>
 								</tr>
 								<tr>
-									<td><input type="boton" class="btn mediano" value="Añadir imagen"></td>
-									<td><input type="text" class="form-control" name="direccion_imagen" value=" direccion de imagen del comprobante de pago"></td>
+									<td>
+										<label>Imagen</label>
+									</td>
+									<td>
+										<input type="file"  name="imagen" required>
+									</td>
 								</tr>
 								<tr>
 									<td></td>

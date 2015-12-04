@@ -6,7 +6,7 @@
 		<div align="center">
 		   	<center><p colspan="2" ><h2>Agregar dirección de envio</h2></p></center>	
 			<table class="carrito">
-			 	<form id="formulario" action="Pedido.php" method="post">
+			 	<form id="formulario" action="pago.php" method="post">
                     <td align="right">Calle:</td>                         
                     <td><input name="calle" class="form-control" placeholder="Calle" ></td>
                 </tr>
