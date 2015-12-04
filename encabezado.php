@@ -17,16 +17,14 @@
 		<!-- INCIAR SESION | REGISTRARSE  O    NOMBRE DE USUARIO -->
 		<header>
 			<?php 
-								//printf($_SERVER["REQUEST_URI"]);
-							if ($_SERVER["REQUEST_URI"] == "/ocs/Registrarse.php" ) 
-
-							ECHO'<a class="enlace" href="inicioSesion.php">Iniciar Sesión</a>  ';
-							else if($_SERVER["REQUEST_URI"] == "/ocs/inicioSesion.php")
-							ECHO'<a class="enlace" href="Registrarse.php">Registrarse</a> ';
-							else
-							ECHO'<a class="enlace" href="inicioSesion.php">Iniciar Sesión</a> | <a class="enlace" href="Registrarse.php">Registrarse</a> ';
-
-							?>
+				session_start();
+				error_reporting(0);
+				if ($_SESSION['nom_usu']) 
+					ECHO'<span>'.$_SESSION['nom_usu'].' | </span><a class="enlace" href="funPHP/cerrarSesion.php">Cerrar Sesión</a>  ';
+				else
+					ECHO'<a class="enlace" href="inicioSesion.php">Iniciar Sesión</a> | <a class="enlace" href="Registrarse.php">Registrarse</a> ';
+				
+			?>
 			  
 		</header> 
 	<!--..........................INICIA NAVEGACIÓN....................................... -->
