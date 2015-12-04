@@ -32,7 +32,7 @@
 			while( $row=($query->fetch(PDO::FETCH_NUM)) )
 			{
 				$_SESSION['nom_usu']=$row[0];
-				$_SESSION['usu']=$row[1];
+				$_SESSION['email']=$row[1];
 				return "true";
 			}
 			return "Usuario y/o contraseña incorrectos";
@@ -55,7 +55,7 @@
 
 
 			try {
-				$query = $db->prepare("INSERT INTO cliente (nombre,contrasena,email) VALUES (:nombre,:correo,:contrasena)");
+				$query = $db->prepare("INSERT INTO cliente (nombre,email,contrasena) VALUES (:nombre,:correo,:contrasena)");
 			    $query->execute($agregar);
 
 			    $agregar2 = array(
