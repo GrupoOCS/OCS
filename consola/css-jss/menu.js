@@ -5,11 +5,11 @@ $(document).ready(function(){
 	else
 		xmlhttp=new ActiveObject("Microsoft.XMLHTTP");
 
-	$("a[id=categorias]").click(function(){
+	$("a[id=subcategorias]").click(function(){
 		xmlhttp.onreadystatechange=function()
 		{
 			if(xmlhttp.readyState==4 && xmlhttp.status==200 && xmlhttp.responseText=="true")//400 que no lo pudo encontrar //500 no pudo formar la pagina
-				categorias();
+				subcategorias();
 			else
 				if(xmlhttp.responseText=="false")
 					window.location="index.html";
@@ -130,18 +130,18 @@ function productos()
 	});
 }
 
-function categorias()
+function subcategorias()
 {
 	$.ajax({
 		data: null,
 	  	url:   'categorias.php',
 	    type:  'post',
 	    beforeSend: function () {
-	   	$("#titulo").html("<span>Categorias</span>");
+	   	$("#titulo").html("<span>Subcategorias</span>");
 	    	var newlink = document.createElement('a');
 			newlink.setAttribute('id', 'addcategoria');
 			newlink.setAttribute('href', ' ');
-			newlink.innerHTML = "<img class='ico-acciones' src='img/agregar.png'/>Agregar Categoria";
+			newlink.innerHTML = "<img class='ico-acciones' src='img/agregar.png'/>Agregar Subategoria";
 			newlink.onclick = formaddcategoria;
 	   		document.getElementById('titulo').appendChild(newlink);
 	    },

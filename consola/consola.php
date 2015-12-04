@@ -32,11 +32,11 @@
 	</div>
 	<div class="menu">
 		<label>MENÚ</label>
-		<a href="" id='categorias'>Categorias</a>
+		<a href="" id='subcategorias'>Subcategorias</a>
 		<a href="" id="productos">Productos</a>
 		<a href="" id="usuarios">Usuarios</a>
 		<a href="" id="pedidos">Pedidos</a>
-		<a href="" id="reportes">Reportess</a>
+		<a href="" id="reportes">Reportes</a>
 	</div>
 	<div class="lista">
 		<div id="titulo" class="titulo">

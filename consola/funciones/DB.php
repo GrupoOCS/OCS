@@ -48,7 +48,7 @@
 		    $query->execute();
 			while( $row=($query->fetch(PDO::FETCH_NUM)) )
 			{
-				echo $row[0]."-"-$row[1]."<BR>";
+				echo $row[0]."-".$row[1]."<BR>";
 			}
 		}
 		else
