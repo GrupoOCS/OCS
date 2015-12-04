@@ -39,20 +39,225 @@
 			return "ERROR:No se pudo conectar a la base de datos";
 	}
 
-	function getCategorias()
+	function getSelectCategorias($select)
 	{
 		$db=conectar();
 		if($db!=null)
 		{
 			$query = $db->prepare("SELECT * FROM categoria");
 		    $query->execute();
+		    $s= "<select id='idcategoria'>";
 			while( $row=($query->fetch(PDO::FETCH_NUM)) )
 			{
-				echo $row[0]."-".$row[1]."<BR>";
+				if($select==$row[0])
+					$s.= "<option value=".$row[0]." selected >".$row[1]."</option>";
+				else
+					$s.= "<option value=".$row[0].">".$row[1]."</option>";
 			}
+			$s.= "</select>";
+			return $s;
 		}
 		else
 			return "ERROR:No se pudo conectar a la base de datos";
 	}
+
+	function getSubcategorias()
+	{
+		$db=conectar();
+		if($db!=null)
+		{
+			$query = $db->prepare("SELECT * FROM subcategoria");
+		    $query->execute();
+		    echo "<table>";
+		    echo "<tr class='fondo'><td>Nombre</td><td colspan='3' >Acciones</td><tr>";
+			while( $row=($query->fetch(PDO::FETCH_NUM)) )
+			{
+				echo "<tr>
+						<td class='nombre'>".$row[1]."</td>
+						<td class='acciones'><a onclick='versubcategoria(".$row[0].");'><img src='img/ver.png' class='icoacc'/></a></td>
+						<td class='acciones'><a onclick='modsubcategoria(".$row[0].");'><img src='img/editar.png' class='icoacc'/></a></td>
+						<td class='acciones'><a onclick='elisubcategoria(".$row[0].");'><img src='img/eliminar.png' class='icoacc'/></a></tr>";
+			}
+			echo "</table>";
+		}
+		else
+			echo "ERROR:No se pudo conectar a la base de datos";
+	}
+
+	function getSubcategoriaid($id)
+	{
+		$db=conectar();
+		if($db!=null)
+		{
+			$query = $db->prepare("SELECT * FROM subcategoria WHERE id=:id");
+		    $query->execute(array('id' => $id ));
+		    return $query;
+		}
+		else
+			return false;
+	}
+
+	function setSubcategoria($datos)
+	{
+		$db=conectar();
+		if($db!=null)
+		{
+			$prepared = array(
+				'nombre' => $datos['nombre'],
+				'idcategoria' => $datos['idcategoria']
+				);
+			$query = $db->prepare("INSERT INTO subcategoria (nombre, idcategoria) VALUES (:nombre, :idcategoria)");
+		    try {
+		    	$query->execute($prepared);
+		    	echo "Sus datos se han guardado exitosamente";
+		    } 
+		    catch ( PDOException $e) 
+		    {
+		    	echo "ERROR: No se puede insertar en la base de datos\nIntente mas tarde";
+		    }	
+		    	
+		}
+		else
+			echo "ERROR:No se pudo conectar a la base de datos";
+	}
+
+	function verSubcategoriaid($id)
+	{
+		$db=conectar();
+		$query=getSubcategoriaid($id);
+		if($query!=false)
+		{
+			if($query)
+			{
+				echo "<table>";
+				if( $row=($query->fetch(PDO::FETCH_NUM)) )
+				{
+					echo 	"<tr>
+								<td width='30%'><span class='r'>Nombre:</span></td><td width='70%'><span class='l'>".$row[1]."</span></td>
+							</tr>
+							<tr>
+								<td width='30%'><span class='r'>Categoria:</span></td><td width='70%'>";
+					$query = $db->prepare("SELECT * FROM categoria WHERE id=:id");
+			    	$query->execute(array('id' => $row[2] ));
+			    	if( $row2=($query->fetch(PDO::FETCH_NUM)) )
+			    		echo "<span class='l'>".$row2[1]."</span>";
+					echo 	"</td></tr>";
+				}
+				echo "</table>";
+				echo "<center><input type='submit' value='Aceptar' onclick='subcategorias();' class='aceptar'/></center>";
+			}
+			else
+				echo "ERROR:No se puede consultar la base de datos. Intentlo mas tarde<BR><center><input type='submit' value='Aceptar' onclick='subcategorias();' class='aceptar'/></center>";
+		}
+		else
+			echo "ERROR:No se pudo conectar a la base de datos<BR><center><input type='submit' value='Aceptar' onclick='subcategorias();' class='aceptar'/></center>";
+	}
+
+	function eliSubcategoria($id)
+	{
+		$db=conectar();
+		$query=getSubcategoriaid($id);
+		if($query!=false)
+		{
+			if($query)
+			{
+				echo "<table>";
+				if( $row=($query->fetch(PDO::FETCH_NUM)) )
+				{
+					echo 	"<tr>
+								<td width='30%'><span class='r'>Nombre:</span></td><td width='70%'><span class='l'>".$row[1]."</span></td>
+							</tr>
+							<tr>
+								<td width='30%'><span class='r'>Categoria:</span></td><td width='70%'>";
+					$query = $db->prepare("SELECT * FROM categoria WHERE id=:id");
+			    	$query->execute(array('id' => $row[2] ));
+			    	if( $row2=($query->fetch(PDO::FETCH_NUM)) )
+			    		echo "<span class='l'>".$row2[1]."</span>";
+					echo 	"</td></tr>";
+				}
+				echo "</table>";
+				echo "<center><input type='submit' value='Aceptar' onclick='delsubcategoria(".$row[0].");' class='aceptar'/> <input type='submit' value='Cancelar' onclick='subcategorias();' class='cancelar'/></center>";
+			}
+			else
+				echo "ERROR:No se puede consultar la base de datos. Intentlo mas tarde<BR><center><input type='submit' value='Aceptar' onclick='subcategorias();' class='aceptar'/></center>";
+		}
+		else
+			echo "ERROR:No se pudo conectar a la base de datos<BR><center><input type='submit' value='Aceptar' onclick='subcategorias();' class='aceptar'/></center>";
+	}
+
+	function delsubcategoria($id)
+	{
+		$db=conectar();
+		if($db!=null)
+		{
+			$query = $db->prepare("DELETE FROM subcategoria WHERE id=:id");
+			try {
+				$query->execute(array('id' => $id ));
+			    echo "Se ha Eliminado exitosamente";
+			} 
+			catch (Exception $e) {
+				echo "ERROR:No se elimino excitosamente. Vuelva a intentarlo mas tarde<BR>";
+			}
+		}
+		else
+			echo "ERROR:No se pudo conectar a la base de datos<BR>";
+
+		echo "<center><input type='submit' value='Aceptar' onclick='subcategorias();' class='aceptar'/></center>";
+	}
+	
+	function modSubcategoria($id)
+	{
+		$db=conectar();
+		$query=getSubcategoriaid($id);
+		if($query!=false)
+		{
+			if($query)
+			{
+				echo "<table>";
+				$i=1;
+				if( $row=($query->fetch(PDO::FETCH_NUM)) )
+				{
+					echo 	"<tr>
+								<td width='30%'><span class='r'>Nombre:</span></td><td width='70%'><input class='entrada-texto' id='nombre' type='text' value='".$row[1]."' autofocus required /></td>
+							</tr>
+							<tr>
+								<td width='30%'><span class='r'>Categoria:</span></td><td width='70%'>".getSelectCategorias($row[2])."</td></tr>";
+				}
+				echo "</table>";
+				echo "<center><input type='submit' value='Aceptar' onclick='updsubcategoria(".$row[0].");' class='aceptar'/> <input type='submit' value='Cancelar' onclick='subcategorias();' class='cancelar'/></center>";
+			}
+			else
+				echo "ERROR:No se puede consultar la base de datos. Intentlo mas tarde<BR><center><input type='submit' value='Aceptar' onclick='subcategorias();' class='aceptar'/></center>";
+		}
+		else
+			echo "ERROR:No se pudo conectar a la base de datos<BR><center><input type='submit' value='Aceptar' onclick='subcategorias();' class='aceptar'/></center>";
+	}
+
+	function updsubcategoria($datos)
+	{
+		$db=conectar();
+		if($db!=null)
+		{
+			$prepared = array(
+				'nombre' => $datos['nombre'],
+				'idcategoria' => $datos['idcategoria'],
+				'id' => $datos['id']
+				);
+
+			$query = $db->prepare("UPDATE subcategoria SET nombre=:nombre, idcategoria=:idcategoria WHERE id=:id");
+			try {
+				$query->execute($prepared);
+			    echo "Se ha Modificado exitosamente";
+			} 
+			catch (Exception $e) {
+				echo "ERROR:No se modifico excitosamente. Vuelva a intentarlo mas tarde<BR>";
+			}
+		}
+		else
+			echo "ERROR:No se pudo conectar a la base de datos<BR>";
+
+		echo "<center><input type='submit' value='Aceptar' onclick='subcategorias();' class='aceptar'/></center>";
+	}
+
 
 ?>
