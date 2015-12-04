@@ -402,7 +402,7 @@ function formaddcategoria(){
     	url:   'categoria/consulta.php',
         type:  'post',
          beforeSend: function () {
-       		$("#titulo").html("<span>Agregar Categorias</span>");
+       		$("#titulo").html("<span>Agregar Subcategorias</span>");
         },
         success:  function (response) 
         {
