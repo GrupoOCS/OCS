@@ -127,13 +127,18 @@
 					<li> '; 						
 								//printf($_SERVER["REQUEST_URI"]);
 								$car = $db->query("select sum(cantidad) from carrito where id_cliente=1;");
-								ECHO'<a class="principal" href="carrito.php"><div id="carrito">';
-								foreach ($car-> fetchAll(PDO::FETCH_NUM) as $row )
-									printf ("(%s)",$row[0]);
-								echo '</div>
+								ECHO'<a class="principal" href="carrito.php">
 								<img class="enlace icono" src="Iconos/CAR.png"></a>';
 					}?>
-					</li>	
+					</li>
+					<!-- <li>
+						<?php
+						// echo '<a class="principal" href="carrito.php"><p id="carrito">';
+						// 		foreach ($car-> fetchAll(PDO::FETCH_NUM) as $row )
+						// 			printf ("(%s)",$row[0]);
+						// 		echo '</p></a>';
+						?>
+					</li> -->	
 				</ul>
 			</div> 
 		</div>

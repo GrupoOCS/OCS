@@ -186,7 +186,7 @@ div.logo{
 	position: relative;
 	/*fuente*/
 	font-family: 'lato';
-	font-size: 45pt;
+	font-size: 35pt;
 	color:white;
 	text-align: center;
 }
@@ -213,15 +213,15 @@ div.busqueda{
 	margin: 1%;
 }
 .tx_buscar{
-	width: 20%;
-	height: 20%;
+	width: 22%;
+	height: 15%;
 	position: relative;
 	float: right;
 	padding-top: 1%;
 }
 .b_buscar{
-	width: 7%;
-	height: 50%;
+	width: 9%;
+	height: 60%;
 	position: relative;
 	float: right;
 	padding-right: 1%;
@@ -495,10 +495,8 @@ table.carrito{
 }
 
 .logo-icon{
-	width: 45px;
-	height: 45px;
-
-
+	width: 35px;
+	height: 35px;
 }
 span.log{
 	font-size: 14pt;
@@ -556,7 +554,7 @@ footer{
 			}
 			.nav li a.principal{ 				/*diseño de los bloques  */
 				width: 200px;
-				height: 32px;
+				height: 30px;
 				color: white;
 				text-decoration: none;
 				background-color: #34495e;		
@@ -566,7 +564,6 @@ footer{
 				font-family: 'lato';
 				font-size:14pt;
 				position: relative;
-
 			}
 
 			.nav li a.principal-active{ 				/*diseño de los bloques  */
