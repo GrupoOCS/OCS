@@ -35,7 +35,7 @@
 	echo "<div class=\"contenido\">";
 		foreach ($res-> fetchAll(PDO::FETCH_NUM) as $row ){
 			echo "<div class=\"producto\">";
-				printf ("<a href=\"#\"><img href=\"#\" class=\"producto\" src=\"%s\"></a>", $row[1]);
+				printf ("<a href=\"DescripcionProducto.php?id=%s\"><img href=\"#\" class=\"producto\" src=\"%s\"></a>", $row[0], $row[1]);
 				printf ("<div class=\"nombre_producto\">%s</div>", $row[2]);
 				printf ("<div class=\"precio_producto\">$%s</div>", $row[3]);
 				printf ("<a href=\"#\" onClick=\"insertarCarrito(1,".$row[0].",1);\" class=\"agrega_carrito\"><img class=\"add_car\" src=\"Iconos/agregar.png\"></a>",$row[0]);

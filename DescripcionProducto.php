@@ -1,50 +1,72 @@
 
 <?php include('encabezado.php'); ?>
- 
-<div class="contenido">
-	<div class="desc-imagen">
-		<img style="width:100%; height:100%;" src="Productos/1lap.jpg">
+	
+	<script type="text/javascript">
+		function insertarCarrito ( idCliente,idProducto, cantidad ) {
+			var xmlhttp;
+			if ( window.XMLHttpRequest ){
+				xmlhttp = new XMLHttpRequest();
+			} else {
+				xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+			}
+			xmlhttp.onreadystatechange = function (){
+				if ( xmlhttp.readyState ==4 && xmlhttp.status==200 ){
+					document.getElementById('carrito').innerHTML = xmlhttp.responseText;
+				}
+			}
+			xmlhttp.open("GET","insertCarrito.php?idc="+idCliente+"&idp="+idProducto+"&n="+cantidad, true);
+			xmlhttp.send();
+		}
+	</script>
 
-	</div>
-	<div class="desc-texto">
-		<h3><center>Laptop- Nombre del producto</center></h3>
-		<div style="color:green; text-align:center;"> Disponible  : 50</div>
-		<p class="texto-descripcion">
-			Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-		</p>
-		<table class="describe">
-			<tr>
-				<td>Marca:</td><td> ASUS </td>
-			</tr>
-			<tr>
-				<td>Modelo:</td><td> 75337 </td>
-			</tr>
-			<tr>
-				<td>Capacidad:</td><td> 1tb </td>
-			</tr>
-			<tr>
-				<td>RAM:</td><td> 500MB </td>
-			</tr>
-		</table>
+<?php
+	$id = $_GET['id'];
+	$db = Conectar();
 
-	</div>
+	$query = "select producto.id, imagen.nombre, producto.nombre, producto.descripcion, producto.precio, producto.marca, subcategoria.nombre, subcategoria.id from imagen, producto, subcategoria where producto.id=imagen.id_producto and imagen.id_producto=".$id." and subcategoria.id=producto.id_subcategoria;";
+	$res = $db->query($query);
+
+
+	echo '<div class="contenido">';
+
+		foreach ($res-> fetchAll(PDO::FETCH_NUM) as $row ){
+			echo '<div class="desc-imagen">
+				<img style="width:100%; height:100%;" src="'.$row[1].'">
+			</div>';
+
+			echo '<div class="desc-texto">';
+			echo'	<h3><center>'.$row[2].'</center></h3>
+				<!-- <div style="color:green; text-align:center;"> Disponible  : 50</div> -->
+				<p class="texto-descripcion">'.$row[3].'</p>';
+
+			echo '<table class="describe">
+				<tr><td>Precio:</td><td> $'.$row[4].' </td></tr>
+				<tr><td>Marca:</td><td> '.$row[5].' </td></tr>';
+
+				$cat = $db->query("select categoria.nombre from categoria,subcategoria where categoria.id=subcategoria.idcategoria and subcategoria.id=".$row[7]." limit 1;");
+				foreach ($cat-> fetchAll(PDO::FETCH_NUM) as $row1 )
+					echo '	<tr><td>Categoria:</td><td> '.$row1[0].' </td></tr>';
+			echo '	<tr><td>Subcategoria:</td><td> '.$row[6].' </td></tr>
+			</table>';
+
+			echo '</div>';
+        }
+
+?>
 	<div class="desc-agregar">
 		<div class="d-cantidad">
 			<fieldset class="field">
-			<form>
+			<!-- <form> -->
 			<label style="position:relative; height:25%; padding:4%; float:left; width:42%;">
 				Cantidad:</label>
-			<input name="cantidad" value="1" style=" position:relative; float:left; width:50%" type="number" class="form-control" min="1">
+			<input id="num" name="cantidad" value="1" style=" position:relative; float:left; width:50%" type="number" class="form-control" min="1">
 			
-				
-				<input type="submit" class="btn grande desc-carrito" value="Agregar al Carrito">
+			<?php
+				//echo "<input href=\"#\" onClick=\"insertarCarrito(1,".$id.",1); type=\"submit\" class=\"btn grande desc-carrito\" value=\"Agregar al Carrito\">";
+			printf ("<a href=\"#\" onClick=\"insertarCarrito(1,".$id.",num.value);\"><img class=\"add_car\" src=\"Iconos/agregar.png\"></a>");
+			?>
 
-		</form>
+		<!-- </form> -->
 		</fieldset>
 		</div>
 
