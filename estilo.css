@@ -174,15 +174,13 @@ a.enlace:hover{
 	text-decoration: none;
 }
 img.enlace.icono{
-	width: 25%;
+	width: 20%;
 	height:100%;
 	position: relative;
-
-
 }
 img.enlace.icono:hover{
-	width: 28%;
-	height:80%;
+	width: 30%;
+	height:110%;
 }
 img.producto{
 	position: relative;
@@ -256,17 +254,19 @@ div.tabla_descripcion{
 	float: left;
 	width: 600px;
 	height: 400px;
-	top:15%;
 	position: relative;
 	left: 3%;
 	border: none;
 
 }
-
+div.tabla_espacio{
+	width: 8%;
+	height: 15%
+}
 div.tabla_carrito.resumen{
 	width: 25%;
 	margin-left: 8%;
-	border: none;
+	
 }
 
 input[type="number"]{
@@ -288,7 +288,7 @@ div.eliminar{
 div.wholeCarrito{
 	position: relative;
 	width: 90%;
-	height: 50%;
+	height: 90%;
 
 	margin-left: 5%;
 }

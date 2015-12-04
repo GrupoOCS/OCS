@@ -1,57 +1,56 @@
 <?php include('encabezado.php'); ?>
-	<!--.............................TERMINA NAVEGACIÓN...............................-->
-	<div class="contenido">
+	
+	<script type="text/javascript">
+		function insertarCarrito ( idCliente,idProducto, cantidad ) {
+			var xmlhttp;
+			if ( window.XMLHttpRequest ){
+				xmlhttp = new XMLHttpRequest();
+			} else {
+				xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+			}
+			xmlhttp.onreadystatechange = function (){
+				if ( xmlhttp.readyState ==4 && xmlhttp.status==200 ){
+					document.getElementById('carrito').innerHTML = xmlhttp.responseText;
+				}
+			}
+			xmlhttp.open("GET","insertCarrito.php?idc="+idCliente+"&idp="+idProducto+"&n="+cantidad, true);
+			xmlhttp.send();
+		}
+	</script>
 
-		<div class="producto">
-			<img class="producto" src="Productos/1comp.jpg">
-			<div class="nombre_producto">Wireless TP-link</div>
-			<div class="precio_producto">$550.00</div>
-			<a href="#	" class="agrega_carrito"><img class="add_car" src="iconos/agregar.png"></a>
-		</div>
-		<div class="producto">
-			<img class="producto" src="Productos/2comp.jpg">
-			<div class="nombre_producto">Wireless TP-link</div>
-			<div class="precio_producto">$550.00</div>
-			<a href="#	" class="agrega_carrito"><img class="add_car" src="iconos/agregar.png"></a>
-		</div>
-		<div class="producto">
-			<img class="producto" src="Productos/3comp.jpg">
-			<div class="nombre_producto">Wireless TP-link</div>
-			<div class="precio_producto">$550.00</div>
-			<a href="#	" class="agrega_carrito"><img class="add_car" src="iconos/agregar.png"></a>
-		</div>
-		<div class="producto">
-			<img class="producto" src="Productos/4comp.jpg">
-			<div class="nombre_producto">Wireless TP-link</div>
-			<div class="precio_producto">$550.00</div>
-			<a href="#	" class="agrega_carrito"><img class="add_car" src="iconos/agregar.png"></a>
-		</div>
-		<div class="producto">
-			<img class="producto" src="Productos/5comp.jpg">
-			<div class="nombre_producto">Wireless TP-link</div>
-			<div class="precio_producto">$550.00</div>
-			<a href="#	" class="agrega_carrito"><img class="add_car" src="iconos/agregar.png"></a>
-		</div>
-		<div class="producto">
-			<img class="producto" src="Productos/6comp.jpg">
-			<div class="nombre_producto">Wireless TP-link</div>
-			<div class="precio_producto">$550.00</div>
-			<a href="#	" class="agrega_carrito"><img class="add_car" src="iconos/agregar.png"></a>
-		</div>
-		<div class="producto">
-			<img class="producto" src="Productos/7comp.jpg">
-			<div class="nombre_producto">Wireless TP-link</div>
-			<div class="precio_producto">$550.00</div>
-			<a href="#	" class="agrega_carrito"><img class="add_car" src="iconos/agregar.png"></a>
-		</div>
+	<!--.............................TERMINA NAVEGACIÓN...............................-->
+<?php	
+	$id = $_GET['id'];
+	$db = Conectar();
+	$ids=substr($id,1);
+	if ($id[0]=="S"){
+		$query = "select producto.id, imagen.nombre, producto.nombre, producto.precio from imagen, producto where imagen.id_producto=producto.id and producto.id_subcategoria=".$ids." order by producto.tag desc;";
+	} else if ($id[0]=="C"){
+		$query = "select producto.id, imagen.nombre, producto.nombre, producto.precio from imagen, producto, (select subcategoria.id as sid from subcategoria where subcategoria.idcategoria=".$ids.") as sub where imagen.id_producto=producto.id and producto.id_subcategoria=sub.sid order by producto.tag desc;";
+	} else {
+		$query = "select producto.id, imagen.nombre, producto.nombre, producto.precio from imagen, producto where imagen.id_producto=producto.id order by producto.tag desc";
+	}
+	$res = $db->query($query);
+
+	echo "<div class=\"contenido\">";
+		foreach ($res-> fetchAll(PDO::FETCH_NUM) as $row ){
+			echo "<div class=\"producto\">";
+				printf ("<img class=\"producto\" src=\"%s\">", $row[1]);
+				printf ("<div class=\"nombre_producto\">%s</div>", $row[2]);
+				printf ("<div class=\"precio_producto\">$%s</div>", $row[3]);
+				printf ("<a href=\"#\" onClick=\"insertarCarrito(1,".$row[0].",1);\" class=\"agrega_carrito\"><img class=\"add_car\" src=\"Iconos/agregar.png\"></a>",$row[0]);
+            echo "</div>";
+        }
+
+	echo "</div>";
+?>
+	<!-- <div class="contenido">
 		<div class="producto">
 			<img class="producto" src="Productos/9comp.jpg">
 			<div class="nombre_producto">Wireless TP-link</div>
 			<div class="precio_producto">$550.00</div>
-			<a href="#	" class="agrega_carrito"><img class="add_car" src="iconos/agregar.png"></a>
+			<a href="#	" class="agrega_carrito"><img class="add_car" src="Iconos/agregar.png"></a>
 		</div>
-
-
 
 		<section class="paginacion">
 			<ul>
@@ -64,9 +63,7 @@
 				<li class="next">Next »</li>
 			</ul>
 		</section>
-
-
-	</div>
-	<!--................................................................. -->
+	</div> -->
+<!--................................................................. -->
 <?php include('pie_pagina.php'); ?>
 

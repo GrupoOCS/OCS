@@ -19,7 +19,7 @@
             <div class="carousel-inner">
 
                 <?php
-                  include 'abrirConexion.php';
+                  //include 'abrirConexion.php';
                   $db = Conectar();
                   $query = "select imagen.nombre, producto.tag, producto.nombre from imagen, producto where imagen.id_producto=producto.id order by producto.tag desc limit ".$n.";";
                   $res = $db->query( $query );

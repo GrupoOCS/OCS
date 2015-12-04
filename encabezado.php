@@ -1,11 +1,13 @@
 
 <html>
 	<head>
-		<title>Estilos del proyecto</title>
+		<meta charset="UTF-8">
+		<title>OCS</title>
 			<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	    	<link href="css/bootstrap.min.css" rel="stylesheet" media="screen"> <!-- Bootstrap necesario para carrusel only -->
 	    	<link rel="stylesheet" type="text/css" href="css/carousel.css">
 	    	<link rel="stylesheet" type="text/css" href="estilo.css"> <!-- Hoja de estilos -->
+	    	<link rel="stylesheet" type="text/css" href="style_carrito.css">
 		<!--<link rel="stylesheet" type="text/css" href="bootstrap.css"> 
  			<link href="css_carrito/bootstrap.min.css" rel="stylesheet"> -->
   			<script src="css_carrito/jquery.min.js" type="text/javascript"></script>
@@ -53,124 +55,86 @@
 			</div>
 			<!-- .......................................................... -->
 			<!-- MENÚ PRINCIPAL DE NAVEGACIÓN -->
-			<?php if ($_SERVER["REQUEST_URI"] == "/ocs/carrito.php"
-			|| $_SERVER["REQUEST_URI"] == "/ocs/direccion.php"
-			|| $_SERVER["REQUEST_URI"] == "/ocs/pago.php")
-			{
-			ECHO'<div class="menu">
-				<ul class="nav">
-					 ';
-
-							 
+			<?php if ($_SERVER["REQUEST_URI"] == "/OCS/carrito.php"
+						|| $_SERVER["REQUEST_URI"] == "/OCS/direccion.php"
+						|| $_SERVER["REQUEST_URI"] == "/OCS/pago.php"){
+				ECHO'<div class="menu">
+				<ul class="nav">';
 								//printf($_SERVER["REQUEST_URI"]);
-							
-						
-						ECHO'	
-
-					<li> '; 
-						
-								
-
-							if ($_SERVER["REQUEST_URI"] == "/ocs/carrito.php")
-							{
+					ECHO'<li> '; 
+						if ($_SERVER["REQUEST_URI"] == "/OCS/carrito.php")
+						{
 							ECHO'<a class="principal-active" href="carrito.php"> 
 								<img class="enlace icono" src="Iconos/CAR.png">
-							</a> 
-							';
-						}
-						else{
+							</a>';
+						}else{
 							ECHO'<a class="principal" href="carrito.php"> 
 								<img class="enlace icono" src="Iconos/CAR.png">
-							</a> 
-							';
+							</a>';
 						}
 
-							if ($_SERVER["REQUEST_URI"] == "/ocs/direccion.php")
-							{
-								echo'
+						if ($_SERVER["REQUEST_URI"] == "/OCS/direccion.php")
+						{
+							echo'
 							<li>
-							<a class="principal-active" href="direccion.php"> Datos de Envío </a>
-							</li> 
-							 ';}
-
-							 else
-							 {
-							 	echo'<li>
-							<a class="principal" href="direccion.php"> Datos de Envío </a>
+								<a class="principal-active" href="direccion.php"> Datos de Envío </a>
+							</li>';
+						}else{
+							 echo'<li>
+								<a class="principal" href="direccion.php"> Datos de Envío </a>
 							</li> ';
-							 }
+						}
 
-							 if ($_SERVER["REQUEST_URI"] == "/ocs/pago.php")
-							{
-								echo'
-							<li>
-							<a class="principal-active" href="pago.php"> Formas de Pago </a>
-							</li> 
-							 ';}
-
-							 else
-							 {
-							 	echo'<li>
-							<a class="principal" href="pago.php"> Formas de Pago</a>
-							</li> ';
-							 }
-
-
-						
-
-							
-							}
-
-
-
-							else
-							{
-								ECHO'<div class="menu">
-				<ul class="nav">
-					<li> ';
-
-							 
-								//printf($_SERVER["REQUEST_URI"]);
-							if ($_SERVER["REQUEST_URI"] == "/ocs/ventas.php" ||
-							 $_SERVER["REQUEST_URI"] == "/ocs/almacenamiento.php" || 
-							  $_SERVER["REQUEST_URI"] == "/ocs/accesorios.php" ||
-							   $_SERVER["REQUEST_URI"] == "/ocs/desktop.php" ||
-							    $_SERVER["REQUEST_URI"] == "/ocs/laptop.php" ||
-							   	 $_SERVER["REQUEST_URI"] == "/ocs/impresoras.php" ) 
-
-							ECHO'<a class="principal-active" href="ventas.php">Productos  </a> ';
-							else
-								ECHO'<a class="principal" href="ventas.php">Productos  </a> ';
-
-						
-						ECHO'	<ul>
-								<li><a  href="almacenamiento.php"><br>Almacenamiento</a></li>	
-								<li><a  href="accesorios.php"><br>Accesorios </a></li>	
-								<li><a  href=""><br>Computadoras </a>
-									<ul>
-										<li><a href="desktop.php"><br>Escritorio</a> </li>
-										<li><a href="laptop.php"><br>Portátiles</a></li>
-									</ul>
-									</li>	
-								<li><a  href="impresoras.php"><br>Impresoras </a></li>	
-							</ul>
-					</li>
-					
+						if ($_SERVER["REQUEST_URI"] == "/OCS/pago.php"){
+							echo'
+								<li>
+									<a class="principal-active" href="pago.php"> Formas de Pago </a>
+								</li> 
+							 ';
+						}else{
+							echo'<li>
+									<a class="principal" href="pago.php"> Formas de Pago</a>
+								</li> ';
+						}
 				
-
-					<li> '; 
-						
+				}else{
+					ECHO'<div class="menu">
+						<ul class="nav">
+						<li> ';
 								//printf($_SERVER["REQUEST_URI"]);
-							 
+							if ($_SERVER["REQUEST_URI"] == "/OCS/ventas.php") 
+									ECHO'<a class="principal-active" href="ventas.php?id=All">Productos</a> ';
+							else ECHO'<a class="principal" href="ventas.php?id=All">Productos</a> ';
 
-							
-								ECHO'<a class="principal" href="carrito.php"> 
-								<img class="enlace icono" src="Iconos/CAR.png">
-							</a>  ';
+		                include 'abrirConexion.php';
+		                $db = Conectar();
+		                $res = $db->query( "select *from categoria;" );
 
-							
-							}
-							?>
+		                echo '<ul>';
+		                foreach ($res-> fetchAll(PDO::FETCH_NUM) as $row ){
+		                    printf ("<li><a  href=\"ventas.php?id=C".$row[0]."\"><br>%s</a>",$row[1]);
+
+		                    $res1 = $db->query("select subcategoria.id, subcategoria.nombre from subcategoria where subcategoria.idcategoria=".$row[0].";");
+		                    echo '<ul>';
+		                    foreach ($res1-> fetchAll(PDO::FETCH_NUM) as $row1 ){
+		                      	printf ("<li><a href=\"ventas.php?id=S".$row1[0]."\"><br>%s</a> </li>",$row1[1]);
+		                  	}
+
+		                    echo "</ul></li>";
+		                }
+		                echo '</ul>';
+
+					echo '</li>
+					
+					<li> '; 						
+								//printf($_SERVER["REQUEST_URI"]);
+								$car = $db->query("select sum(cantidad) from carrito where id_cliente=1;");
+								ECHO'<a class="principal" href="carrito.php"><div id="carrito">';
+								foreach ($car-> fetchAll(PDO::FETCH_NUM) as $row )
+									printf ("(%s)",$row[0]);
+								echo '</div>
+								<img class="enlace icono" src="Iconos/CAR.png"></a>';
+					}?>
 					</li>	
 				</ul>
 			</div> 
