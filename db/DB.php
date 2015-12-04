@@ -72,7 +72,7 @@
 
 			    $query2 = $db->prepare("INSERT INTO direccion (id_cliente,calle,colonia,municipio,ciudad,id_estado,telefono,cp,destinatario) VALUES (:idcliente,:calle,:colonia,:municipio,:ciudad,:edo,:telefono,:codigoP,:destino)");
 			    $query2->execute($agregar2);
-			    return "true";
+			   return "true";
 			} catch (PDOException $e) {
 				return "intentelo mas  tardesito";
 			}
