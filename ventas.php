@@ -52,7 +52,7 @@
 		</div>
 
 
-
+		<div class="pagina-cion">
 		<section class="paginacion">
 			<ul>
 				<li class="previous-off">«Previous</li>
@@ -64,7 +64,7 @@
 				<li class="next">Next »</li>
 			</ul>
 		</section>
-
+		</div>
 
 	</div>
 	<!--................................................................. -->

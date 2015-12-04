@@ -52,15 +52,21 @@
 			<a href="#	" class="agrega_carrito"><img class="add_car" src="iconos/agregar.png"></a>
 		</div>
 
+		
+		<div class="pagina-cion">
 		<section class="paginacion">
 			<ul>
+				<li class="previous-off">«Previous</li>
 				<li><a href="?page=1" class="active">1</a></li>
 				<li><a href="?page=2">2</a></li>
 				<li><a href="?page=3">3</a></li>
 				<li><a href="?page=4">4</a></li>
 				<li><a href="?page=5">5</a></li>
+				<li class="next">Next »</li>
 			</ul>
 		</section>
+		</div>
+
 
 
 	</div>

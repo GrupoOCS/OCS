@@ -67,6 +67,27 @@ a.agrega_carrito{
 	width: 100%;
 	height: 100%;
 }
+div.desc-imagen{
+background-color: red;
+width: 30%;
+}
+div.desc-texto{
+background-color: blue;
+width: 50%;
+}
+div.desc-agregar{
+width: 20%;
+background-color: green;
+}
+div.pagina-cion{
+width: 80%;
+height: 15%;
+float: left;
+position: relative;
+text-align: center;
+margin-left: 10%;
+
+}
 div.logo{
 	float: left;
 	width: 20%;
