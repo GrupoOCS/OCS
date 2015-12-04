@@ -97,7 +97,7 @@ function usuarios()
 	$.ajax({
 		data: null,
     	url:   'usuarios.php',
-        type:  'post',
+        type:  'POST',
         beforeSend: function () {
        		$("#titulo").html("<span>Usuarios</span>");
         },
@@ -112,7 +112,7 @@ function productos()
 {
 	$.ajax({
 		data: null,
-    	url:   'productos.php',
+    	url:   'producto/consulta.php',
 	    type:  'post',
         beforeSend: function () {
        		$("#titulo").html("<span>Productos</span>");
@@ -124,10 +124,135 @@ function productos()
     		document.getElementById('titulo').appendChild(newlink);
 		},
 	    success:  function (response) {
-        	if(response=="true")
-	          	$("#contenido").html("<p>Tabla de datos de Productos</p>");
+	    	$("#contenido").html(response);
 	    }
 	});
+}
+
+function agrproducto()
+{
+	var datos= {
+		"nombre" :  $("#nombre").val(),
+		"marca":  $("#marca").val(),
+		"precio":  $("#precio").val(),
+		"descripcion":  $("#descripcion").val(),
+		"idsubcategoria" : $("#idsubcategoria").val()
+	};
+	$.ajax({
+		data: datos,
+	  	url:   'producto/agregar.php',
+	    type:  'POST',
+	    beforeSend: function () {
+	   		$("#titulo").html("<span>Agregar Producto</span>");
+	    },
+	    success:  function (response) {
+		   $("#contenido").html(response+"<center><input type='submit' value='Aceptar' onclick='productos();' class='aceptar'/></center>");
+		}
+	});
+	return false;
+}
+
+function verproductos(id)
+{
+	var datos= {
+		"id" : id
+	};
+	$.ajax({
+		data: datos,
+	  	url:   'producto/ver.php',
+	    type:  'post',
+	     beforeSend: function () {
+	   	$("#titulo").html("<span>Ver Producto</span>");
+	    	var newlink = document.createElement('a');
+			newlink.setAttribute('id', 'addcategoria');
+			newlink.setAttribute('href', ' ');
+			newlink.innerHTML = "<img class='ico-acciones' src='img/agregar.png'/>Agregar Subategoria";
+			newlink.onclick = formaddcategoria;
+	   		document.getElementById('titulo').appendChild(newlink);
+	    },
+	    success:  function (response) {
+		   	$("#contenido").html(response);
+		}
+	});
+	return false;
+}
+
+function eliproductos(id)
+{
+	var datos= {
+		"id" : id,
+		"acc": "eli"
+	};
+	$.ajax({
+		data: datos,
+	  	url:   'producto/eliminar.php',
+	    type:  'post',
+	    beforeSend: function () {
+	   		$("#titulo").html("<span>Eliminar Producto</span>");
+	    },
+	    success:  function (response) {
+		   	$("#contenido").html(response);
+		}
+	});
+	return false;
+}
+function delproductos(id)
+{
+	var datos= {
+		"id" : id,
+		"acc": "del"	
+	};
+	$.ajax({
+		data: datos,
+	  	url:   'producto/eliminar.php',
+	    type:  'post',
+	    success:  function (response) {
+		   	$("#contenido").html(response);
+		}
+	});
+	return false;
+}
+
+function modproductos(id)
+{
+	var datos= {
+		"id" : id,
+		"acc": "mod"
+	};
+	$.ajax({
+		data: datos,
+	  	url:   'producto/modificar.php',
+	    type:  'post',
+	   	beforeSend: function () {
+	   		$("#titulo").html("<span>Modificar Producto</span>");
+	    },
+	    success:  function (response) {
+		   	$("#contenido").html(response);
+		}
+	});
+	return false;
+}
+
+function updproductos(id)
+{
+	var datos= {
+		"acc": "upd",
+		"id": id,
+		"nombre" :  $("#nombre").val(),
+		"marca":  $("#marca").val(),
+		"precio":  $("#precio").val(),
+		"descripcion":  $("#descripcion").val(),
+		"idsubcategoria" : $("#idsubcategoria").val()
+	};
+	$.ajax({
+		data: datos,
+	  	url:   'producto/modificar.php',
+	    type:  'post',
+	    success:  function (response) {
+		   	$("#contenido").html(response);
+		}
+	});
+	return false;
 }
 
 function subcategorias()
@@ -272,8 +397,6 @@ function updsubcategoria(id)
 }
 
 function formaddcategoria(){
-	//alert("addcategoria");
-	var select;
 	$.ajax({
 		data: null,
     	url:   'categoria/consulta.php',
@@ -283,11 +406,11 @@ function formaddcategoria(){
         },
         success:  function (response) 
         {
-			$("#contenido").html("<table>"+
+			$("#contenido").html("<form onSubmit='return agrsubcategoria();'><table>"+
 				"<tr><td><span class='r'>Nombre: </span></td><td><input class='entrada-texto' name='nombre' id='nombre' type='text' placeholder='Nombre de la categoria' autofocus required /></td><td>"+
 				"<tr><td><span class='r'>Categoria: </span></td><td>"+response+"</td></tr></table>"+
-				"<center><input type='submit' value='Aceptar' onclick='agrsubcategoria();' class='aceptar'/> "+
-				"<input type='submit' value='Cancelar' onclick='subcategorias();' class='cancelar'/></center>");
+				"<center><input type='submit' value='Aceptar' class='aceptar'/> "+
+				"<input type='button' value='Cancelar' onclick='subcategorias()' class='cancelar'/></center></form>");
 	    }
 	});
 	
@@ -295,17 +418,27 @@ function formaddcategoria(){
 }
 
 function formaddproducto(){
-	//alert("addprocto");
-	$("#titulo").html("<span>Agregar Producto</span>");
-	$("#contenido").html("<form action='' method='post' enctype='multipart/form-data'><table><tr><td><span>Nombre: </span>"
-						+"</td><td><input class='entrada-texto' name='nombre' id='nombre' type='text' placeholder='Nombre del producto' autofocus required />"
-						+"</td></tr><tr><td><span>Marca: </span></td><td><input class='entrada-texto' name='nombre' id='nombre' type='text' placeholder='Marca' autofocus required />"
-						+"</td></tr><tr><td><span>Precio: </span></td><td><input class='entrada-texto' name='nombre' id='nombre' type='number' placeholder='Precio' autofocus required />"
-						+"</td></tr><tr><td><span>Descripcion: </span></td><td><textarea rows='5'></textarea></td></tr><tr><td><span>Categoria: </span>"
-						+"</td><td><select><option value='volvo'>Volvo</option><option value='saab'>Saab</option><option value='mercedes'>Mercedes</option><option value='audi'>Audi</option>"
-						+"</select></td></tr><tr><td><span>Imagen: </span></td><td>"
-						+"<input class='entrada-texto' type='file' name='file'  multiple='' accept='image/jpeg, image/png' required>"
-						+"</td></tr></table></form>");
+	$.ajax({
+		data: null,
+    	url:   'subcategoria/select.php',
+        type:  'post',
+         beforeSend: function () {
+       		$("#titulo").html("<span>Agregar Producto</span>");
+        },
+        success:  function (response) 
+        {
+			$("#contenido").html(" <form enctype='multipart/form-data' id='formuploadajax' method='post' onSubmit='return agrproducto();' ><table><tr><td><span class='r'>Nombre: </span>"
+				+"</td><td><input class='entrada-texto' id='nombre' type='text' placeholder='Nombre del producto' autofocus required />"
+				+"</td></tr><tr><td><span class='r'>Marca: </span></td><td><input class='entrada-texto' id='marca' type='text' placeholder='Marca' autofocus required />"
+				+"</td></tr><tr><td><span class='r'>Precio: </span></td><td><input class='entrada-texto' id='precio' min='1' type='number' placeholder='Precio' autofocus required />"
+				+"</td></tr><tr><td><span class='r'>Descripcion: </span></td><td><textarea rows='5' id='descripcion' required></textarea></td></tr><tr><td><span class='r'>Subcategoria: </span>"
+				+"</td><td>"+response+"</td></tr>"
+				//+"<tr><td><span class='r'>Imagen: </span></td><td><input class='entrada-texto' type='file' id='file'  multiple='' accept='image/jpeg, image/png' required>"
+				+"</td></tr></table>"
+				+"<center><input type='submit' value='Aceptar' class='aceptar'/> "
+				+"<input type='button' value='Cancelar' onclick='productos();' class='cancelar'/></center></form>");
+		}
+	});
 	return false;
 }
 
@@ -322,10 +455,10 @@ function reportes()
         {
 	        $("#contenido").html("<br><table><tr><td class= 'col'><span class='r'><label>Clientes</label></span></td>"
 	        					+"<td class= 'col'><select><option value='1'>Juan Pérez</option><option value='2'>José López</option><option value='3'>Miguel Ponce</option><option value='4'>Omar Rodríguez</option>"
-								+"</select><br><br></td><td></td><td><button>Generar</button></td></tr>"
-	        					+"<tr><td class= 'col'><span class='r'><label>Pedidos</label></span><br><br></td><td class= 'col'><input class='date' type='date' name='fecha'></td><td class= 'col'><input class='date' type='date' name='fecha'><td class= 'col'><button>Generar</button></td></td></tr>"
-	        					+"<tr><td class= 'col'><span class='r'><label>Productos</label></span><br><br></td><td class= 'col'><select><option value='1'>Asus</option><option value='2'>HP</option><option value='3'>Toshiba</option><option value='4'>Sony</option></select></td><td class= 'col'><select><option value='1'>Todo</option><option value='2'>Más vendidos</option></select><td class= 'col'><button>Generar</button></td></td></tr>"
-	        					+"<tr><td class= 'col'><span class='r'><label>Ventas</label></span><br><br><td class= 'col'><input class='date' type='date' name='fecha'></td><td class= 'col'><input class='date' type='date' name='fecha'></td><td class= 'col'><button>Generar</button></td></tr></table>");
+								+"</select><br><br></td><td></td><td><button class='aceptar'>Generar</button></td></tr>"
+	        					+"<tr><td class= 'col'><span class='r'><label>Pedidos</label></span><br><br></td><td class= 'col'><input class='date' type='date' name='fecha'></td><td class= 'col'><input class='date' type='date' name='fecha'><td class= 'col'><button class='aceptar' >Generar</button></td></td></tr>"
+	        					+"<tr><td class= 'col'><span class='r'><label>Productos</label></span><br><br></td><td class= 'col'><select><option value='1'>Asus</option><option value='2'>HP</option><option value='3'>Toshiba</option><option value='4'>Sony</option></select></td><td class= 'col'><select><option value='1'>Todo</option><option value='2'>Más vendidos</option></select><td class= 'col'><button class='aceptar'>Generar</button></td></td></tr>"
+	        					+"<tr><td class= 'col'><span class='r'><label>Ventas</label></span><br><br><td class= 'col'><input class='date' type='date' name='fecha'></td><td class= 'col'><input class='date' type='date' name='fecha'></td><td class= 'col'><button class='aceptar'>Generar</button></td></tr></table>");
 	    }
 	});
 }

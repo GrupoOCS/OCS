@@ -1,7 +1,7 @@
 <?php
 	include('../funciones/DB.php');
 	if($_POST['acc']=='eli')
-		eliSubcategoria($_POST['id']);
+		eliProductos($_POST['id']);
 	else
-		delSubcategoria($_POST['id']);
+		delProductos($_POST['id']);
 ?>

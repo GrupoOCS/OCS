@@ -1,4 +1,4 @@
 <?php
 	include('../funciones/DB.php');
-	echo setSubcategoria($_POST);
+	echo setProducto($_POST);
 ?>
