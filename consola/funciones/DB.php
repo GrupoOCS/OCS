@@ -175,10 +175,28 @@
 			echo "ERROR:No se pudo conectar a la base de datos<BR><center><input type='submit' value='Aceptar' onclick='subcategorias();' class='aceptar'/></center>";
 	}
 
+	function getcountSubcategoria($id)
+	{
+		$db=conectar();
+		if($db!=null)
+		{
+			$query = $db->prepare("SELECT count(id) FROM producto WHERE id_subcategoria=:id");
+		    $query->execute(array('id' => $id ));
+		    if($query)
+		    	if( $row=($query->fetch(PDO::FETCH_NUM)) )
+		    		return $row[0];
+		    	else 
+		    		return 0;
+		}
+		else
+			return false;
+	}
+
 	function eliSubcategoria($id)
 	{
 		$db=conectar();
 		$query=getSubcategoriaid($id);
+		$elementos=getcountSubcategoria($id);
 		if($query!=false)
 		{
 			if($query)
@@ -198,7 +216,11 @@
 					echo 	"</td></tr>";
 				}
 				echo "</table>";
-				echo "<center><input type='submit' value='Aceptar' onclick='delsubcategoria(".$row[0].");' class='aceptar'/> <input type='button' value='Cancelar' onclick='subcategorias();' class='cancelar'/></center>";
+				if($elementos>0)
+					echo "<center><p class='texterror'> Nota:No se puede eliminar la categoria debido a que tiene productos</p></center><center>".
+						 "<input type='submit' value='Mostar producto(s)' onclick='getProductosSubcategoria(".$row[0].");' class='mostrar'/> <input type='button' value='Cancelar' onclick='subcategorias();' class='cancelar'/></center>";
+				else
+					echo "<center><input type='submit' value='Aceptar' onclick='delsubcategoria(".$row[0].");' class='aceptar'/> <input type='button' value='Cancelar' onclick='subcategorias();' class='cancelar'/></center>";
 			}
 			else
 				echo "ERROR:No se puede consultar la base de datos. Intentlo mas tarde<BR><center><input type='submit' value='Aceptar' onclick='subcategorias();' class='aceptar'/></center>";
@@ -293,6 +315,33 @@
 		}
 		else
 			return false;
+	}
+
+	function getProductosSubcategoria($id)
+	{
+		$db=conectar();
+		if($db!=null)
+		{
+			$db=conectar();
+			if($db!=null)
+			{
+				$query = $db->prepare("SELECT * FROM producto WHERE id_subcategaria=:id");
+			    $query->execute(array('id' => $id ));
+			    echo "<table>";
+			    echo "<tr class='fondo'><td>Nombre</td><td colspan='3' >Acciones</td><tr>";
+				while( $row=($query->fetch(PDO::FETCH_NUM)) )
+				{
+					echo "<tr>
+							<td class='nombre'>".$row[1]."</td>
+							<td class='acciones'><a onclick='verproductos(".$row[0].");'><img src='img/ver.png' class='icoacc'/></a></td>
+							<td class='acciones'><a onclick='modproductos(".$row[0].");'><img src='img/editar.png' class='icoacc'/></a></td>
+							<td class='acciones'><a onclick='eliproductos(".$row[0].");'><img src='img/eliminar.png' class='icoacc'/></a></tr>";
+				}
+				echo "</table>";
+			}
+			else
+				echo "ERROR:No se pudo conectar a la base de datos";
+		}
 	}
 
 	function getProductos()

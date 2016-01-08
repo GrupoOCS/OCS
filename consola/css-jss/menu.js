@@ -444,22 +444,20 @@ function formaddproducto(){
 
 function reportes()
 {
-	$.ajax({
-		data: null,
-    	url:   'usuarios.php',
-        type:  'post',
-        beforeSend: function () {
+	
        		$("#titulo").html("<span>Reportes</span>");
-        },
-        success:  function (response) 
-        {
-	        $("#contenido").html("<br><table><tr><td class= 'col'><span class='r'><label>Clientes</label></span></td>"
+       
+	        $("#contenido").html("<br><table><tr><td class= 'col'><span><label>Clientes</label></span></td>"
 	        					+"<td class= 'col'><select><option value='1'>Juan Pérez</option><option value='2'>José López</option><option value='3'>Miguel Ponce</option><option value='4'>Omar Rodríguez</option>"
-								+"</select><br><br></td><td></td><td><button class='aceptar'>Generar</button></td></tr>"
-	        					+"<tr><td class= 'col'><span class='r'><label>Pedidos</label></span><br><br></td><td class= 'col'><input class='date' type='date' name='fecha'></td><td class= 'col'><input class='date' type='date' name='fecha'><td class= 'col'><button class='aceptar' >Generar</button></td></td></tr>"
-	        					+"<tr><td class= 'col'><span class='r'><label>Productos</label></span><br><br></td><td class= 'col'><select><option value='1'>Asus</option><option value='2'>HP</option><option value='3'>Toshiba</option><option value='4'>Sony</option></select></td><td class= 'col'><select><option value='1'>Todo</option><option value='2'>Más vendidos</option></select><td class= 'col'><button class='aceptar'>Generar</button></td></td></tr>"
-	        					+"<tr><td class= 'col'><span class='r'><label>Ventas</label></span><br><br><td class= 'col'><input class='date' type='date' name='fecha'></td><td class= 'col'><input class='date' type='date' name='fecha'></td><td class= 'col'><button class='aceptar'>Generar</button></td></tr></table>");
-	    }
-	});
+								+"</select><br><br></td><td></td><td><button onclick='genrep()'>Generar</button></td></tr>"
+	        					+"<tr><td class= 'col'><span><label>Pedidos</label></span><br><br></td><td class= 'col'><input type='date' name='fecha'></td><td class= 'col'><input type='date' name='fecha'><td class= 'col'><button onclick='genrep()'>Generar</button></td></td></tr>"
+	        					+"<tr><td class= 'col'><span><label>Productos</label></span><br><br></td><td class= 'col'><select><option value='1'>Asus</option><option value='2'>HP</option><option value='3'>Toshiba</option><option value='4'>Sony</option></select></td><td class= 'col'><select><option value='1'>Todo</option><option value='2'>Más vendidos</option></select><td class= 'col'><button onclick='genrep()'>Generar</button></td></td></tr>"
+	        					+"<tr><td class= 'col'><span><label>Ventas</label></span><br><br><td class= 'col'><input type='date' name='fecha'></td><td class= 'col'><input type='date' name='fecha'></td><td class= 'col'><button onclick='genrep()'>Generar</button></td></tr></table>");
+	
+}
+
+function genrep()
+{
+	window.open("pdf2.php");
 }
 
