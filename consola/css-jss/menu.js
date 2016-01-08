@@ -152,10 +152,11 @@ function agrproducto()
 	return false;
 }
 
-function verproductos(id)
+function verproductos(id,sub)
 {
 	var datos= {
-		"id" : id
+		"id" : id,
+		"sub":sub
 	};
 	$.ajax({
 		data: datos,
@@ -176,11 +177,30 @@ function verproductos(id)
 	});
 	return false;
 }
+function verProductosSubcategoria(id)
+{
+	var datos= {
+		"id" : id
+	};
+	$.ajax({
+		data: datos,
+    	url:   'producto/consultaporcategoria.php',
+	    type:  'post',
+        beforeSend: function () {
+       		$("#titulo").html("<span>Productos por Subcategoria</span>");
+		},
+	    success:  function (response) {
+	    	$("#contenido").html(response);
+	    }
+	});
+	return false;
+}
 
-function eliproductos(id)
+function eliproductos(id,sub)
 {
 	var datos= {
 		"id" : id,
+		"sub":sub,
 		"acc": "eli"
 	};
 	$.ajax({
@@ -196,11 +216,12 @@ function eliproductos(id)
 	});
 	return false;
 }
-function delproductos(id)
+function delproductos(id,sub)
 {
 	var datos= {
 		"id" : id,
-		"acc": "del"	
+		"sub": sub,
+		"acc": "del"
 	};
 	$.ajax({
 		data: datos,
@@ -213,10 +234,11 @@ function delproductos(id)
 	return false;
 }
 
-function modproductos(id)
+function modproductos(id,sub)
 {
 	var datos= {
 		"id" : id,
+		"sub":sub,
 		"acc": "mod"
 	};
 	$.ajax({
@@ -233,7 +255,7 @@ function modproductos(id)
 	return false;
 }
 
-function updproductos(id)
+function updproductos(id,sub)
 {
 	var datos= {
 		"acc": "upd",
@@ -242,8 +264,8 @@ function updproductos(id)
 		"marca":  $("#marca").val(),
 		"precio":  $("#precio").val(),
 		"descripcion":  $("#descripcion").val(),
-		"idsubcategoria" : $("#idsubcategoria").val()
-	};
+		"idsubcategoria" : $("#idsubcategoria").val(),
+		"sub" : sub	};
 	$.ajax({
 		data: datos,
 	  	url:   'producto/modificar.php',
