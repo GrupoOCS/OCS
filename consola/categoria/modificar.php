@@ -1,7 +1,7 @@
 <?php
 	include('../funciones/DB.php');
 	if($_POST['acc']=='mod')
-		modSubcategoria($_POST['id'],$_POST['cat']);
+		modCategoria($_POST['id']);
 	else
-		updSubcategoria($_POST);
+		updCategoria($_POST);
 ?>

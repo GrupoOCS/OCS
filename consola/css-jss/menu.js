@@ -5,6 +5,20 @@ $(document).ready(function(){
 	else
 		xmlhttp=new ActiveObject("Microsoft.XMLHTTP");
 
+	$("a[id=categorias]").click(function(){
+		xmlhttp.onreadystatechange=function()
+		{
+			if(xmlhttp.readyState==4 && xmlhttp.status==200 && xmlhttp.responseText=="true")//400 que no lo pudo encontrar //500 no pudo formar la pagina
+				categorias();
+			else
+				if(xmlhttp.responseText=="false")
+					window.location="index.html";
+		}
+		xmlhttp.open("GET","verifica.php",true);
+		xmlhttp.send();
+		return false;
+    });
+
 	$("a[id=subcategorias]").click(function(){
 		xmlhttp.onreadystatechange=function()
 		{
@@ -108,6 +122,147 @@ function usuarios()
 	});
 }
 
+function categorias()
+{
+	$.ajax({
+		data: null,
+	  	url:   'categoria/consulta.php',
+	    type:  'post',
+	    beforeSend: function () {
+	   	$("#titulo").html("<span>Categorias</span>");
+	    	var newlink = document.createElement('a');
+			newlink.setAttribute('id', 'addcategoria');
+			newlink.setAttribute('href', ' ');
+			newlink.innerHTML = "<img class='ico-acciones' src='img/agregar.png'/>Agregar Categoria";
+			newlink.onclick = formaddcategoria;
+	   		document.getElementById('titulo').appendChild(newlink);
+	    },
+	    success:  function (response) {
+		   	$("#contenido").html(response);
+		}
+	});
+}
+
+function agrcategoria()
+{
+	var datos= {
+		"nombre" :  $("#nombre").val(),
+		"idcategoria" : $("#idcategoria").val()
+	};
+	$.ajax({
+		data: datos,
+	  	url:   'categoria/agregar.php',
+	    type:  'post',
+	    beforeSend: function () {
+	   		$("#titulo").html("<span>Agregar Categorias</span>");
+	    },
+	    success:  function (response) {
+	    	$("#contenido").html(response+"<center><input type='submit' value='Aceptar' onclick='categorias();' class='aceptar'/></center>");
+		}
+	});
+	return false;
+}
+
+function vercategoria(id)
+{
+	var datos= {
+		"id" : id
+	};
+	$.ajax({
+		data: datos,
+	  	url:   'categoria/ver.php',
+	    type:  'post',
+	     beforeSend: function () {
+	   	$("#titulo").html("<span>Ver Categoria</span>");
+	    	var newlink = document.createElement('a');
+			newlink.setAttribute('id', 'addcategoria');
+			newlink.setAttribute('href', ' ');
+			newlink.innerHTML = "<img class='ico-acciones' src='img/agregar.png'/>Agregar Categoria";
+			newlink.onclick = formaddcategoria;
+	   		document.getElementById('titulo').appendChild(newlink);
+	    },
+	    success:  function (response) {
+		   	$("#contenido").html(response);
+		}
+	});
+	return false;
+}
+
+function elicategoria(id)
+{
+	var datos= {
+		"id" : id,
+		"acc": "eli"
+	};
+	$.ajax({
+		data: datos,
+	  	url:   'categoria/eliminar.php',
+	    type:  'post',
+	    beforeSend: function () {
+	   		$("#titulo").html("<span>Eliminar Categoria</span>");
+	    },
+	    success:  function (response) {
+		   	$("#contenido").html(response);
+		}
+	});
+	return false;
+}
+function delcategoria(id)
+{
+	var datos= {
+		"id" : id,
+		"acc": "del"	
+	};
+	$.ajax({
+		data: datos,
+	  	url:   'categoria/eliminar.php',
+	    type:  'post',
+	    success:  function (response) {
+		   	$("#contenido").html(response);
+		}
+	});
+	return false;
+}
+
+function modcategoria(id)
+{
+	var datos= {
+		"id" : id,
+		"acc": "mod"
+	};
+	$.ajax({
+		data: datos,
+	  	url:   'categoria/modificar.php',
+	    type:  'post',
+	   	beforeSend: function () {
+	   		$("#titulo").html("<span>Modificar Categorias</span>");
+	    },
+	    success:  function (response) {
+		   	$("#contenido").html(response);
+		}
+	});
+	return false;
+}
+
+function updcategoria(id)
+{
+	var datos= {
+		"id" : id,
+		"acc": "upd",
+		"nombre" :  $("#nombre").val()
+	};
+	$.ajax({
+		data: datos,
+	  	url:   'categoria/modificar.php',
+	    type:  'post',
+	    success:  function (response) {
+		   	$("#contenido").html(response);
+		}
+	});
+	return false;
+}
+
+
 function productos()
 {
 	$.ajax({
@@ -165,10 +320,10 @@ function verproductos(id,sub)
 	     beforeSend: function () {
 	   	$("#titulo").html("<span>Ver Producto</span>");
 	    	var newlink = document.createElement('a');
-			newlink.setAttribute('id', 'addcategoria');
+			newlink.setAttribute('id', 'addproducto');
 			newlink.setAttribute('href', ' ');
-			newlink.innerHTML = "<img class='ico-acciones' src='img/agregar.png'/>Agregar Subategoria";
-			newlink.onclick = formaddcategoria;
+			newlink.innerHTML = "<img class='ico-acciones' src='img/agregar.png'/>Agregar Producto";
+			newlink.onclick = formaddproducto;
 	   		document.getElementById('titulo').appendChild(newlink);
 	    },
 	    success:  function (response) {
@@ -288,8 +443,8 @@ function subcategorias()
 	    	var newlink = document.createElement('a');
 			newlink.setAttribute('id', 'addcategoria');
 			newlink.setAttribute('href', ' ');
-			newlink.innerHTML = "<img class='ico-acciones' src='img/agregar.png'/>Agregar Subategoria";
-			newlink.onclick = formaddcategoria;
+			newlink.innerHTML = "<img class='ico-acciones' src='img/agregar.png'/>Agregar Subcategoria";
+			newlink.onclick = formaddsubcategoria;
 	   		document.getElementById('titulo').appendChild(newlink);
 	    },
 	    success:  function (response) {
@@ -318,10 +473,30 @@ function agrsubcategoria()
 	return false;
 }
 
-function versubcategoria(id)
+function verSubcategoriasCategorias(id)
 {
 	var datos= {
 		"id" : id
+	};
+	$.ajax({
+		data: datos,
+    	url:   'subcategoria/consultaporcategoria.php',
+	    type:  'post',
+        beforeSend: function () {
+       		$("#titulo").html("<span>Subcategoria por Categoria</span>");
+		},
+	    success:  function (response) {
+	    	$("#contenido").html(response);
+	    }
+	});
+	return false;
+}
+
+function versubcategoria(id,cat)
+{
+	var datos= {
+		"id" : id,
+		"cat" : cat
 	};
 	$.ajax({
 		data: datos,
@@ -332,8 +507,8 @@ function versubcategoria(id)
 	    	var newlink = document.createElement('a');
 			newlink.setAttribute('id', 'addcategoria');
 			newlink.setAttribute('href', ' ');
-			newlink.innerHTML = "<img class='ico-acciones' src='img/agregar.png'/>Agregar Subategoria";
-			newlink.onclick = formaddcategoria;
+			newlink.innerHTML = "<img class='ico-acciones' src='img/agregar.png'/>Agregar Subcategoria";
+			newlink.onclick = formaddsubcategoria;
 	   		document.getElementById('titulo').appendChild(newlink);
 	    },
 	    success:  function (response) {
@@ -343,11 +518,12 @@ function versubcategoria(id)
 	return false;
 }
 
-function elisubcategoria(id)
+function elisubcategoria(id,cat)
 {
 	var datos= {
 		"id" : id,
-		"acc": "eli"
+		"acc": "eli",
+		"cat" : cat
 	};
 	$.ajax({
 		data: datos,
@@ -362,11 +538,12 @@ function elisubcategoria(id)
 	});
 	return false;
 }
-function delsubcategoria(id)
+function delsubcategoria(id,cat)
 {
 	var datos= {
 		"id" : id,
-		"acc": "del"	
+		"acc": "del",
+		"cat" : cat	
 	};
 	$.ajax({
 		data: datos,
@@ -379,11 +556,12 @@ function delsubcategoria(id)
 	return false;
 }
 
-function modsubcategoria(id)
+function modsubcategoria(id,cat)
 {
 	var datos= {
 		"id" : id,
-		"acc": "mod"
+		"acc": "mod",
+		"cat" : cat
 	};
 	$.ajax({
 		data: datos,
@@ -399,13 +577,14 @@ function modsubcategoria(id)
 	return false;
 }
 
-function updsubcategoria(id)
+function updsubcategoria(id,cat)
 {
 	var datos= {
 		"id" : id,
 		"acc": "upd",
 		"nombre" :  $("#nombre").val(),
-		"idcategoria" : $("#idcategoria").val()
+		"idcategoria" : $("#idcategoria").val(),
+		"cat" : cat
 	};
 	$.ajax({
 		data: datos,
@@ -419,9 +598,18 @@ function updsubcategoria(id)
 }
 
 function formaddcategoria(){
+	$("#titulo").html("<span>Agregar Categorias</span>");
+	$("#contenido").html("<form onSubmit='return agrcategoria();'><table>"+
+				"<tr><td><span class='r'>Nombre: </span></td><td><input class='entrada-texto' name='nombre' id='nombre' type='text' placeholder='Nombre de la categoria' autofocus required /></td></tr></table>"+
+				"<center><input type='submit' value='Aceptar' class='aceptar'/> "+
+				"<input type='button' value='Cancelar' onclick='categorias()' class='cancelar'/></center></form>");	
+	return false;
+}
+
+function formaddsubcategoria(){
 	$.ajax({
 		data: null,
-    	url:   'categoria/consulta.php',
+    	url:   'categoria/select.php',
         type:  'post',
          beforeSend: function () {
        		$("#titulo").html("<span>Agregar Subcategorias</span>");
@@ -429,7 +617,7 @@ function formaddcategoria(){
         success:  function (response) 
         {
 			$("#contenido").html("<form onSubmit='return agrsubcategoria();'><table>"+
-				"<tr><td><span class='r'>Nombre: </span></td><td><input class='entrada-texto' name='nombre' id='nombre' type='text' placeholder='Nombre de la categoria' autofocus required /></td><td>"+
+				"<tr><td><span class='r'>Nombre: </span></td><td><input class='entrada-texto' name='nombre' id='nombre' type='text' placeholder='Nombre de la subcategoria' autofocus required /></td><td>"+
 				"<tr><td><span class='r'>Categoria: </span></td><td>"+response+"</td></tr></table>"+
 				"<center><input type='submit' value='Aceptar' class='aceptar'/> "+
 				"<input type='button' value='Cancelar' onclick='subcategorias()' class='cancelar'/></center></form>");
