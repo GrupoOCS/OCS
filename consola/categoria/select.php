@@ -1,4 +1,4 @@
 <?php
 	include('../funciones/DB.php');
-	getCategorias();
+	echo getSelectCategorias(null);
 ?>

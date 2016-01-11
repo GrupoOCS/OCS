@@ -32,6 +32,7 @@
 	</div>
 	<div class="menu">
 		<label>MENÚ</label>
+		<a href="" id='categorias'>Categorias</a>
 		<a href="" id='subcategorias'>Subcategorias</a>
 		<a href="" id="productos">Productos</a>
 		<a href="" id="usuarios">Usuarios</a>
