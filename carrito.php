@@ -18,9 +18,9 @@
 					</thead>
 					<tbody>
 							<?php
-								include 'abrirConexion.php';
+								// include 'abrirConexion.php';
 		                		$db = Conectar();
-								$query = "SELECT * FROM  carrito";
+								$query = "SELECT * FROM  carrito where id_cliente=".$_SESSION['id_usu'];
 								$res = $db->query($query);
 								$total = 0;
 								$iva=0;

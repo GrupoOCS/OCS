@@ -175,10 +175,28 @@
 			echo "ERROR:No se pudo conectar a la base de datos<BR><center><input type='submit' value='Aceptar' onclick='subcategorias();' class='aceptar'/></center>";
 	}
 
+	function getcountSubcategoria($id)
+	{
+		$db=conectar();
+		if($db!=null)
+		{
+			$query = $db->prepare("SELECT count(id) FROM producto WHERE id_subcategoria=:id");
+		    $query->execute(array('id' => $id ));
+		    if($query)
+		    	if( $row=($query->fetch(PDO::FETCH_NUM)) )
+		    		return $row[0];
+		    	else 
+		    		return 0;
+		}
+		else
+			return false;
+	}
+
 	function eliSubcategoria($id)
 	{
 		$db=conectar();
 		$query=getSubcategoriaid($id);
+		$elementos=getcountSubcategoria($id);
 		if($query!=false)
 		{
 			if($query)
@@ -198,7 +216,11 @@
 					echo 	"</td></tr>";
 				}
 				echo "</table>";
-				echo "<center><input type='submit' value='Aceptar' onclick='delsubcategoria(".$row[0].");' class='aceptar'/> <input type='button' value='Cancelar' onclick='subcategorias();' class='cancelar'/></center>";
+				if($elementos>0)
+					echo "<center><p class='texterror'>Nota:No se puede eliminar la categoria debido a que tiene productos</p></center><center>".
+						 "<input type='submit' value='Mostar producto(s)' onclick='verProductosSubcategoria(".$id.");' class='mostrar'/> <input type='button' value='Cancelar' onclick='subcategorias();' class='cancelar'/></center>";
+				else
+					echo "<center><input type='submit' value='Aceptar' onclick='delsubcategoria(".$row[0].");' class='aceptar'/> <input type='button' value='Cancelar' onclick='subcategorias();' class='cancelar'/></center>";
 			}
 			else
 				echo "ERROR:No se puede consultar la base de datos. Intentlo mas tarde<BR><center><input type='submit' value='Aceptar' onclick='subcategorias();' class='aceptar'/></center>";
@@ -295,6 +317,29 @@
 			return false;
 	}
 
+	function getProductosSubcategoria($id)
+	{
+		$db=conectar();
+		if($db!=null)
+		{
+			$query = $db->prepare("SELECT * FROM producto WHERE id_subcategoria=:id");
+		    $query->execute(array('id' => $id ));
+		    echo "<table>";
+		    echo "<tr class='fondo'><td>Nombre</td><td colspan='3' >Acciones</td><tr>";
+			while( $row=($query->fetch(PDO::FETCH_NUM)) )
+			{
+				echo "<tr>
+						<td class='nombre'>".$row[1]."</td>
+						<td class='acciones'><a onclick='verproductos(".$row[0].",".$id.");'><img src='img/ver.png' class='icoacc'/></a></td>
+						<td class='acciones'><a onclick='modproductos(".$row[0].",".$id.");'><img src='img/editar.png' class='icoacc'/></a></td>
+						<td class='acciones'><a onclick='eliproductos(".$row[0].",".$id.");'><img src='img/eliminar.png' class='icoacc'/></a></tr>";
+			}
+			echo "</table>";
+		}
+		else
+			echo "ERROR:No se pudo conectar a la base de datos";
+	}
+
 	function getProductos()
 	{
 		$db=conectar();
@@ -308,9 +353,9 @@
 			{
 				echo "<tr>
 						<td class='nombre'>".$row[1]."</td>
-						<td class='acciones'><a onclick='verproductos(".$row[0].");'><img src='img/ver.png' class='icoacc'/></a></td>
-						<td class='acciones'><a onclick='modproductos(".$row[0].");'><img src='img/editar.png' class='icoacc'/></a></td>
-						<td class='acciones'><a onclick='eliproductos(".$row[0].");'><img src='img/eliminar.png' class='icoacc'/></a></tr>";
+						<td class='acciones'><a onclick='verproductos(".$row[0].",0);'><img src='img/ver.png' class='icoacc'/></a></td>
+						<td class='acciones'><a onclick='modproductos(".$row[0].",0);'><img src='img/editar.png' class='icoacc'/></a></td>
+						<td class='acciones'><a onclick='eliproductos(".$row[0].",0);'><img src='img/eliminar.png' class='icoacc'/></a></tr>";
 			}
 			echo "</table>";
 		}
@@ -345,8 +390,11 @@
 			echo "ERROR:No se pudo conectar a la base de datos";
 	}
 
-	function verProductoid($id)
+	function verProductoid($id,$idsub)
 	{
+		$funcion="'productos();'";
+		if($idsub>0)
+			$funcion="'verProductosSubcategoria(".$idsub.");'";
 		$db=conectar();
 		$query=getProductoid($id);
 		if($query!=false)
@@ -377,7 +425,7 @@
 					echo 	"</td></tr>";
 				}
 				echo "</table>";
-				echo "<center><input type='submit' value='Aceptar' onclick='productos();' class='aceptar'/></center>";
+				echo "<center><input type='submit' value='Aceptar' onclick=".$funcion." class='aceptar'/></center>";
 			}
 			else
 				echo "ERROR:No se puede consultar la base de datos. Intentlo mas tarde<BR><center><input type='submit' value='Aceptar' onclick='productos();' class='aceptar'/></center>";
@@ -386,8 +434,11 @@
 			echo "ERROR:No se pudo conectar a la base de datos<BR><center><input type='submit' value='Aceptar' onclick='productos();' class='aceptar'/></center>";
 	}
 
-	function modProducto($id)
+	function modProducto($id,$idsub)
 	{
+		$funcion="'productos();'";
+		if($idsub>0)
+			$funcion="'verProductosSubcategoria(".$idsub.");'";
 		$db=conectar();
 		$query=getProductoid($id);
 		if($query!=false)
@@ -396,7 +447,7 @@
 			{	
 				if( $row=($query->fetch(PDO::FETCH_NUM)) )
 				{
-					echo "<form onsubmit='return updproductos(".$row[0].")'>
+					echo "<form onsubmit='return updproductos(".$row[0].",".$idsub.")'>
 							<table>
 								<tr>
 									<td width='30%'><span class='r'>Nombre:</span></td><td width='70%'><input class='entrada-texto' id='nombre' type='text' value='".$row[1]."' autofocus required /></td>
@@ -413,7 +464,7 @@
 								<tr>
 								<td width='30%'><span class='r'>Subcategoria:</span></td><td width='70%'>".getselectSubcategorias($row[5])."</td></tr>
 							</table>
-							<center><input type='submit' value='Aceptar' class='aceptar'/> <input type='button' value='Cancelar' onclick='productos();' class='cancelar'/></center>";
+							<center><input type='submit' value='Aceptar' class='aceptar'/> <input type='button' value='Cancelar' onclick=".$funcion." class='cancelar'/></center>";
 
 				}
 			}
@@ -426,6 +477,9 @@
 
 	function updProducto($datos)
 	{
+		$funcion="'productos();'";
+		if($datos['sub']>0)
+			$funcion="'verProductosSubcategoria(".$datos['idsubcategoria'].");'";
 		$db=conectar();
 		if($db!=null)
 		{
@@ -449,11 +503,14 @@
 		else
 			echo "ERROR:No se pudo conectar a la base de datos<BR>";
 
-		echo "<center><input type='submit' value='Aceptar' onclick='productos();' class='aceptar'/></center>";
+		echo "<center><input type='submit' value='Aceptar' onclick=".$funcion." class='aceptar'/></center>";
 	}
 
-	function eliProductos($id)
+	function eliProductos($id,$idsub)
 	{
+		$funcion="'productos();'";
+		if($idsub>0)
+			$funcion="'verProductosSubcategoria(".$idsub.");'";
 		$db=conectar();
 		$query=getProductoid($id);
 		if($query!=false)
@@ -484,7 +541,7 @@
 					echo 	"</td></tr>";
 				}
 				echo "</table>";
-				echo "<center><input type='submit' value='Aceptar' onclick='delproductos(".$row[0].");' class='aceptar'/> <input type='button' value='Cancelar' onclick='productos();' class='cancelar'/></center>";
+				echo "<center><input type='submit' value='Aceptar' onclick='delproductos(".$row[0].",".$idsub.");' class='aceptar'/> <input type='button' value='Cancelar' onclick=".$funcion."class='cancelar'/></center>";
 			}
 			else
 				echo "ERROR:No se puede consultar la base de datos. Intentlo mas tarde<BR><center><input type='submit' value='Aceptar' onclick='productos();' class='aceptar'/></center>";
@@ -493,8 +550,11 @@
 			echo "ERROR:No se pudo conectar a la base de datos<BR><center><input type='submit' value='Aceptar' onclick='productos();' class='aceptar'/></center>";
 	}
 
-	function delProductos($id)
+	function delProductos($id,$idsub)
 	{
+		$funcion="'productos();'";
+		if($idsub>0)
+			$funcion="'verProductosSubcategoria(".$idsub.");'";
 		$db=conectar();
 		if($db!=null)
 		{
@@ -510,7 +570,7 @@
 		else
 			echo "ERROR:No se pudo conectar a la base de datos<BR>";
 
-		echo "<center><input type='submit' value='Aceptar' onclick='productos();' class='aceptar'/></center>";
+		echo "<center><input type='submit' value='Aceptar' onclick=".$funcion." class='aceptar'/></center>";
 	}
 
 ?>

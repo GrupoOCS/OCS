@@ -15,6 +15,8 @@
 			}
 			xmlhttp.open("GET","insertCarrito.php?idc="+idCliente+"&idp="+idProducto+"&n="+cantidad, true);
 			xmlhttp.send();
+
+			javascript:location.reload();
 		}
 	</script>
 
@@ -23,25 +25,30 @@
 	$id = $_GET['id'];
 	$db = Conectar();
 	$ids=substr($id,1);
-	if ($id[0]=="S"){
+	if ($id[0]=="S"){ //subcategoria
 		$query = "select producto.id, imagen.nombre, producto.nombre, producto.precio from imagen, producto where imagen.id_producto=producto.id and producto.id_subcategoria=".$ids." order by producto.tag desc;";
-	} else if ($id[0]=="C"){
+	} else if ($id[0]=="C"){ //categoria
 		$query = "select producto.id, imagen.nombre, producto.nombre, producto.precio from imagen, producto, (select subcategoria.id as sid from subcategoria where subcategoria.idcategoria=".$ids.") as sub where imagen.id_producto=producto.id and producto.id_subcategoria=sub.sid order by producto.tag desc;";
-	} else {
-		$query = "select producto.id, imagen.nombre, producto.nombre, producto.precio from imagen, producto where imagen.id_producto=producto.id order by producto.tag desc";
+	} else { //todos o buscador
+		if (isset($_GET['buscador'])){
+			$query = "select producto.id, imagen.nombre, producto.nombre, producto.precio from imagen, producto where imagen.id_producto=producto.id and producto.nombre like '%".$_GET['buscador']."%' order by producto.tag desc";
+		}else $query = "select producto.id, imagen.nombre, producto.nombre, producto.precio from imagen, producto where imagen.id_producto=producto.id order by producto.tag desc";
 	}
 	$res = $db->query($query);
 
 	echo "<div class=\"contenido\">";
+	if ($res->rowCount() == 0){
+		echo '<p>No se encontrarón resultados.</p>';
+	}else {
 		foreach ($res-> fetchAll(PDO::FETCH_NUM) as $row ){
 			echo "<div class=\"producto\">";
 				printf ("<a href=\"DescripcionProducto.php?id=%s\"><img href=\"#\" class=\"producto\" src=\"%s\"></a>", $row[0], $row[1]);
 				printf ("<div class=\"nombre_producto\">%s</div>", $row[2]);
 				printf ("<div class=\"precio_producto\">$%s</div>", $row[3]);
-				printf ("<a href=\"#\" onClick=\"insertarCarrito(1,".$row[0].",1);\" class=\"agrega_carrito\"><img class=\"add_car\" src=\"Iconos/agregar.png\"></a>",$row[0]);
+				printf ("<a href=\"#\" onClick=\"insertarCarrito(".$_SESSION['id_usu'].",".$row[0].",1);\" class=\"agrega_carrito\"><img class=\"add_car\" src=\"Iconos/agregar.png\"></a>",$row[0]);
             echo "</div>";
         }
-
+    }
 	echo "</div>";
 ?>
 	<!-- <div class="contenido">
@@ -54,7 +61,7 @@
 
 =======
 
-		<div class="pagina-cion">
+	<div class="pagina-cion">
 		<section class="paginacion">
 			<ul>
 				<li class="previous-off">«Previous</li>
@@ -68,9 +75,22 @@
 		</section>
 	</div> -->
 <!--................................................................. -->
-		</div>
+	<!--	</div> 
 
-	</div>
+	
 	<!--................................................................. -->
+
+<ul id="pagination-digg">
+	<li class="previous-off">«Previous</li>
+	<li class="active">1</li>
+	<li><a href="?page=2">2</a></li>
+	<li><a href="?page=3">3</a></li>
+	<li><a href="?page=4">4</a></li>
+	<li><a href="?page=5">5</a></li>
+	<li><a href="?page=6">6</a></li>
+	<li><a href="?page=7">7</a></li>
+	<li class="next"><a href="?page=8">Next »</a></li>
+</ul>
+
 <?php include('pie_pagina.php'); ?>
 

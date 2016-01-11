@@ -1,4 +1,3 @@
-
 <?php include('encabezado.php'); ?>
 	<!--.............................TERMINA NAVEGACIÓN...............................-->
 	<div class="contenido">

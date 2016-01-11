@@ -27,12 +27,13 @@
 				'correo' => $datos['correo'],
 				'contra' => $datos['contrasena']
 				);
-			$query = $db->prepare("SELECT nombre,email FROM cliente WHERE email=:correo AND contrasena=:contra");
+			$query = $db->prepare("SELECT id,nombre,email FROM cliente WHERE email=:correo AND contrasena=:contra");
 		    $query->execute($prepared);
 			while( $row=($query->fetch(PDO::FETCH_NUM)) )
 			{
-				$_SESSION['nom_usu']=$row[0];
-				$_SESSION['email']=$row[1];
+				$_SESSION['id_usu']=$row[0];
+				$_SESSION['nom_usu']=$row[1];
+				$_SESSION['email']=$row[2];
 				return "true";
 			}
 			return "Usuario y/o contraseña incorrectos";

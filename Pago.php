@@ -1,4 +1,3 @@
-
 <?php include('encabezado.php'); ?>
 
 <div class="contenido">

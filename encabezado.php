@@ -1,4 +1,8 @@
-
+<?php
+	session_start();
+	//error_reporting(0);
+	include 'abrirConexion.php';
+?>
 <html>
 	<head>
 		<meta charset="UTF-8">
@@ -19,38 +23,19 @@
 		<!-- INCIAR SESION | REGISTRARSE  O    NOMBRE DE USUARIO -->
 		<header>
 			<?php 
-				session_start();
-				error_reporting(0);
-				if ($_SESSION['nom_usu']) 
-					ECHO'<span>'.$_SESSION['nom_usu'].' | </span><a class="enlace" href="funPHP/cerrarSesion.php">Cerrar Sesión</a>  ';
-				else
-					ECHO'<a class="enlace" href="inicioSesion.php">Iniciar Sesión</a> | <a class="enlace" href="Registrarse.php">Registrarse</a> ';
-				
+				if ($_SESSION['nom_usu']) echo '<span>'.$_SESSION['nom_usu'].' | </span><a class="enlace" href="funPHP/cerrarSesion.php">Cerrar Sesión</a>  ';
+				else echo '<a class="enlace" href="inicioSesion.php">Iniciar Sesión</a> | <a class="enlace" href="Registrarse.php">Registrarse</a> ';
 			?>
 			  
 		</header> 
 	<!--..........................INICIA NAVEGACIÓN....................................... -->
 	
 		<div class="navg">
-
 			<!-- LOGO OCS ONLINE COMPUTER SHOP -->
 			<a href="index.php"><div class="logo">OCS<img class="logo-icon" src="Iconos/etiqueta.png">
 				<br><span class='log'>Online Computer Shop</span>
 			</div></a>
-			<!-- .......................................................... -->
-
-			<!-- FORMULARIO PARA EL BUSCADOR -->
-			<div class="busqueda">
-				<form>
-					<div class="b_buscar">
-						<input type="submit" class="btn-buscar" value="Buscar"> 
-					</div>
-					<div class="tx_buscar">
-						<input type="text" class="form-control" name="buscador" placeholder="Buscar..." >
-					</div>
-					
-				</form>
-			</div>
+			
 			<!-- .......................................................... -->
 			<!-- MENÚ PRINCIPAL DE NAVEGACIÓN -->
 			<?php if ($_SERVER["REQUEST_URI"] == "/OCS/carrito.php"
@@ -104,7 +89,7 @@
 									ECHO'<a class="principal-active" href="ventas.php?id=All">Productos</a> ';
 							else ECHO'<a class="principal" href="ventas.php?id=All">Productos</a> ';
 
-		                include 'abrirConexion.php';
+		                
 		                $db = Conectar();
 		                $res = $db->query( "select *from categoria;" );
 
@@ -126,9 +111,17 @@
 					
 					<li> '; 						
 								//printf($_SERVER["REQUEST_URI"]);
-								$car = $db->query("select sum(cantidad) from carrito where id_cliente=1;");
-								ECHO'<a class="principal" href="carrito.php">
-								<img class="enlace icono" src="Iconos/CAR.png"></a>';
+								if ($_SESSION['nom_usu']){
+									ECHO'<a class="principal" href="carrito.php">
+									<img class="enlace icono" src="Iconos/CAR.png">';
+									
+									$car = $db->query("select sum(cantidad) from carrito where id_cliente=".$_SESSION['id_usu'].";");
+									if ($car->rowCount() > 0){
+										foreach ($car-> fetchAll(PDO::FETCH_NUM) as $row ){
+							 				printf ("(%s)</a>",$row[0]);
+										}
+									}
+								}
 					}?>
 					</li>
 					<!-- <li>
@@ -141,6 +134,19 @@
 					</li>  -->	
 				</ul>
 			</div> 
+
+			<!-- FORMULARIO PARA EL BUSCADOR -->
+			<div class="busqueda">
+				<form action="ventas.php">
+					<div class="tx_buscar">
+						<input type="text" class="form-control" name="buscador" placeholder="Buscar...">
+					</div>
+  					<div class="b_buscar">
+						<input type="submit" class="btn-buscar" value="Buscar"> 
+					</div>
+				</form>
+			</div>
+			
 		</div>
 
 

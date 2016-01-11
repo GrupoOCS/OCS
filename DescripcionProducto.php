@@ -1,4 +1,3 @@
-
 <?php include('encabezado.php'); ?>
 	
 	<script type="text/javascript">
@@ -37,7 +36,7 @@
 			echo '<div class="desc-texto">';
 			echo'	<h3><center>'.$row[2].'</center></h3>
 				<!-- <div style="color:green; text-align:center;"> Disponible  : 50</div> -->
-				<p class="texto-descripcion">'.$row[3].'</p>';
+				<p class="texto-descripcion">'.nl2br(/*htmlentities(*/$row[3])/*))*/.'</p>';
 
 			echo '<table class="describe">
 				<tr><td>Precio:</td><td> $'.$row[4].' </td></tr>

@@ -21,21 +21,21 @@
                 <?php
                   //include 'abrirConexion.php';
                   $db = Conectar();
-                  $query = "select imagen.nombre, producto.tag, producto.nombre from imagen, producto where imagen.id_producto=producto.id order by producto.tag desc limit ".$n.";";
+                  $query = "select producto.id, imagen.nombre, producto.tag, producto.nombre from imagen, producto where imagen.id_producto=producto.id order by producto.tag desc limit ".$n.";";
                   $res = $db->query( $query );
                   $i=1;
                   foreach ($res-> fetchAll(PDO::FETCH_NUM) as $row ){
                       if ($i==1){
-                          printf ("<div class=\"active item\"><center><br><img  src=\"%s\" width='500' height='300' alt=\"banner1\" /> <br>%s </center></div>", $row[0], $row[2]);
-                      } else printf ("<div class=\"item\"><center><img  src=\"%s\" width='500' height='300' alt=\"banner%s\" /> <br>%s </center></div>", $row[0], $i, $row[2]);
+                          printf ("<div class=\"active item\"><center><br> <a href=\"DescripcionProducto.php?id=%s\"><img  src=\"%s\"  alt=\"banner1\" /></a> <br>%s</center></div>", $row[0], $row[1], $row[3]);
+                      } else printf ("<div class=\"item\"><center><a href=\"DescripcionProducto.php?id=%s\"><img  src=\"%s\" alt=\"banner%s\" /></a> <br>%s </center></div>", $row[0], $row[1], $i, $row[3]);
                       
                       $i=$i+1;
                   }
                 ?>
             </div>
             <!-- Carousel nav -->
-            <a  class="carousel-control left car" href="#myCarousel" data-slide="prev">&lsaquo;</a>
-            <a class="carousel-control right car" href="#myCarousel" data-slide="next">&rsaquo;</a>
+            <a  class="carousel-control left car" href="#myCarousel" data-slide="prev"><!-- &lsaquo; --><img  src="Iconos/anterior.png"  alt=\"banner1\" /></a>
+            <a class="carousel-control right car" href="#myCarousel" data-slide="next"><!-- &rsaquo; --><img  src="Iconos/siguiente.png"  alt=\"banner1\" /></a>
         </div>
       </div>
 
@@ -44,7 +44,7 @@
     <script>
         $(document).ready(function(){
             $('.myCarousel').carousel({
-                interval: 3000
+                interval: 500
             });
         });
     </script>
