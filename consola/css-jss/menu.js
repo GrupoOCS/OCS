@@ -612,7 +612,7 @@ function formaddsubcategoria(){
     	url:   'categoria/select.php',
         type:  'post',
          beforeSend: function () {
-       		$("#titulo").html("<span>Agregar Subcategorias</span>");
+       		$("#titulo").html("<span>Agregar Categorias</span>");
         },
         success:  function (response) 
         {
