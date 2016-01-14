@@ -91,10 +91,10 @@ include('encabezado.php'); ?>
 				    </tr>
 				    	<tr>
 				      	<td align="right">Tel&eacutefono:</td>
-				      	<td><input  class="form-control"  placeholder="Teléfono" id="telefono" type="text" required/></td>
+				      	<td><input  class="form-control"  placeholder="Teléfono" id="telefono" type="number" maxlength="10" required/></td>
 				    </tr>
 					<tr>
-				    	<td></td><td align="right"><input id="campo3"  id="Guardar" class="btn mediano" type="submit" value="Guardar" /></td>
+				    	<td></td><td align="right"><input id="campo3"  id="Guardar" class="btn mediano" type="submit" value="Guardar"/></td>
 				    </tr>
 				</form>
 			</table>

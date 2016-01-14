@@ -1,4 +1,6 @@
 $(document).ready(function(){
+
+
     $('#login').submit(function(){
      
        var datos= {
@@ -56,6 +58,33 @@ $(document).ready(function(){
 
 		return false;
 	});
+
 });
 
-	     
+
+//===============FUNCION QUE  REALIZA  LA  VERIFICACION  DEL  CODIGO=============================
+function verificacodigo(id_cliente){
+       var codificacion= {
+			"idcliente" : id_cliente,
+			"codigo" : $('#codigo').val()
+		};
+		
+			$.ajax({
+				data:   codificacion, //aqui mando  la  varible
+		    	url:   'js/codigoverificacion.php',
+		        type:  'post', //metodo  como acceder a  la  variable
+		 
+		        success:  function (response) {
+		        	if(response=="true"){
+		        		alert("Tu  codigo  es  correcto");	
+		        		location.href = "ventas.php";
+		        	}
+		        	else
+		        		$('#error').html(response); 
+		        }
+			});
+
+		return false;
+	}
+
+     
