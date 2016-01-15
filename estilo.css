@@ -399,14 +399,16 @@ div.tabla_carrito{
 	border: none;
 }
 
+
 div.tabla_descripcion{
 	overflow: auto;
 	float: left;
-	width: 600px;
-	height: 400px;
+	width: 70%;
+	height: 90%;
 	position: relative;
-	left: 3%;
+	left: 1%;
 	border: none;
+
 
 }
 div.tabla_espacio{
@@ -414,7 +416,7 @@ div.tabla_espacio{
 	height: 15%
 }
 div.tabla_carrito.resumen{
-	width: 25%;
+	width: 20%;
 	margin-left: 8%;
 	
 }
@@ -571,6 +573,7 @@ footer{
 
 }
 
+
 .nav ul, ol {
 				list-style:none;   /*hace que no se vea el punto */
 			}
@@ -580,7 +583,7 @@ footer{
 			}
 			
 			.nav li a { 				/*diseño de los bloques  */
-					width: 200px;
+				width: 200px;
 				height: 40px;
 				color: white;
 				margin: .5%;

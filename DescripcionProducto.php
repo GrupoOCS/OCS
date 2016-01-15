@@ -62,7 +62,7 @@
 			
 			<?php
 				//echo "<input href=\"#\" onClick=\"insertarCarrito(1,".$id.",1); type=\"submit\" class=\"btn grande desc-carrito\" value=\"Agregar al Carrito\">";
-			printf ("<a href=\"#\" onClick=\"insertarCarrito(1,".$id.",num.value);\"><img class=\"add_car\" src=\"Iconos/agregar.png\"></a>");
+			printf ("<a href=\"#\" onClick=\"insertarCarrito(".$_SESSION['id_usu'].",".$row[0].",1);\" class=\"agrega_carrito\"><img class=\"add_car\" src=\"Iconos/agregar.png\"></a>",$row[0]);
 			?>
 
 		<!-- </form> -->
