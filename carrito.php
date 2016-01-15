@@ -12,6 +12,7 @@
 				data: "cantidad_modif="+ val +"&id_c="+ id_cli +"&id_p=" +id_pro,
 				success: function(res)
 				{	
+					
 					location.reload();
 				},
 				error: function(jqXHR, textStatus, error)
@@ -26,7 +27,7 @@
 			<div class="tabla_descripcion">
 				<table class="table table-hover">
 					
-							<tr >
+							<tr style="background-color: #72d077;" >
 							<td style="font-weight: bold; text-align: center;" width="15%">Cantidad</td>
 							<td style="font-weight: bold; text-align: center;" width="10%">Imagen</td>
 							<td style="font-weight: bold; text-align: center;" width="30%">Nombre</td>

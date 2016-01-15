@@ -415,9 +415,14 @@ div.tabla_espacio{
 	width: 8%;
 	height: 15%
 }
-div.tabla_carrito.resumen{
-	width: 20%;
+.tabla_carrito.resumen{
+	width: 18%;
 	margin-left: 8%;
+	padding: 1%;
+	border: solid; 
+	border-width: 5px;
+	border-radius: 10px;
+	border-color: 72d077;
 	
 }
 
