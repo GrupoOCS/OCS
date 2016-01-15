@@ -54,16 +54,16 @@ a{
 	width: 0px;
 	height: 0px;
 }
-header{
-	width: 98%;
-	height: 23px;
-	margin-left:0%;
-	background-color: #1abc9c;
-	padding: 1%;
-	text-align: right;
-	color: white;
-	font-family: 'lato';	
-	font-weight: bold;
+header {
+    width: 99%;
+    height: 17px;
+    margin-left: 0%;
+    background-color: #1abc9c;
+    padding: 0.5%;
+    text-align: right;
+    color: white;
+    font-family: 'lato';
+    font-weight: bold;
 }
 div.navg {
     width: 100%;
@@ -187,18 +187,16 @@ margin-left: 10%;
 form {
     margin: 0;
 }
-div.logo{
-	float: left;
-	width: auto;
-	height: 100%;
-
-	background-color: #34495e;
-	position: relative;
-	/*fuente*/
-	font-family: 'lato';
-	font-size: 25pt;
-	color:white;
-	text-align: center;
+div.logo {
+    float: left;
+    width: auto;
+    height: 100%;
+    position: relative;
+    font-family: 'lato';
+    font-size: 35pt;
+    color: white;
+    text-align: center;
+    margin-top: -26px;
 }
 	
 div.busqueda {
@@ -270,15 +268,20 @@ div.busqueda {
 	width: 5%;
 	float: left;
 }
-
-a.enlace{
-	width: 100%;
-	height: 100%;
-	color:white;
+span.usuario{
 	text-decoration: none;
-	font-family: 'lato';
-	font-size:14pt;
-	position: relative;
+    font-family: 'lato';
+    font-size: 11pt;
+    position: relative;
+}
+a.enlace {
+    width: 100%;
+    height: 100%;
+    color: white;
+    text-decoration: none;
+    font-family: 'lato';
+    font-size: 11pt;
+    position: relative;
 }
 a.enlace-active{
 	width: 100%;

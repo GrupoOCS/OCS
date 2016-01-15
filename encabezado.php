@@ -23,7 +23,7 @@
 		<!-- INCIAR SESION | REGISTRARSE  O    NOMBRE DE USUARIO -->
 		<header>
 			<?php 
-				if ($_SESSION['nom_usu']) echo '<span>'.$_SESSION['nom_usu'].' | </span><a class="enlace" href="funPHP/cerrarSesion.php">Cerrar Sesión</a>  ';
+				if ($_SESSION['nom_usu']) echo '<span class="usuario">'.$_SESSION['nom_usu'].' | </span><a class="enlace" href="funPHP/cerrarSesion.php">Cerrar Sesión</a>  ';
 				else echo '<a class="enlace" href="inicioSesion.php">Iniciar Sesión</a> | <a class="enlace" href="Registrarse.php">Registrarse</a> ';
 			?>
 			  
@@ -118,7 +118,7 @@
 									$car = $db->query("select sum(cantidad) from carrito where id_cliente=".$_SESSION['id_usu'].";");
 									if ($car->rowCount() > 0){
 										foreach ($car-> fetchAll(PDO::FETCH_NUM) as $row ){
-							 				printf ("(%s)</a>",$row[0]);
+							 				printf ("%s</a>",$row[0]);
 										}
 									}
 								}
