@@ -107,22 +107,24 @@ a.agrega_carrito {
     width: 55px;
     height: 65px;
 }
+.b_add_car {
+    width: 100px;
+    height: 55px;
+}
 div.desc-imagen{
-background-color: red;
-width: 30%;
-height: 70%;
-float: left;
-margin-top: 3%;
-position: relative;
+	background-color: red;
+	width: 30%;
+	height: 60%;
+	float: left;
+	margin-top: 3%;
+	position: relative;
 }
 div.desc-texto{
-
-width: 50%;
-height: 80%;
-position: relative;
-float: left;
-margin-top: 3%;
-
+	width: 50%;
+	height: 60%;
+	position: relative;
+	float: left;
+	margin-top: 3%;
 }
 p.texto-descripcion{
 	text-align: justify;
@@ -132,12 +134,11 @@ p.texto-descripcion{
 
 }
 div.desc-agregar{
-width: 20%;
-height: 100%;
+	width: 20%;
+	height: 60%;
 
-float: left;	
-position: relative;
-
+	float: left;	
+	position: relative;
 }
 div.d-cantidad{
 position: relative;
@@ -175,14 +176,14 @@ table.describe{
 table.describe tr:hover{
 	background-color: #92c0dd;
 }
-div.pagina-cion{
-width: 80%;
-height: 15%;
-float: left;
-position: relative;
-text-align: center;
-margin-left: 10%;
-
+div.pagina-cion {
+    width: 80%;
+    height: 8%;
+    float: left;
+    position: inherit;
+    text-align: center;
+    margin-left: 20%;
+    margin-top: 2%;
 }
 form {
     margin: 0;
@@ -193,10 +194,10 @@ div.logo {
     height: 100%;
     position: relative;
     font-family: 'lato';
-    font-size: 35pt;
+    font-size: 28pt;
     color: white;
     text-align: center;
-    margin-top: -26px;
+    margin-top: 0px;
 }
 	
 div.busqueda {
@@ -242,8 +243,8 @@ div.busqueda {
     color: white;
     float: left;
     text-align: center;
-    background-color: #34495e;
     position: relative;
+    margin-top: 2%;
 }
 
 .menu_enlace{
@@ -323,7 +324,7 @@ div.contenido{
 	overflow: auto;
 	background-color: white;
 	height: auto;
-	min-height: 80%;
+	min-height: 60%;
 	width: 98%;
 	font-family: 'lato';
 	border-color:#34495e;

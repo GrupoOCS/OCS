@@ -15,6 +15,8 @@
 			}
 			xmlhttp.open("GET","insertCarrito.php?idc="+idCliente+"&idp="+idProducto+"&n="+cantidad, true);
 			xmlhttp.send();
+
+			javascript:location.reload();
 		}
 	</script>
 
@@ -61,8 +63,8 @@
 			<input id="num" name="cantidad" value="1" style=" position:relative; float:left; width:50%" type="number" class="form-control" min="1">
 			
 			<?php
-				//echo "<input href=\"#\" onClick=\"insertarCarrito(1,".$id.",1); type=\"submit\" class=\"btn grande desc-carrito\" value=\"Agregar al Carrito\">";
-			printf ("<a href=\"#\" onClick=\"insertarCarrito(1,".$id.",num.value);\"><img class=\"add_car\" src=\"Iconos/agregar.png\"></a>");
+				// echo "<input href=\"#\" onClick=\"insertarCarrito(1,".$id.",1) type=\"submit\" class=\"btn grande desc-carrito\" value=\"Agregar al Carrito\">";
+			printf ("<a href=\"#\" onClick=\"insertarCarrito(".$_SESSION['id_usu'].",".$id.",num.value);\"><img class=\"b_add_car\" src=\"Iconos/bagregar.png\"></a>");
 			?>
 
 		<!-- </form> -->
