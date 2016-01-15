@@ -27,7 +27,7 @@
 			<div class="tabla_descripcion">
 				<table class="table table-hover">
 					
-							<tr style="background-color: #72d077;" >
+							<tr style="background-color: #1abc9c;" >
 							<td style="font-weight: bold; text-align: center;" width="15%">Cantidad</td>
 							<td style="font-weight: bold; text-align: center;" width="10%">Imagen</td>
 							<td style="font-weight: bold; text-align: center;" width="30%">Nombre</td>
