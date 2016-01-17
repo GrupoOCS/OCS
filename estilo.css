@@ -324,7 +324,7 @@ div.contenido{
 	overflow: auto;
 	background-color: white;
 	height: auto;
-	min-height: 60%;
+	min-height: 66.4%;
 	width: 98%;
 	font-family: 'lato';
 	border-color:#34495e;
@@ -400,23 +400,30 @@ div.tabla_carrito{
 	border: none;
 }
 
+
 div.tabla_descripcion{
 	overflow: auto;
 	float: left;
-	width: 600px;
-	height: 400px;
+	width: 70%;
+	height: 90%;
 	position: relative;
-	left: 3%;
+	left: 1%;
 	border: none;
+
 
 }
 div.tabla_espacio{
 	width: 8%;
 	height: 15%
 }
-div.tabla_carrito.resumen{
-	width: 25%;
+.tabla_carrito.resumen{
+	width: 18%;
 	margin-left: 8%;
+	padding: 1%;
+	border: solid; 
+	border-width: 5px;
+	border-radius: 10px;
+	border-color: 72d077;
 	
 }
 
@@ -454,6 +461,16 @@ div.wholeDireccion{
 	border-radius: 10px;
 }
 div.wholeRegistro{
+	position: relative;
+	width: 30%;
+	height: 82%;
+	background-color: #dadada;
+	margin-left: 32%;
+	top: 3%;
+	border-radius: 10px;
+	padding: 3%;
+}
+div.wholeCodigo{
 	position: relative;
 	width: 30%;
 	height: 82%;
@@ -562,15 +579,16 @@ span.log{
 footer{
 	background-color: #617071;
 	height: 13%;
-	width: 98%;
+	width: 100%;
 	font-family: 'lato';
 	color:white;
-	padding: 1%;
+	padding: 0%;
 	margin-left:0%;
 	font-weight: normal;
 	font-size: 12pt;
 
 }
+
 
 .nav ul, ol {
 				list-style:none;   /*hace que no se vea el punto */
@@ -581,7 +599,7 @@ footer{
 			}
 			
 			.nav li a { 				/*diseño de los bloques  */
-					width: 200px;
+				width: 200px;
 				height: 40px;
 				color: white;
 				margin: .5%;

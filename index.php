@@ -3,6 +3,13 @@
 	<div class="contenido_car">
 	    <script src="http://code.jquery.com/jquery.js"></script>
       <script src="js/bootstrap.min.js"></script>
+      <script>
+          $(document).ready(function(){
+              $('.myCarousel').carousel({
+                  interval: 1000
+              });
+          });
+      </script>
 
       <div id="container">
         <div id="myCarousel" class="carousel slide">
@@ -38,17 +45,6 @@
             <a class="carousel-control right car" href="#myCarousel" data-slide="next"><!-- &rsaquo; --><img  src="Iconos/siguiente.png"  alt=\"banner1\" /></a>
         </div>
       </div>
-
-    <script src="js/jquery.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script>
-        $(document).ready(function(){
-            $('.myCarousel').carousel({
-                interval: 500
-            });
-        });
-    </script>
-		
 	</div>
 	<!--................................................................. -->
 <?php include('pie_pagina.php'); ?>
