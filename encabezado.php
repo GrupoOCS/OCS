@@ -8,9 +8,11 @@
 		<meta charset="UTF-8">
 		<title>OCS</title>
 			<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	    	<link href="css/bootstrap.min.css" rel="stylesheet" media="screen"> <!-- Bootstrap necesario para carrusel only -->
-	    	<link rel="stylesheet" type="text/css" href="css/carousel.css">
-	    	<link rel="stylesheet" type="text/css" href="estilo.css"> <!-- Hoja de estilos -->
+			
+			<link rel="stylesheet" type="text/css" href="estilo.css"> <!-- Hoja de estilos -->
+			
+			<link href="./bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"> <!-- Carusel -->
+	    	
 	    	<link rel="stylesheet" type="text/css" href="style_carrito.css">
 		<!--<link rel="stylesheet" type="text/css" href="bootstrap.css"> 
  			<link href="css_carrito/bootstrap.min.css" rel="stylesheet"> -->
@@ -20,7 +22,6 @@
 	</head>
 	<body>
 
-		<!-- INCIAR SESION | REGISTRARSE  O    NOMBRE DE USUARIO -->
 		<header>
 			<?php 
 				if ($_SESSION['nom_usu']) echo '<span class="usuario">'.$_SESSION['nom_usu'].' | </span><a class="enlace" href="funPHP/cerrarSesion.php">Cerrar Sesión</a>  ';
@@ -28,15 +29,13 @@
 			?>
 			  
 		</header> 
-	<!--..........................INICIA NAVEGACIÓN....................................... -->
 	
 		<div class="navg">
-			<!-- LOGO OCS ONLINE COMPUTER SHOP -->
+			<!--Logo-->
 			<a href="index.php"><div class="logo">OCS<img class="logo-icon" src="Iconos/etiqueta.png">
 				<br><span class='log'>Online Computer Shop</span>
 			</div></a>
 			
-			<!-- .......................................................... -->
 			<!-- MENÚ PRINCIPAL DE NAVEGACIÓN -->
 			<?php if ($_SERVER["REQUEST_URI"] == "/OCS/carrito.php"
 						|| $_SERVER["REQUEST_URI"] == "/OCS/direccion.php"
@@ -44,34 +43,12 @@
 				ECHO'<div class="menu">
 				<ul class="nav">';
 								//printf($_SERVER["REQUEST_URI"]);
-					ECHO'<li> '; 
-						if ($_SERVER["REQUEST_URI"] == "/OCS/carrito.php")
-						{
-							ECHO'<a class="principal-active" href="carrito.php"> 
-								<img class="enlace icono" src="Iconos/CAR.png">
-							</a>';
-						}else{
-							ECHO'<a class="principal" href="carrito.php"> 
-								<img class="enlace icono" src="Iconos/CAR.png">
-							</a>';
-						}
-
-						if ($_SERVER["REQUEST_URI"] == "/OCS/direccion.php")
-						{
-							echo'
-							<li>
-								<a class="principal-active" href="direccion.php"> Datos de Envío </a>
-							</li>';
-						}else{
-							 echo'<li>
-								<a class="principal" href="direccion.php"> Datos de Envío </a>
-							</li> ';
-						}
+						$db = Conectar();
 
 						if ($_SERVER["REQUEST_URI"] == "/OCS/pago.php"){
 							echo'
 								<li>
-									<a class="principal-active" href="pago.php"> Formas de Pago </a>
+									<a class="principal-active" href="#"> Formas de Pago </a>
 								</li> 
 							 ';
 						}else{
@@ -79,21 +56,70 @@
 									<a class="principal" href="pago.php"> Formas de Pago</a>
 								</li> ';
 						}
+
+
+						if ($_SERVER["REQUEST_URI"] == "/OCS/direccion.php"){
+							echo'
+							<li>
+								<a class="principal-active" href="#"> Datos de Envío </a>
+							</li>';
+						}else{
+							 echo'<li>
+								<a class="principal" href="direccion.php"> Datos de Envío </a>
+							</li> ';
+						}
+
+						echo '<li> '; 
+						if ($_SERVER["REQUEST_URI"] == "/OCS/carrito.php"){
+							echo '<a class="principal-active" href="#"> 
+								<img class="enlace icono" src="Iconos/CAR.png">';
+								$car = $db->query("select sum(cantidad) from carrito where id_cliente=".$_SESSION['id_usu'].";");
+								if ($car->rowCount() > 0){
+									foreach ($car-> fetchAll(PDO::FETCH_NUM) as $row ){
+						 				printf ("%s</a>",$row[0]);
+									}
+								}
+						}else{
+							echo '<a class="principal" href="carrito.php"> 
+								<img class="enlace icono" src="Iconos/CAR.png">';
+								$car = $db->query("select sum(cantidad) from carrito where id_cliente=".$_SESSION['id_usu'].";");
+								if ($car->rowCount() > 0){
+									foreach ($car-> fetchAll(PDO::FETCH_NUM) as $row ){
+						 				printf ("%s</a>",$row[0]);
+									}
+								}
+						}
+						echo '</li>';
 				
 				}else{
-					ECHO'<div class="menu">
-						<ul class="nav">
-						<li> ';
+					echo '<div class="menu">
+						<ul class="nav">';
+
+						$db = Conectar();
+
+						echo '<li> '; 						
 								//printf($_SERVER["REQUEST_URI"]);
-							if ($_SERVER["REQUEST_URI"] == "/OCS/ventas.php") 
-									ECHO'<a class="principal-active" href="ventas.php?id=All">Productos</a> ';
-							else ECHO'<a class="principal" href="ventas.php?id=All">Productos</a> ';
+								if ($_SESSION['nom_usu']){
+									ECHO'<a class="principal" href="carrito.php">
+									<img class="enlace icono" src="Iconos/CAR.png">';
+									
+									$car = $db->query("select sum(cantidad) from carrito where id_cliente=".$_SESSION['id_usu'].";");
+									if ($car->rowCount() > 0){
+										foreach ($car-> fetchAll(PDO::FETCH_NUM) as $row ){
+							 				printf ("%s</a>",$row[0]);
+										}
+									}
+								}
+					
+						echo '</li>'; 
 
-		                
-		                $db = Conectar();
-		                $res = $db->query( "select *from categoria;" );
+						echo '<li>';
+						if ($_SERVER["REQUEST_URI"] == "/OCS/ventas.php") 
+							echo '<a class="principal-active" href="ventas.php?id=All">Productos</a> ';
+						else echo '<a class="principal" href="ventas.php?id=All">Productos</a> ';
 
-		                echo '<ul>';
+						echo '<ul>';
+						$res = $db->query( "select *from categoria;" );
 		                foreach ($res-> fetchAll(PDO::FETCH_NUM) as $row ){
 		                    printf ("<li><a  href=\"ventas.php?id=C".$row[0]."\"><br>%s</a>",$row[1]);
 
@@ -107,35 +133,14 @@
 		                }
 		                echo '</ul>';
 
-					echo '</li>
+					echo '</li>';
 					
-					<li> '; 						
-								//printf($_SERVER["REQUEST_URI"]);
-								if ($_SESSION['nom_usu']){
-									ECHO'<a class="principal" href="carrito.php">
-									<img class="enlace icono" src="Iconos/CAR.png">';
-									
-									$car = $db->query("select sum(cantidad) from carrito where id_cliente=".$_SESSION['id_usu'].";");
-									if ($car->rowCount() > 0){
-										foreach ($car-> fetchAll(PDO::FETCH_NUM) as $row ){
-							 				printf ("%s</a>",$row[0]);
-										}
-									}
-								}
+					
 					}?>
-					</li>
-					<!-- <li>
-						<?php
-						// echo '<a class="principal" href="carrito.php"><p id="carrito">';
-						// 		foreach ($car-> fetchAll(PDO::FETCH_NUM) as $row )
-						// 			printf ("(%s)",$row[0]);
-						// 		echo '</p></a>';
-						?>
-					</li>  -->	
 				</ul>
 			</div> 
 
-			<!-- FORMULARIO PARA EL BUSCADOR -->
+			<!--Buscador-->
 			<div class="busqueda">
 				<form action="ventas.php">
 					<div class="tx_buscar">
@@ -148,12 +153,3 @@
 			</div>
 			
 		</div>
-
-
-					
-		<!-- .......................................................................-->
-
-
-
-
-		<!-- CIERRE DE HTML EN EL PIE DE PAGINA -->

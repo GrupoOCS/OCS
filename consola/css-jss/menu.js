@@ -286,17 +286,22 @@ function productos()
 
 function agrproducto()
 {
-	var datos= {
-		"nombre" :  $("#nombre").val(),
-		"marca":  $("#marca").val(),
-		"precio":  $("#precio").val(),
-		"descripcion":  $("#descripcion").val(),
-		"idsubcategoria" : $("#idsubcategoria").val()
-	};
+	var data = new FormData();
+	jQuery.each(jQuery('#file')[0].files, function(i, file) {
+	    data.append(i, file);
+	});
+	data.append("nombre", $("#nombre").val());
+	data.append("marca", $("#marca").val());
+	data.append("precio", $("#precio").val());
+	data.append("descripcion", $("#descripcion").val());
+	data.append("idsubcategoria", $("#idsubcategoria").val());
+	
 	$.ajax({
-		data: datos,
+		data: data,
 	  	url:   'producto/agregar.php',
 	    type:  'POST',
+	    processData: false,
+		contentType: false,
 	    beforeSend: function () {
 	   		$("#titulo").html("<span>Agregar Producto</span>");
 	    },
@@ -612,7 +617,7 @@ function formaddsubcategoria(){
     	url:   'categoria/select.php',
         type:  'post',
          beforeSend: function () {
-       		$("#titulo").html("<span>Agregar Categorias</span>");
+       		$("#titulo").html("<span>Agregar Subcategorias</span>");
         },
         success:  function (response) 
         {
@@ -627,6 +632,94 @@ function formaddsubcategoria(){
 	return false;
 }
 
+function selectTodos(ele) {
+    var checkboxes = document.getElementsByTagName('input');
+    if (ele.checked) {
+    	document.getElementById('eliminarP').removeAttribute("disabled");
+    	document.getElementById('modificarP').removeAttribute("disabled");
+        for (var i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i].type == 'checkbox') {
+                checkboxes[i].checked = true;
+            }
+        }
+    } else {
+    	document.getElementById('eliminarP').disabled = true;
+    	document.getElementById('modificarP').disabled = true;
+        for (var i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i].type == 'checkbox') {
+                checkboxes[i].checked = false;
+            }
+        }
+    }
+    return false;
+}
+
+function seleccion(ele) {
+    var checkboxes = document.getElementsByTagName('input'),i;
+    document.getElementById('selectall').checked = false;
+    if (ele.checked) {
+    	document.getElementById('eliminarP').removeAttribute("disabled");
+    	document.getElementById('modificarP').removeAttribute("disabled");
+    } else {
+        for (i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i].type == 'checkbox') 
+            	if(checkboxes[i].checked==true)
+            		break;
+        }
+        if(i==checkboxes.length)
+        {
+        	document.getElementById('eliminarP').disabled = true;
+    		document.getElementById('modificarP').disabled = true;
+    	}
+    }
+    return false;
+}
+
+function ModificarProductoSelec(sub)
+{
+	document.getElementById('modificarP').style.display = 'none';
+	document.getElementById('eliminarP').style.display = 'block';
+	$.ajax({
+		data: null,
+	  	url:   'subcategoria/select.php',
+	    type:  'post',
+	    success:  function (response) {
+		   	$("#cam").html('<p>Seleccione la nueva categoria</p>'+response+"<BR><input type='submit' value='Aceptar' onclick='updProductoSelec("+sub+")' class='aceptar'/>");
+		}
+	});
+	return false;
+}
+
+function updProductoSelec(sub)
+{
+	alert("upd");
+	var datos= [$("#idcategoria").val()];
+	var checkboxes = document.getElementsByTagName('input'),i;
+    for (i = 0; i < checkboxes.length; i++) 
+    {
+        if (checkboxes[i].type == 'checkbox') 
+        	if(checkboxes[i].checked==true)
+        		if(checkboxes[i].value>0)
+        			datos.push(checkboxes[i].value);
+          		
+	}
+	$.ajax({
+		data: datos,
+	  	url:   'productos/modificarvarios.php',
+	    type:  'post',
+	    success:  function (response) {
+		   	$("#contenido").html("<p>Se ha actualizado correctamente</p><input type='submit' value='Aceptar' onclick='verProductosSubcategoria("+sub+")' class='aceptar'/>");
+		}
+	});
+	return false;
+}
+
+function EliminarProductoSelec(sub)
+{
+	document.getElementById('eliminarP').style.display = 'none';
+	document.getElementById('modificarP').style.display = 'block';
+}
+
 function formaddproducto(){
 	$.ajax({
 		data: null,
@@ -637,13 +730,13 @@ function formaddproducto(){
         },
         success:  function (response) 
         {
-			$("#contenido").html(" <form enctype='multipart/form-data' id='formuploadajax' method='post' onSubmit='return agrproducto();' ><table><tr><td><span class='r'>Nombre: </span>"
+			$("#contenido").html(" <form enctype='multipart/form-data' method='post' id='formproducto' onSubmit='return agrproducto();' ><table><tr><td><span class='r'>Nombre: </span>"
 				+"</td><td><input class='entrada-texto' id='nombre' type='text' placeholder='Nombre del producto' autofocus required />"
 				+"</td></tr><tr><td><span class='r'>Marca: </span></td><td><input class='entrada-texto' id='marca' type='text' placeholder='Marca' autofocus required />"
 				+"</td></tr><tr><td><span class='r'>Precio: </span></td><td><input class='entrada-texto' id='precio' min='1' type='number' placeholder='Precio' autofocus required />"
 				+"</td></tr><tr><td><span class='r'>Descripcion: </span></td><td><textarea rows='5' id='descripcion' required></textarea></td></tr><tr><td><span class='r'>Subcategoria: </span>"
 				+"</td><td>"+response+"</td></tr>"
-				//+"<tr><td><span class='r'>Imagen: </span></td><td><input class='entrada-texto' type='file' id='file'  multiple='' accept='image/jpeg, image/png' required>"
+				+"<tr><td><span class='r'>Imagen: </span></td><td><input class='entrada-texto' type='file' id='file'  multiple='' accept='image/jpeg, image/png' required>"
 				+"</td></tr></table>"
 				+"<center><input type='submit' value='Aceptar' class='aceptar'/> "
 				+"<input type='button' value='Cancelar' onclick='productos();' class='cancelar'/></center></form>");
@@ -658,16 +751,16 @@ function reportes()
        		$("#titulo").html("<span>Reportes</span>");
        
 	        $("#contenido").html("<br><table><tr><td class= 'col'><span><label>Clientes</label></span></td>"
-	        					+"<td class= 'col'><select><option value='1'>Juan Pérez</option><option value='2'>José López</option><option value='3'>Miguel Ponce</option><option value='4'>Omar Rodríguez</option>"
-								+"</select><br><br></td><td></td><td><button onclick='genrep()'>Generar</button></td></tr>"
-	        					+"<tr><td class= 'col'><span><label>Pedidos</label></span><br><br></td><td class= 'col'><input type='date' name='fecha'></td><td class= 'col'><input type='date' name='fecha'><td class= 'col'><button onclick='genrep()'>Generar</button></td></td></tr>"
-	        					+"<tr><td class= 'col'><span><label>Productos</label></span><br><br></td><td class= 'col'><select><option value='1'>Asus</option><option value='2'>HP</option><option value='3'>Toshiba</option><option value='4'>Sony</option></select></td><td class= 'col'><select><option value='1'>Todo</option><option value='2'>Más vendidos</option></select><td class= 'col'><button onclick='genrep()'>Generar</button></td></td></tr>"
-	        					+"<tr><td class= 'col'><span><label>Ventas</label></span><br><br><td class= 'col'><input type='date' name='fecha'></td><td class= 'col'><input type='date' name='fecha'></td><td class= 'col'><button onclick='genrep()'>Generar</button></td></tr></table>");
+	        					+"<td class= 'col'><select id= 'nombre'><option value='Todos'>Todos</option><option value='Juan Robles'>Juan Robles</option><option value='Miguel Ponce'>Miguel Ponce</option><option value='Omar Bravo'>Omar Bravo</option>"
+								+"</select><br><br></td><td></td><td></td></tr>"
+	        					+"<tr><td class= 'col'><span><label>Productos</label></span><br><br></td><td class= 'col'><select id='marca'><option value='Asus'>Asus</option><option value='HP'>HP</option><option value='Toshiba'>Toshiba</option><option value='Sony'>Sony</option></select></td><td class= 'col'><select><option value='1'>Todo</option><option value='2'>Más vendidos</option></select><td class= 'col'></td></td></tr>"
+	        					+"<tr><td class= 'col'><span><label>Intervalo de fecha</label></span><br><br><td class= 'col'><input type='date' name='fecha'></td><td class= 'col'><input type='date' name='fechaf'></td><td class= 'col'><br><br><br><br><button onclick='genrep()'>Generar</button></td></tr></table>");
 	
 }
 
 function genrep()
 {
-	window.open("pdf2.php");
+	var posicion=document.getElementById('marca').value;
+	var nombre=document.getElementById('nombre').value;
+	window.open("pdf2.php?productos="+posicion+"&&nombre="+nombre);
 }
-

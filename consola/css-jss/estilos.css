@@ -16,6 +16,18 @@ $gris = #DADADA;
 	background: #34495E;
 }
 
+/*Productos*/
+.producto{
+	width: 200px;
+	height: 200px;
+	background: #34495E;
+	padding-bottom: 5px;
+	padding-top: 5px;
+	padding-right: 10px;
+	padding-left: 10px;
+}
+
+
 /*Acciones*/
 .ico-acciones{
 	width: 25px;
@@ -309,11 +321,7 @@ div.fakefile {
 {
 	font-size: 110%;
 	color: #ffffff;
-<<<<<<< HEAD
-	width: 200px;
-=======
 	width: 220px;
->>>>>>> origin/master
 	height: 42px;
 	margin-top: 10px;
 	margin-left: 10px;
@@ -325,6 +333,14 @@ div.fakefile {
 .mostrar:hover
 {
 	font-size: 120%;
+}
+
+.aceptar:disabled {
+    background: #808080;
+}
+
+.cancelar:disabled {
+    background: #808080;
 }
 
 .aceptar

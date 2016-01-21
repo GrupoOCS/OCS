@@ -1,4 +1,4 @@
 <?php
 	include('../funciones/DB.php');
-	echo setProducto($_POST);
+	echo setProducto($_POST,$_FILES);
 ?>

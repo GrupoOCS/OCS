@@ -420,28 +420,7 @@
 			echo "ERROR:No se pudo conectar a la base de datos<BR><center><input type='submit' value='Aceptar' onclick='".$funcion."' class='aceptar'/></center>";
 	}
 
-<<<<<<< HEAD
-	function getcountSubcategoria($id)
-	{
-		$db=conectar();
-		if($db!=null)
-		{
-			$query = $db->prepare("SELECT count(id) FROM producto WHERE id_subcategoria=:id");
-		    $query->execute(array('id' => $id ));
-		    if($query)
-		    	if( $row=($query->fetch(PDO::FETCH_NUM)) )
-		    		return $row[0];
-		    	else 
-		    		return 0;
-		}
-		else
-			return false;
-	}
-
-	function eliSubcategoria($id)
-=======
 	function eliSubcategoria($id,$idcat)
->>>>>>> origin/master
 	{
 		$funcion="subcategorias();";
 		if($idcat>0)
@@ -469,17 +448,10 @@
 				}
 				echo "</table>";
 				if($elementos>0)
-<<<<<<< HEAD
-					echo "<center><p class='texterror'>Nota:No se puede eliminar la categoria debido a que tiene productos</p></center><center>".
-						 "<input type='submit' value='Mostar producto(s)' onclick='verProductosSubcategoria(".$id.");' class='mostrar'/> <input type='button' value='Cancelar' onclick='subcategorias();' class='cancelar'/></center>";
-				else
-					echo "<center><input type='submit' value='Aceptar' onclick='delsubcategoria(".$row[0].");' class='aceptar'/> <input type='button' value='Cancelar' onclick='subcategorias();' class='cancelar'/></center>";
-=======
 					echo "<center><p class='texterror'>Nota:No se puede eliminar la Subcategoria debido a que tiene productos</p></center><center>".
 						 "<input type='submit' value='Mostar producto(s)' onclick='verProductosSubcategoria(".$id.");' class='mostrar'/> <input type='button' value='Cancelar' onclick='".$funcion."' class='cancelar'/></center>";
 				else
 					echo "<center><input type='submit' value='Aceptar' onclick='delsubcategoria(".$row[0].");' class='aceptar'/> <input type='button' value='Cancelar' onclick='".$funcion."' class='cancelar'/></center>";
->>>>>>> origin/master
 			}
 			else
 				echo "ERROR:No se puede consultar la base de datos. Intentlo mas tarde<BR><center><input type='submit' value='Aceptar' onclick='".$funcion."' class='aceptar'/></center>";
@@ -593,16 +565,18 @@
 			$query = $db->prepare("SELECT * FROM producto WHERE id_subcategoria=:id");
 		    $query->execute(array('id' => $id ));
 		    echo "<table>";
-		    echo "<tr class='fondo'><td>Nombre</td><td colspan='3' >Acciones</td><tr>";
+		    echo "<tr class='fondo'><td width='50px'>Todos<input type='checkbox' id='selectall' value=0 onClick='selectTodos(this)'/></td><td>Nombre</td><td colspan='3' >Acciones</td><tr>";
 			while( $row=($query->fetch(PDO::FETCH_NUM)) )
 			{
 				echo "<tr>
+						<td><center><input type='checkbox' onClick='seleccion(this)' value=".$row[0]." /></center></td>
 						<td class='nombre'>".$row[1]."</td>
 						<td class='acciones'><a onclick='verproductos(".$row[0].",".$id.");'><img src='img/ver.png' class='icoacc'/></a></td>
 						<td class='acciones'><a onclick='modproductos(".$row[0].",".$id.");'><img src='img/editar.png' class='icoacc'/></a></td>
 						<td class='acciones'><a onclick='eliproductos(".$row[0].",".$id.");'><img src='img/eliminar.png' class='icoacc'/></a></tr>";
 			}
 			echo "</table>";
+			echo "<center><input type='submit' value='Eliminar' onclick='EliminarProductoSelec(".$id.")' id='eliminarP' class='cancelar' disabled /><input type='button' value='Modificar' onclick='ModificarProductoSelec(".$id.")' id='modificarP'  class='aceptar' disabled/></center><BR><div id=cam>";
 		}
 		else
 			echo "ERROR:No se pudo conectar a la base de datos";
@@ -616,7 +590,7 @@
 			$query = $db->prepare("SELECT * FROM producto");
 		    $query->execute();
 		    echo "<table>";
-		    echo "<tr class='fondo'><td>Nombre</td><td colspan='3' >Acciones</td><tr>";
+		    echo "<tr class='fondo'><td>Nombre</td><td>Nombre</td><td colspan='3' >Acciones</td><tr>";
 			while( $row=($query->fetch(PDO::FETCH_NUM)) )
 			{
 				echo "<tr>
@@ -631,7 +605,7 @@
 			echo "ERROR:No se pudo conectar a la base de datos";
 	}
 
-	function setProducto($datos)
+	function setProducto($datos,$files)
 	{
 		$db=conectar();
 		if($db!=null)
@@ -646,6 +620,19 @@
 			$query = $db->prepare("INSERT INTO producto (nombre, marca, precio, descripcion, id_subcategoria) VALUES (:nombre, :marca,:precio, :descripcion,:idsubcategoria)");
 		    try {
 		    	$query->execute($prepared);
+		    	
+		    	$id=$db->lastInsertId(); 
+		    	$destino = "Productos/";
+				foreach ($files as $image)
+				{
+					if($image['name']!="")
+					{
+						$prefijo = substr(md5(uniqid(rand())), 0,6);
+						copy($image['tmp_name'], "../../".$destino.$prefijo."_".$image['name']);
+						$query = $db->prepare("INSERT INTO imagen (nombre, id_producto) VALUES (:nombre, :idproducto)");
+						$query->execute(array('nombre' => $destino.$prefijo."_".$image['name'],'idproducto' => $id));
+					}
+				}
 		    	echo "Sus datos se han guardado exitosamente";
 		    } 
 		    catch ( PDOException $e) 
@@ -690,6 +677,13 @@
 			    	$query->execute(array('id' => $row[5] ));
 			    	if( $row2=($query->fetch(PDO::FETCH_NUM)) )
 			    		echo "<span class='l'>".$row2[1]."</span>";
+					echo 	"</td></tr>
+							<tr>
+								<td width='45%'><span class='r'>Imagene(s):</span></td><td width='70%'>";
+					$query = $db->prepare("SELECT * FROM imagen WHERE id_producto=:id");
+			    	$query->execute(array('id' => $row[0] ));
+			    	while( $row2=($query->fetch(PDO::FETCH_NUM)) )
+			    		echo "<img class='l producto' src='../".$row2[1]."'/> ";
 					echo 	"</td></tr>";
 				}
 				echo "</table>";
@@ -747,7 +741,7 @@
 	{
 		$funcion="'productos();'";
 		if($datos['sub']>0)
-			$funcion="'verProductosSubcategoria(".$datos['idsubcategoria'].");'";
+			$funcion="'verProductosSubcategoria(".$datos['sub'].");'";
 		$db=conectar();
 		if($db!=null)
 		{
@@ -772,6 +766,28 @@
 			echo "ERROR:No se pudo conectar a la base de datos<BR>";
 
 		echo "<center><input type='submit' value='Aceptar' onclick=".$funcion." class='aceptar'/></center>";
+	}
+	function updProductovarios($datos)
+	{
+		$db=conectar();
+		if($db!=null)
+		{
+			for($i=1;$i<sizeof($datos);$i++)
+				$prepared = array(
+					'idsubcategoria' => $datos[0],
+					'id' => $datos[$i],
+				);
+				$query = $db->prepare("UPDATE producto SET id_subcategoria=:idsubcategoria WHERE id=:id");
+				try {
+					$query->execute($prepared);
+				    echo "Se ha Modificado exitosamente";
+				} 
+				catch (Exception $e) {
+					echo "ERROR:No se modifico excitosamente. Vuelva a intentarlo mas tarde<BR>";
+				}
+		}
+		else
+			echo "ERROR:No se pudo conectar a la base de datos<BR>";
 	}
 
 	function eliProductos($id,$idsub)

@@ -1,50 +1,66 @@
 <?php include('encabezado.php'); ?>
-	<!--.............................TERMINA NAVEGACIÓN...............................-->
-	<div class="contenido_car">
-	    <script src="http://code.jquery.com/jquery.js"></script>
-      <script src="js/bootstrap.min.js"></script>
-      <script>
-          $(document).ready(function(){
-              $('.myCarousel').carousel({
-                  interval: 1000
-              });
-          });
-      </script>
 
-      <div id="container">
-        <div id="myCarousel" class="carousel slide">
-            <ol class="carousel-indicators">
-              <?php
-                $n=5;
-                for ($i=0; $i<$n; $i++){
-                  if ($i==0) printf ("<li data-target=\"#myCarousel\" data-slide-to=\"0\"  class=\"active\"></li>");
-                  else printf ("<li data-target=\"#myCarousel\" data-slide-to=\"%s\"></li>", $i);
-                }
-              ?>
-            </ol>
-            <!-- Carousel items -->
-            <div class="carousel-inner">
+<div id="wrapper">
+  <div class="container">
+  <div class="btn-group-vertical" role="group" aria-label="...">
 
-                <?php
-                  //include 'abrirConexion.php';
-                  $db = Conectar();
-                  $query = "select producto.id, imagen.nombre, producto.tag, producto.nombre from imagen, producto where imagen.id_producto=producto.id order by producto.tag desc limit ".$n.";";
-                  $res = $db->query( $query );
-                  $i=1;
-                  foreach ($res-> fetchAll(PDO::FETCH_NUM) as $row ){
-                      if ($i==1){
-                          printf ("<div class=\"active item\"><center><br> <a href=\"DescripcionProducto.php?id=%s\"><img  src=\"%s\"  alt=\"banner1\" /></a> <br>%s</center></div>", $row[0], $row[1], $row[3]);
-                      } else printf ("<div class=\"item\"><center><a href=\"DescripcionProducto.php?id=%s\"><img  src=\"%s\" alt=\"banner%s\" /></a> <br>%s </center></div>", $row[0], $row[1], $i, $row[3]);
-                      
-                      $i=$i+1;
-                  }
-                ?>
-            </div>
-            <!-- Carousel nav -->
-            <a  class="carousel-control left car" href="#myCarousel" data-slide="prev"><!-- &lsaquo; --><img  src="Iconos/anterior.png"  alt=\"banner1\" /></a>
-            <a class="carousel-control right car" href="#myCarousel" data-slide="next"><!-- &rsaquo; --><img  src="Iconos/siguiente.png"  alt=\"banner1\" /></a>
+  </div>
+    <div class="row">
+      <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+          <!-- Indicators -->
+        <ol class="carousel-indicators">
+          <?php
+            $n=5;
+            for ($i=0; $i<$n; $i++){
+              if ($i==0) printf ("<li data-target=\"#carousel-example-generic\" data-slide-to=\"0\"  class=\"active\"></li>");
+              else printf ("<li data-target=\"#carousel-example-generic\" data-slide-to=\"%s\"></li>", $i);
+            }
+          ?>
+        </ol>
+
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner" role="listbox">
+
+        <?php
+          $db = Conectar();
+          $query = "select producto.id, producto.tag, producto.nombre from producto order by producto.tag desc limit ".$n.";";
+          $res = $db->query( $query );
+          $i=1;
+          foreach ($res-> fetchAll(PDO::FETCH_NUM) as $row ){
+            $prodimg = $db->query( "select imagen.nombre from imagen where imagen.id_producto=".$row[0]." limit 1;" );
+            if ($i==1){
+              print('<div class="item active">');
+              foreach ($prodimg-> fetchAll(PDO::FETCH_NUM) as $r) {
+                printf('<center><a href="DescripcionProducto.php?id=%s"><img  src="%s" /></a></center>', $row[0],$r[0]);
+              }
+              // printf('<center><a href="DescripcionProducto.php?id=%s"><img  src="%s" /></a></center>', $row[0],$row[1]);
+              printf('<div class="carousel-caption">%s</div></div>',$row[2]);
+            } else {
+              print('<div class="item">');
+              foreach ($prodimg-> fetchAll(PDO::FETCH_NUM) as $r) {
+                printf('<center><a href="DescripcionProducto.php?id=%s"><img  src="%s"/></a></center>',$row[0],$r[0]);
+              }
+              printf('<div class="carousel-caption">%s</div></div>',$row[2]);
+            }
+            
+            $i=$i+1;
+          }
+        ?>
+
         </div>
-      </div>
-	</div>
-	<!--................................................................. -->
+
+        <!-- Controls -->
+        <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only">Prev</span>
+        </a>
+        <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+        </a>
+    </div>
+  </div>
+  </div>	
+</div>
+	
 <?php include('pie_pagina.php'); ?>

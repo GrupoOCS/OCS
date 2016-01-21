@@ -55,8 +55,8 @@ a{
 	height: 0px;
 }
 header {
-    width: 99%;
-    height: 17px;
+    width: 100%;
+    height: 4.5%;
     margin-left: 0%;
     background-color: #1abc9c;
     padding: 0.5%;
@@ -67,7 +67,7 @@ header {
 }
 div.navg {
     width: 100%;
-    height: 9%;
+    height: 10.5%;
     margin-left: 0%;
     background-color: #34495e;
     position: relative;
@@ -112,19 +112,18 @@ a.agrega_carrito {
     height: 55px;
 }
 div.desc-imagen{
-	background-color: red;
-	width: 30%;
+	width: 40%;
 	height: 60%;
 	float: left;
-	margin-top: 3%;
+	margin-top: 0%;
 	position: relative;
 }
 div.desc-texto{
-	width: 50%;
-	height: 60%;
+	width: 60%;
+	height: auto;
 	position: relative;
 	float: left;
-	margin-top: 3%;
+	margin-top: 0%;
 }
 p.texto-descripcion{
 	text-align: justify;
@@ -134,8 +133,8 @@ p.texto-descripcion{
 
 }
 div.desc-agregar{
-	width: 20%;
-	height: 60%;
+	width: 100%;
+	height: 26%;
 
 	float: left;	
 	position: relative;
@@ -201,7 +200,7 @@ div.logo {
 }
 	
 div.busqueda {
-    width: 25%;
+    width: 25.4%;
     height: 80%;
     /*background-color: #34495e;*/
     float: right;
@@ -209,10 +208,9 @@ div.busqueda {
     position: relative;
     margin-top: 1.4%;
 }
-.btn-buscar
-{
+.btn-buscar{
 	height: 100%;
-	width: 65px;
+	width: 100%;
   	background-color: #1abc9c;
   	border-color: #1abc9c;
   	border-radius: 3px;
@@ -231,20 +229,19 @@ div.busqueda {
 }
 .b_buscar {
     width: 30%;
-    height: 50%;
+    height: 60%;
     position: relative;
     float: right;
     padding-right: 1%;
-    padding-top: 1%;
 }
 .menu {
-    width: 56%;
-    height: 100%;
+    width: 62%;
+    height: 70%;
     color: white;
     float: left;
     text-align: center;
     position: relative;
-    margin-top: 2%;
+    margin-top: 1.7%;
 }
 
 .menu_enlace{
@@ -301,10 +298,12 @@ img.enlace.icono{
 	width: 20%;
 	height:100%;
 	position: relative;
+	margin-top: -2%;
 }
 img.enlace.icono:hover{
-	width: 30%;
-	height:120%;
+	width: 40%;
+	height:130%;
+	margin-top: -5%;
 }
 img.producto{
 	position: relative;
@@ -324,7 +323,8 @@ div.contenido{
 	overflow: auto;
 	background-color: white;
 	height: auto;
-	min-height: 66.4%;
+	min-height: 69.5%;
+	max-height: 500%;
 	width: 98%;
 	font-family: 'lato';
 	border-color:#34495e;
@@ -372,17 +372,24 @@ input[type="search"]::-webkit-search-decoration {
   -webkit-appearance: none;
 }
 
-div.contactt{
-	width:75%;
-	height:100%;
-	float:left;	
-	margin-left: 3%;
+div.contactt {
+    width: 45%;
+    height: 50%;
+    float: left;
+    margin-left: 20%;
+    margin-top: 2.4%;
+    border-right-width: 2px;
+    border-style: solid;
+    border-top-width: 0px;
+    border-bottom-width: 0px;
+    border-left-width: 0px;
 }
 div.contactt_rs{
 	width: 20%;
     height: auto;
     float: left;
-    padding-top: 2%;	
+    padding-top: 3%;	
+    padding-left: 5%;	
 }
 
 div.contactt_colum{
@@ -399,32 +406,29 @@ div.tabla_carrito{
 	left: 3%;
 	border: none;
 }
-
-
-div.tabla_descripcion{
-	overflow: auto;
-	float: left;
-	width: 70%;
-	height: 90%;
-	position: relative;
-	left: 1%;
-	border: none;
-
-
+div.tabla_descripcion {
+    overflow: auto;
+    float: left;
+    width: 98%;
+    height: auto;
+    position: relative;
+    left: 1%;
+    border: none;
 }
 div.tabla_espacio{
 	width: 8%;
 	height: 15%
 }
-.tabla_carrito.resumen{
-	width: 18%;
-	margin-left: 8%;
-	padding: 1%;
-	border: solid; 
-	border-width: 5px;
-	border-radius: 10px;
-	border-color: 72d077;
-	
+.tabla_carrito.resumen {
+    width: 50%;
+    margin-left: 20%;
+    margin-bottom: 4%;
+    margin-top: 2%;
+    padding: 1%;
+    border: solid;
+    border-width: 5px;
+    border-radius: 10px;
+    border-color: 72d077;
 }
 
 input[type="number"]{
@@ -443,12 +447,11 @@ img.carro_compra{
 div.eliminar{
 
 }
-div.wholeCarrito{
-	position: relative;
-	width: 90%;
-	height: 90%;
-
-	margin-left: 5%;
+div.wholeCarrito {
+    position: relative;
+    width: 100%;
+    height: auto;
+    margin-left: 1%;
 }
 div.wholeDireccion{
 	align: center;
@@ -578,7 +581,7 @@ span.log{
 }
 footer{
 	background-color: #617071;
-	height: 13%;
+	height: 15%;
 	width: 100%;
 	font-family: 'lato';
 	color:white;
@@ -595,7 +598,7 @@ footer{
 			}
 			
 			.nav > li {
-				float:left;  /*da el efecto */
+				float:right;  /*da el efecto */
 			}
 			
 			.nav li a { 				/*diseño de los bloques  */
@@ -608,6 +611,13 @@ footer{
 				display:block;
 				
 				font-family: 'lato';
+
+				border-right-width: 1px;
+			    border-bottom-width: 0;
+			    border-left-width: 1px;
+			    border-top-width: 0;
+			    border-style: solid;
+			    border-color: #fff;
 			}
 			.nav li a.principal{ 				/*diseño de los bloques  */
 				width: 200px;
@@ -637,9 +647,8 @@ footer{
 				position: relative;
 				border-bottom: solid;
 
-				border-width: 3px;
+				border-width: 0px;
 				border-color: #1abc9c;
-
 			}
 
 			.nav li a.principal:hover {				/*hover diseño de los bloques  */
@@ -661,7 +670,7 @@ footer{
 				display:none;
 				position:absolute;		/*esconde  los bloques  */
 				min-width:140px;
-			}
+			}	
 			
 			.nav li:hover > ul {  /*muestra  los bloques  */
 				display:block;
@@ -670,9 +679,11 @@ footer{
 			
 			.nav li ul li {
 				position:relative;
+				left: -40px;
+				bottom: -20px;
 			}
 			
 			.nav li ul li ul {
-				right:-202px;
-				top:0px;
+				right:-240px;
+				top:-20px;
 			}

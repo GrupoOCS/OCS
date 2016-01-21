@@ -30,15 +30,15 @@
 	$filtro = "";
 
 	if ($id[0]=="S"){ //subcategoria
-		$query = "select producto.id, imagen.nombre, producto.nombre, producto.precio from imagen, producto where imagen.id_producto=producto.id and producto.id_subcategoria=".$ids." order by producto.tag desc;";
+		$query = "select producto.id, producto.nombre, producto.precio from producto where producto.id_subcategoria=".$ids." order by producto.tag desc;";
 	} else if ($id[0]=="C"){ //categoria
-		$query = "select producto.id, imagen.nombre, producto.nombre, producto.precio from imagen, producto, (select subcategoria.id as sid from subcategoria where subcategoria.idcategoria=".$ids.") as sub where imagen.id_producto=producto.id and producto.id_subcategoria=sub.sid order by producto.tag desc;";
+		$query = "select producto.id, producto.nombre, producto.precio from producto, (select subcategoria.id as sid from subcategoria where subcategoria.idcategoria=".$ids.") as sub where producto.id_subcategoria=sub.sid order by producto.tag desc;";
 	} else { //todos o buscador
 		if (isset($_GET['buscador'])){
 			$filtro = $_GET['buscador'];
 			echo '<p>Mostrando resultados de '.$filtro.'.</p>';
-			$query = "select producto.id, imagen.nombre, producto.nombre, producto.precio from imagen, producto where imagen.id_producto=producto.id and producto.nombre like '%".$_GET['buscador']."%' order by producto.tag desc";
-		}else $query = "select producto.id, imagen.nombre, producto.nombre, producto.precio from imagen, producto where imagen.id_producto=producto.id order by producto.tag desc";
+			$query = "select producto.id, producto.nombre, producto.precio from producto where producto.nombre like '%".$_GET['buscador']."%' order by producto.tag desc";
+		}else $query = "select producto.id, producto.nombre, producto.precio from producto order by producto.tag desc";
 	}
 	$res = $db->query($query);
 
@@ -46,11 +46,17 @@
 		echo '<p>No se encontrarón resultados.</p>';
 	}else {
 		foreach ($res-> fetchAll(PDO::FETCH_NUM) as $row ){
+			$prodimg = $db->query( "select imagen.nombre from imagen where imagen.id_producto=".$row[0]." limit 1;" );
 			echo "<div class=\"producto\">";
-				printf ("<a href=\"DescripcionProducto.php?id=%s\"><img href=\"#\" class=\"producto\" src=\"%s\"></a>", $row[0], $row[1]);
-				printf ("<div class=\"nombre_producto\">%s</div>", $row[2]);
-				printf ("<div class=\"precio_producto\">$%s</div>", $row[3]);
-				printf ("<a href=\"#\" onClick=\"insertarCarrito(".$_SESSION['id_usu'].",".$row[0].",1);\" class=\"agrega_carrito\"><img class=\"add_car\" src=\"Iconos/agregar.png\"></a>",$row[0]);
+				foreach ($prodimg-> fetchAll(PDO::FETCH_NUM) as $r) {
+					printf ("<a href=\"DescripcionProducto.php?id=%s\"><img href=\"#\" class=\"producto\" src=\"%s\"></a>", $row[0], $r[0]);
+				}
+				printf ("<div class=\"nombre_producto\">%s</div>", $row[1]);
+				printf ("<div class=\"precio_producto\">$%s</div>", $row[2]);
+				
+				if ($_SESSION['nom_usu']){
+					printf ("<a href=\"#\" onClick=\"insertarCarrito(".$_SESSION['id_usu'].",".$row[0].",1);\" class=\"agrega_carrito\"><img class=\"add_car\" src=\"Iconos/agregar.png\"></a>",$row[0]);
+				}
             echo "</div>";
         }
     }
@@ -78,7 +84,11 @@
 		</section>
 	</div> -->
 	
-	<div class="pagina-cion">	
+
+
+
+
+	<!-- <div class="pagina-cion">	
 		<ul id="pagination-digg">
 			<li class="previous-off">«</li>
 			<li class="active">1</li>
@@ -90,7 +100,7 @@
 			<li><a href="?page=7">7</a></li>
 			<li class="next"><a href="?page=8">»</a></li>
 		</ul>
-	</div>
+	</div> -->
 
 	</div> <!-- cierre contenido  -->
 

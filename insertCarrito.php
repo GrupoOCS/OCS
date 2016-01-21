@@ -18,6 +18,8 @@
 		}
 	}
 
+	$tag = $db->exec("UPDATE producto SET tag=tag+1 WHERE producto.id=".$idp.";");
+
 	$car = $db->query("select sum(cantidad) from carrito where id_cliente=".$idc.";");
 	foreach ($car-> fetchAll(PDO::FETCH_NUM) as $row ){
 		printf ("(%s)",$row[0]);
