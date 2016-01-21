@@ -10,7 +10,7 @@
 
 	 	<div class="wholeSesion">
             <div id="error"></div>
-	 		<table class="carrito">
+	 		<table class="sesion">
                 <tr>
                 	<td colspan="2" align="center"><h3 align="center">Iniciar Sesión</h3></td>
                 </tr>
