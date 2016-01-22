@@ -51,7 +51,10 @@
 				foreach ($prodimg-> fetchAll(PDO::FETCH_NUM) as $r) {
 					printf ("<a href=\"DescripcionProducto.php?id=%s\"><img href=\"#\" class=\"producto\" src=\"%s\"></a>", $row[0], $r[0]);
 				}
-				printf ("<div class=\"nombre_producto\">%s</div>", $row[1]);
+				$c = substr($row[1], 0, 45);
+				if (strlen($row[1]) > 45)
+					$c = $c."...";
+				printf ("<div class=\"nombre_producto\">%s</div>", $c);
 				printf ("<div class=\"precio_producto\">$%s</div>", $row[2]);
 				
 				if ($_SESSION['nom_usu']){

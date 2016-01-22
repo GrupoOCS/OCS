@@ -114,17 +114,19 @@
 	?>
 	<div class="desc-agregar">
 		<div class="d-cantidad">
-			<fieldset class="field">
-			<!-- <form> -->
-			<label style="position:relative; height:25%; padding:4%; float:left; width:42%;">
-				Cantidad:</label>
-			<input id="num" name="cantidad" value="1" style=" position:relative; float:left; width:50%" type="number" class="form-control" min="1">
-			
-			<?php
-			printf ("<a href=\"#\" onClick=\"insertarCarrito(".$_SESSION['id_usu'].",".$id.",num.value);\"><img class=\"b_add_car\" src=\"Iconos/bagregar.png\"></a>");
-			?>
-		<!-- </form> -->
-		</fieldset>
+			<!-- <fieldset class="field"> -->
+				<!-- <form> -->
+				<label style="position:relative; height:25%; padding:4%; float:left; width:42%;">
+					Cantidad:</label>
+				<input id="num" name="cantidad" value="1" style=" position:relative; float:left; width:50%" type="number" class="form-control" min="1">
+		</div>
+		<div class="d-agrega">
+				<?php
+				// printf ("<a href=\"#\" onClick=\"insertarCarrito(".$_SESSION['id_usu'].",".$id.",num.value);\"><img class=\"b_add_car\" src=\"Iconos/bagregar.png\"></a>");
+				printf ("<a href=\"#\" onClick=\"insertarCarrito(".$_SESSION['id_usu'].",".$id.",num.value);\"><input type=\"submit\" class=\"btn-buscar\" value=\"Agregar al carrito\"></a>");
+				?>
+			<!-- </form> -->
+			<!-- </fieldset> -->
 		</div>
 	</div>
 	<?php } ?>

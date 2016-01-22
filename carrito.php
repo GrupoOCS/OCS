@@ -25,6 +25,22 @@
 	<div class="contenido">
 		<div class="wholeCarrito">	
 
+			<?php
+        		$db = Conectar();
+				$query = "SELECT * FROM  carrito where id_cliente=".$_SESSION['id_usu'];
+				$res = $db->query($query);
+				$total = 0;
+				$iva=0;
+				$descuento = 0;
+				foreach($res->fetchAll(PDO::FETCH_ASSOC) as $row){	
+					$query2 = "SELECT nombre,precio FROM producto WHERE id = '".$row["id_producto"]."'";
+					$res2 = $db->query($query2);
+					foreach($res2->fetchAll(PDO::FETCH_ASSOC) as $row2)
+						$total += $row["cantidad"] * $row2["precio"];
+					$iva = $total * 0.16;
+				}
+			?>
+
 			<div class="tabla_carrito resumen">
 				<table class="carrito">
 					<tr>
@@ -52,6 +68,8 @@
 				</table>
 			</div>
 
+
+
 			<div class="tabla_descripcion">
 				<table class="table table-hover">
 					
@@ -67,12 +85,8 @@
 					
 							<?php
 								// include 'abrirConexion.php';
-		                		$db = Conectar();
 								$query = "SELECT * FROM  carrito where id_cliente=".$_SESSION['id_usu'];
 								$res = $db->query($query);
-								$total = 0;
-								$iva=0;
-								$descuento = 0;
 								foreach($res->fetchAll(PDO::FETCH_ASSOC) as $row)
 								{	
 									print'<tr class="fondo">';
@@ -87,7 +101,7 @@
 									$res3 = $db->query($query3);
 									foreach($res3->fetchAll(PDO::FETCH_ASSOC) as $row3) 
 									{
-										print '<td style="text-align: center;" ><img class="imagen_resumen" src="'.$row3["nombre"].'" ></td>';
+										print '<td style="text-align: center;" ><a href="DescripcionProducto.php?id='.$row["id_producto"].'"><img class="imagen_resumen" src="'.$row3["nombre"].'" ></a></td>';
 									}
 									$query2 = "SELECT nombre,precio FROM producto WHERE id = '".$row["id_producto"]."'";
 									$res2 = $db->query($query2);
@@ -96,7 +110,6 @@
 										print '<td style="text-align: center;" class="tabla_carrito">'.$row2["nombre"].'</td>';
 										print '<td style="text-align: center;" class="tabla_carrito">$ '.$row2["precio"].'.00</td>';
 										print '<td style="text-align: center;" class="tabla_carrito">$'.$row["cantidad"] * $row2["precio"].'.00</td>';
-										$total += $row["cantidad"] * $row2["precio"];
 									
 										print '<td style="text-align: center;"><form method="POST" action="elim_carrito.php">
 										<input type="hidden" name="id_p" value="'.$row["id_producto"].'">
@@ -106,7 +119,6 @@
 									}							
 									//print "<br>";
 									print '</tr>';
-									$iva = $total * 0.16;
 								}
 								
 
@@ -116,6 +128,12 @@
 				
 				</table>
 			</div>
+
+
+
+
+
+
 			<!-- <div class="tabla_espacio"></div> -->
 		</div>
 
