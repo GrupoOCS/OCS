@@ -25,32 +25,7 @@
 	<div class="contenido">
 		<div class="wholeCarrito">	
 
-			<div class="tabla_carrito resumen">
-				<table class="carrito">
-					<tr>
-						<td align="left">Subtotal: </td>
-						<td align="right" width="200"><?php echo "$ ".$total.".00" ?></td>
-					</tr>
-					<tr>
-						<td>IVA(16%):</td>
-						<td align="right" width="200"><?php echo "$ ".$iva ."0"?></td>
-					</tr>
-					<tr>
-						<td>Descuento (0%):</td>
-						<td align="right" width="200"><?php echo "$ ".$total * $descuento .".00"?></td>
-					</tr>
-					<tr>
-						<td>Total: </td>
-						<td align="right" width="200"><?php echo "$ ".($total + $iva)."0"?></td>
-					</tr>
-					<tr>
-						<td></td><td align="right">
-						<form action="direccion.php">
-							<button class="btn mediano" type="submit">Comprar</button>
-						</form></td>
-					</tr>
-				</table>
-			</div>
+			
 
 			<div class="tabla_descripcion">
 				<table class="table table-hover">
@@ -114,6 +89,32 @@
 							
 							<!--<td><img class="carro_compra"src="compu.png"></td> -->
 				
+				</table>
+			</div>
+			<div class="tabla_carrito resumen">
+				<table class="carrito">
+					<tr>
+						<td align="left">Subtotal: </td>
+						<td align="right" width="200"><?php echo "$ ".$total.".00" ?></td>
+					</tr>
+					<tr>
+						<td>IVA(16%):</td>
+						<td align="right" width="200"><?php echo "$ ".$iva ."0"?></td>
+					</tr>
+					<tr>
+						<td>Descuento (0%):</td>
+						<td align="right" width="200"><?php echo "$ ".$total * $descuento .".00"?></td>
+					</tr>
+					<tr>
+						<td>Total: </td>
+						<td align="right" width="200"><?php echo "$ ".($total + $iva)."0"?></td>
+					</tr>
+					<tr>
+						<td></td><td align="right">
+						<form action="direccion.php">
+							<button class="btn mediano" type="submit">Comprar</button>
+						</form></td>
+					</tr>
 				</table>
 			</div>
 			<!-- <div class="tabla_espacio"></div> -->

@@ -1,4 +1,7 @@
-<?php include('encabezado.php'); ?>
+<?php include('encabezado.php'); 
+
+
+?>
 
 <div class="contenido">
 	<div class="wholeTipoPago">
@@ -32,11 +35,11 @@
 								</tr>
 								<tr>
 									<td><label>Autorizacion</label></td>
-									<td>	<input type="text" class="form-control" name="autorizacion" value="numAutorizacion"></td>
+									<td>	<input type="text" class="form-control" name="autorizacion" Placeholder="numAutorizacion"></td>
 								</tr>
 								<tr>
 									<td>Referencia</td>
-									<td><input type="text" class="form-control" name="referencia" value="numReferencia"></td>
+									<td><input type="text" class="form-control" name="referencia" PlaceHolder="numReferencia"></td>
 								</tr>
 								<tr>
 									<td>
