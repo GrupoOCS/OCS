@@ -480,7 +480,7 @@ div.wholeDireccion{
 div.wholeRegistro{
 	position: relative;
 	width: 30%;
-	height: 82%;
+	height: auto;
 	background-color: #dadada;
 	margin-left: 32%;
 	top: 3%;
@@ -563,10 +563,6 @@ table.sesion{
 }
 .btn.mediano.cancelar{
 	  background-color: #cf2430;
-  	border-color: #cf2430;
-}
-.btn.grande.cancelar{
-	 background-color: #cf2430;
   	border-color: #cf2430;
 }
 .contacto{
@@ -729,20 +725,47 @@ footer{
 
 
 /*Paginacion*/
-
-div.page {
-    width: 95%;
+div.resultados {
+    width: 60%;
     height: 5%;
-    padding-left: 20%;
-    padding-right: 20%;
+    padding: 0% 0% 4% 5%;
+    background-color: transparent;
+    float: left;
+    margin: 1% 0% 1% 6%;
+    border-style: solid;
+    border-width: 0px 0px 1px 0px;
+}
+div.prod_pagina {
+    width: 30%;
+    height: 5%;
+    padding: 0% 0% 4% 5%;
+    background-color: transparent;
+    float: left;
+    margin: 1% 1% 1% 0%;
+    border-style: solid;
+    border-width: 0px 0px 1px 0px;
+}
+div.page {
+    width: 75%;
+    height: 5%;
+    padding-left: 40%;
+    padding-right: auto;
+    background-color: transparent;
+    float: left;
+    margin: -5% 0% 1% 0%;
+}
+div.page_fin {
+    width: 75%;
+    height: 5%;
+    padding-left: 40%;
+    padding-right: auto;
     background-color: transparent;
     float: left;
     margin: 1%;
 }
-
 .paginate {
 	font-family: Arial, Helvetica, sans-serif;
-	font-size: .7em;
+	font-size: 18px;
 }
 a.paginate {
 	border: 1px solid #1abc9c;
@@ -757,7 +780,7 @@ a.paginate:hover {
 }
 a.current {
 	border: 1px solid #000080;
-	font: bold .7em Arial,Helvetica,sans-serif;
+	font: bold 18px Arial,Helvetica,sans-serif;
 	padding: 6px 10px 5px 10px;
 	cursor: default;
 	background:#1abc9c;

@@ -17,7 +17,7 @@ class Paginator{
 	{
 		$this->current_page = 1;
 		$this->mid_range = 7;
-		$this->ipp_array = array(8,16,24,32,40,48,'All');
+		$this->ipp_array = array(4,8,16,24,32,40,48,'All');
 		$this->items_per_page = (!empty($_GET['ipp'])) ? $_GET['ipp']:$this->default_ipp;
 	}
  
@@ -98,12 +98,15 @@ class Paginator{
 		if($this->current_page <= 0) $this->items_per_page = 0;
 		$this->limit = ($_GET['ipp'] == 'All') ? "":" LIMIT $this->low,$this->items_per_page";
 	}
+	function display_total_results(){
+		return "<span class=\"paginate\">Encontramos: ".$this->items_total." productos</span>\n";
+	}
 	function display_items_per_page()
 	{
 		$items = '';
 		if(!isset($_GET[ipp])) $this->items_per_page = $this->default_ipp;
 		foreach($this->ipp_array as $ipp_opt) $items .= ($ipp_opt == $this->items_per_page) ? "<option selected value=\"$ipp_opt\">$ipp_opt</option>\n":"<option value=\"$ipp_opt\">$ipp_opt</option>\n";
-		return "<span class=\"paginate\">Resultados por página:</span><select class=\"paginate\" onchange=\"window.location='$_SERVER[PHP_SELF]?page=1&ipp='+this[this.selectedIndex].value+'$this->querystring';return false\">$items</select><span class=\"paginate\"> de: </span>".$this->items_total."\n";
+		return "<span class=\"paginate\">Productos por página:</span><select class=\"paginate\" onchange=\"window.location='$_SERVER[PHP_SELF]?page=1&ipp='+this[this.selectedIndex].value+'$this->querystring';return false\">$items</select>\n";
 	}
 	function display_jump_menu()
 	{

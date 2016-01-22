@@ -54,19 +54,22 @@
     $pages->mid_range = 7;
     $pages->paginate();
 
-    echo '<div class="page">';
-	echo $pages->display_pages();
-	echo '</div><div class="page">';
-	// echo $pages->display_jump_menu();
+    echo '<div class="resultados">';
+    echo $pages->display_total_results();
+	echo '</div><div class="prod_pagina">';
 	echo $pages->display_items_per_page();
+	echo '</div><div class="page">';
+	echo $pages->display_pages();
 	echo '</div>';
+
+	// echo $pages->display_jump_menu();
 
 	if (isset($_GET['page'])) 
 		$pagina = $_GET['page'];
 	else $pagina = 1;
 
 	$min = ($pagina - 1 ) * $pages->items_per_page;
-	$max = $pagina*$pages->items_per_page;
+	$max = $pages->items_per_page;
 
 	if ($pages->items_per_page == "All")
 		$query = $query;
@@ -97,7 +100,7 @@
         }
     }
 
-    echo '<div class="page">';
+    echo '<div class="page_fin">';
 	echo $pages->display_pages();
 	// echo '</div><div class="page">';
 	// echo $pages->display_jump_menu();
