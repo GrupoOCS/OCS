@@ -56,15 +56,23 @@
                     <td align="right">Destinatario:</td>                         
                     <td><input name="Colonia" class="form-control" placeholder="Destinatario" ></td>
                 </tr>
-                <tr>
-                </tr>
-                <br>
+
+                
 				<tr>
-			     <td></td><td align="right"><input 	  name="Guardar" class="btn mediano" type="submit" value="Guardar" /></td>
+			     <td></td ><td rowspan="2" align="right"><input 	  name="Guardar" class="btn mediano" type="submit" value="Guardar" /></td>
 			    </tr>
 			    </form>
+			    <tr>
+			    <td> 
+			    <form action="direccion.php">
+				<center><input type="submit" class="btn mediano cancelar" value="cancelar"> </center>
+				</form>
+			    </td>
+			    <td></td>
+			    </tr>
 			</table>
 				</div>
+				
 				</div>
 		
 		';
