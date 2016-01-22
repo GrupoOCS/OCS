@@ -561,6 +561,10 @@ table.sesion{
 
 
 }
+.btn.mediano.cancelar{
+	  background-color: #cf2430;
+  	border-color: #cf2430;
+}
 .contacto{
 	width:20px;
 	height:18px;

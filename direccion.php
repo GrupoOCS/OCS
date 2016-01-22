@@ -53,6 +53,10 @@
 			      <td align="right">Código Postal:</td>                         
                     <td><label for="cp" >&nbsp '.$row["cp"].'</label></td>
 			    </tr>
+			    	<tr>
+			      <td align="right">Teléfono:</td>                         
+                    <td><label for="cp" >&nbsp '.$row["telefono"].'</label></td>
+			    </tr>
 				<tr>
                     <td align="right">Destinatario:</td>                         
                     <td><label for="destinatario" >&nbsp '.$row["destinatario"].'</label></td>
