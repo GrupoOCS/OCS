@@ -108,8 +108,8 @@ a.agrega_carrito {
     height: 65px;
 }
 .b_add_car {
-    width: 100px;
-    height: 55px;
+    width: 150px;
+    height: 35px;
 }
 div.desc-imagen{
 	width: 40%;
@@ -133,19 +133,29 @@ p.texto-descripcion{
 
 }
 div.desc-agregar{
-	width: 100%;
-	height: 26%;
+	width: 90%;
+	height: 10%;
 
 	float: left;	
 	position: relative;
+	margin-top: 5%;
+    margin-left: 10%;
 }
 div.d-cantidad{
-position: relative;
-width: 90%;
-height: 10%;
-margin-left: 5%;
-top:15%;
-float: left;
+	position: relative;
+	width: 25%;
+	height: 55%;
+	margin-left: 10%;
+	top:22%;
+	float: left;
+}
+div.d-agrega{
+	position: relative;
+	width: 35%;
+	height: 55%;
+	margin-left: 5%;
+	top:15%;
+	float: left;
 }
 fieldset.field{
 border-color:#1abc9c;
@@ -495,7 +505,7 @@ div.wholeDireccionEnvio{
 div.wholeTipoPago{
 	position: relative;
 	width: 60%;
-	height: 50%;
+	height: auto;
 	/*background-color: #dadada;*/
 	margin-left: 20%;
 	top: 15%;
