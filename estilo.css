@@ -291,6 +291,10 @@ a.enlace {
     font-size: 11pt;
     position: relative;
 }
+a.enlace.negro{
+	color:#2a7fa4;
+	text-align: center;
+}
 a.enlace-active{
 	width: 100%;
 	height: 100%;

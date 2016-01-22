@@ -69,26 +69,30 @@
 					<tr>
 						<td onClick="desplegar('tabla_a_desplegar2','estadoT2')">
 							<center>
-								<h3>Targeta de débito</h3>		
+								<h3>Tarjeta de débito</h3>		
 								<p><IMG SRC="img\baco.jpg"> </p>
 							</center>
 						</td>
 					</tr>
 					<tr>
 						<td>
-							<table  id="tabla_a_desplegar2" style="display: none;">
+							<center><table  id="tabla_a_desplegar2"   style="display: none;">
 								<form action="Cuenta.php" method="POST">
 								
-									 <tr>
-									 	<td><label>Nombre del titular de la tarjeta</label></td>
-										<td><label><center>Numero de tarjeta </center> </label></td>
-										<td><label >Fecha de vencimiento</label></td>
-										<td></td>
-										<td><label >Código de Seguridad</label></td>				
-									</tr>
-									<tr>
-										<td>	<input type="text" class="form-control" name="titular_targeta" value="MINOMBRE"></td>
-										<td>    <input type="text" class="form-control" name="numero_targeta" value="NUMS5445"></td>
+									
+									
+										<tr>
+											<td><label>Nombre del titular de la tarjeta: </label></td>
+											<td>	<input type="text" class="form-control" name="titular_tarjeta" placeholder="Nombre"></td>
+										
+										</tr>
+										<tr>
+											<td><label><center>Número de tarjeta: </center> </label></td>
+											<td>    <input type="text" class="form-control" name="numero_tarjeta" placeholder="Numero de tarjeta"></td>
+										
+											</tr>
+										<tr>
+												<td><label >Mes de Vencimiento: </label></td>
 										<td>
 											<select id="mes" class="form-control" name="mes">
 												<option value="1">01</option>
@@ -105,7 +109,10 @@
 												<option value="12">12</option>
 											</select>
 										</td>
-										<td>
+									</tr>
+										<tr>
+											<td><label >Año de Vencimiento: </label></td>
+											<td>
 											<select id="anio" class="form-control" name="anio">
 												<option value="2015">2015</option>
 												<option value="2016">2016</option>
@@ -121,13 +128,19 @@
 												<option value="2026">2026</option>
 											</select>
 										</td>
-										<td>    <input type="text" class="form-control" name="Codigo_targeta" value="000"></td>
-										<td>	
+									</tr>
+										<tr>
+											<td><label >Código de Seguridad: </label></td>
+										<td><input type="text" class="form-control" name="Codigo_tarjeta" placeholder="000" maxlength="3"></td>
+										</tr>
+										<tr >
+											<td colspan="2" align="center">	
 											<input type="submit" class="btn grande" value="Añadir a tu tarjeta">
 										</td>
 									</tr>
+									
 								
-								</table>
+								</table></center>
 							</form>
 						</td>
 					</tr>
