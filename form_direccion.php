@@ -12,16 +12,16 @@
                 </tr>
                 <tr>
                    	<td align="right">Número:</td>                         
-                    <td><input name="Numero" class="form-control" placeholder="Número" ></td>
+                    <td><input name="numero" class="form-control" placeholder="Número" ></td>
                 </tr>
                 <tr>
                     <td align="right">Colonia:</td>                         
-                    <td><input name="Colonia" class="form-control" placeholder="Colonia" ></td>
+                    <td><input name="colonia" class="form-control" placeholder="Colonia" ></td>
                 </tr>
 			    <tr>
 			      	<td align="right">Estado: </td>
 			      	<td>
-			    		<select name="Estado"  class="form-control" >
+			    		<select name="estado"  class="form-control" >
 					        <option value="1">Aguascalientes</option> 
 					        <option value="2">Baja California</option> 
 					        <option value="3">Baja California Sur</option>
@@ -36,7 +36,7 @@
 			    <tr>
 			    	<td align="right">Municipio:</td> 
 			    	<td>
-			      		<select name="Ciudad"  class="form-control" >
+			      		<select name="municipio"  class="form-control" >
 					        <option value="1">San José de Gracia</option> 
 					        <option value="2">Mexicali</option> 
 					        <option value="3">Baja California Sur</option>
@@ -50,21 +50,29 @@
 			  	</tr>
 			  	<tr>
 			      	<td align="right">CP:</td>
-			      	<td><input  placeholder="Código Postal" class="form-control"  name="CP" type="text" /></td>
+			      	<td><input  placeholder="Código Postal" class="form-control"  name="cp" type="text" /></td>
 			    </tr>
 				<tr>
                     <td align="right">Destinatario:</td>                         
-                    <td><input name="Colonia" class="form-control" placeholder="Destinatario" ></td>
+                    <td><input name="destinatario" class="form-control" placeholder="Destinatario" ></td>
                 </tr>
-                <tr>
-                </tr>
-                <br>
+
+                
 				<tr>
-			     <td></td><td align="right"><input 	  name="Guardar" class="btn mediano" type="submit" value="Guardar" /></td>
+			     <td></td ><td rowspan="2" align="right"><input 	  name="Guardar" class="btn mediano" type="submit" value="Guardar" /></td>
 			    </tr>
 			    </form>
+			    <tr>
+			    <td> 
+			    <form action="direccion.php">
+				<center><input type="submit" class="btn mediano cancelar" value="cancelar"> </center>
+				</form>
+			    </td>
+			    <td></td>
+			    </tr>
 			</table>
 				</div>
+				
 				</div>
 		
 		';

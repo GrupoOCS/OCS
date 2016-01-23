@@ -1,5 +1,12 @@
 <?php include('encabezado.php'); 
 
+echo $_POST["calle"];
+echo $_POST["numero"];
+echo $_POST["colonia"];
+echo $_POST["estado"];
+echo $_POST["municipio"];
+echo $_POST["cp"];
+echo $_POST["destinatario"];
 
 ?>
 
@@ -20,7 +27,7 @@
 			<table >
 				<tr>
 					<th onClick="desplegar('tabla_a_desplegar','estadoT')" align="center">
-						<h3>Pago en efectivo<h3>
+						<h3>Pago en Ventanilla<h3>
 					</th>
 				</tr>
 
@@ -69,7 +76,7 @@
 					<tr>
 						<td onClick="desplegar('tabla_a_desplegar2','estadoT2')">
 							<center>
-								<h3>Tarjeta de débito</h3>		
+								<h3>Pago con Tarjeta</h3>		
 								<p><IMG SRC="img\baco.jpg"> </p>
 							</center>
 						</td>
