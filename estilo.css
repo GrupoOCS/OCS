@@ -120,10 +120,11 @@ div.desc-imagen{
 }
 div.desc-texto{
 	width: 60%;
-	height: auto;
+	height: 65%;
 	position: relative;
 	float: left;
 	margin-top: 0%;
+	overflow-y: auto;
 }
 p.texto-descripcion{
 	text-align: justify;
@@ -140,6 +141,7 @@ div.desc-agregar{
 	position: relative;
 	margin-top: 5%;
     margin-left: 10%;
+    margin-bottom: 3%;
 }
 div.d-cantidad{
 	position: relative;
@@ -152,7 +154,7 @@ div.d-cantidad{
 div.d-agrega{
 	position: relative;
 	width: 35%;
-	height: 55%;
+	height: 85%;
 	margin-left: 5%;
 	top:15%;
 	float: left;
@@ -334,7 +336,7 @@ img.producto:hover{
 	margin-bottom: 0%;
 }
 div.contenido{
-	overflow: auto;
+	overflow: hidden;
 	background-color: white;
 	height: auto;
 	min-height: 69.5%;
@@ -446,8 +448,7 @@ div.tabla_espacio{
 }
 
 input[type="number"]{
-	width: 40%;
-
+	width: 100%;
 }
 tr.fondo:hover{
 	background-color:#A1A0A0;
@@ -515,15 +516,15 @@ div.wholeTipoPago{
 	top: 15%;
 	border-radius: 10px;
 }
-div.wholeSesion{
-	position: relative;
-	width: 16%;
-	height: 26%;
-	background-color: #dadada;
-	margin-left: 40%;
-	margin-top: 10%;
-	border-radius: 10px;
-	padding: 2%
+div.wholeSesion {
+    position: relative;
+    width: 50%;
+    height: 50%;
+    background-color: #dadada;
+    margin-left: 25%;
+    margin-top: 5%;
+    border-radius: 10px;
+    padding: 2%;
 }
 table.carrito{
 	border: none;
@@ -573,8 +574,8 @@ table.sesion{
 }
 
 .icono_sesion{
-	width:30px;
-	height:25px;
+	width:40px;
+	height:35px;
 	background-color: #1abc9c;
 }
 
@@ -755,13 +756,15 @@ div.page {
     margin: -5% 0% 1% 0%;
 }
 div.page_fin {
-    width: 75%;
+    width: 90%;
     height: 5%;
-    padding-left: 40%;
-    padding-right: auto;
+    padding: 3.5% 0% 0% 0%;
+    text-align: center;
     background-color: transparent;
-    float: left;
-    margin: 1%;
+    float: right;
+    margin: 0% 4% 4% 0%;
+    border-style: solid;
+    border-width: 1px 0px 0px 0px;
 }
 .paginate {
 	font-family: Arial, Helvetica, sans-serif;
@@ -771,7 +774,7 @@ a.paginate {
 	border: 1px solid #1abc9c;
 	padding: 6px 10px 5px 10px;
 	text-decoration: none;
-	color: #000080;
+	color: #617071;
 }
 a.paginate:hover {
 	background-color: #1abc9c;
@@ -779,7 +782,7 @@ a.paginate:hover {
 	text-decoration: underline;
 }
 a.current {
-	border: 1px solid #000080;
+	border: 1px solid #617071;
 	font: bold 18px Arial,Helvetica,sans-serif;
 	padding: 6px 10px 5px 10px;
 	cursor: default;
@@ -790,8 +793,8 @@ a.current {
 span.inactive {
 	border: 1px solid #999;
 	font-family: Arial, Helvetica, sans-serif;
-	font-size: .7em;
-	padding: 2px 6px 2px 6px;
+	font-size: 18px;
+	padding: 6px 10px 5px 10px;
 	color: #999;
 	cursor: default;
 }

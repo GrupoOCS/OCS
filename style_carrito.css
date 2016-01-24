@@ -1,7 +1,8 @@
 
 ::-webkit-scrollbar{
   width: 10px;
-  background: #dbe8ec;
+  /*background: #dbe8ec;*/
+  background: white;
 }
 ::-webkit-scrollbar-button{
   width:8px;

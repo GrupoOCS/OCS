@@ -46,27 +46,29 @@
 			          	$query = "select imagen.nombre from imagen where imagen.id_producto=".$_GET['id'].";";
 			          	$resimg = $db->query( $query );
 			            $n=$resimg->rowCount();
-			            for ($i=0; $i<$n; $i++){
-			              if ($i==0) printf ("<li data-target=\"#carousel-example-generic\" data-slide-to=\"0\"  class=\"active\"></li>");
-			              else printf ("<li data-target=\"#carousel-example-generic\" data-slide-to=\"%s\"></li>", $i);
+			            // for ($i=0; $i<$n; $i++){
+			            $i=0;
+			            foreach ($resimg-> fetchAll(PDO::FETCH_NUM) as $r ){
+			              if ($i==0) printf ("<li data-target=\"#carousel-example-generic\" data-slide-to=\"0\"  class=\"active\"><img  src=\"%s\" /></li>",$r[0]);
+			              else printf ("<li data-target=\"#carousel-example-generic\" data-slide-to=\"%s\"><img  src=\"%s\" /></li>", $i, $r[0]);
+			              $i++;
 			            }
 			          ?>
 			        </ol>
 
 			        <!-- Wrapper for slides -->
 			        <div class="carousel-inner" role="listbox">
-
 			        <?php			          
 			          $i=1;
+			          $resimg = $db->query( $query );
 			          foreach ($resimg-> fetchAll(PDO::FETCH_NUM) as $r ){
 			              if ($i==1){
-			                print('<div class="item active">');
+			              	print('<div class="item active">');
 			                printf('<center><img  src="%s" /></center></div>', $r[0]);
 			              } else {
 			                print('<div class="item">');
 			                printf('<center><img  src="%s"/></center></div>',$r[0]);
 			              }
-			              
 			              $i=$i+1;
 			          }
 			        ?>

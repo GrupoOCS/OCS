@@ -51,16 +51,17 @@
 	
 	$pages= new Paginator;
     $pages->items_total = $res->rowCount(); // cambiamos X por el total
-    $pages->mid_range = 7;
+    $pages->mid_range = 5; 
     $pages->paginate();
 
     echo '<div class="resultados">';
     echo $pages->display_total_results();
 	echo '</div><div class="prod_pagina">';
 	echo $pages->display_items_per_page();
-	echo '</div><div class="page">';
-	echo $pages->display_pages();
 	echo '</div>';
+	// echo '</div><div class="page">';
+	// echo $pages->display_pages();
+	// echo '</div>';
 
 	// echo $pages->display_jump_menu();
 
@@ -71,7 +72,7 @@
 	$min = ($pagina - 1 ) * $pages->items_per_page;
 	$max = $pages->items_per_page;
 
-	if ($pages->items_per_page == "All")
+	if ($pages->items_per_page == "Todos")
 		$query = $query;
 	else $query = $query." limit ".$min." , ".$max;
 	$res = $db->query($query);

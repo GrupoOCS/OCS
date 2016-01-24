@@ -17,14 +17,14 @@ class Paginator{
 	{
 		$this->current_page = 1;
 		$this->mid_range = 7;
-		$this->ipp_array = array(4,8,16,24,32,40,48,'All');
+		$this->ipp_array = array(4,8,16,24,32,40,48,'Todos');
 		$this->items_per_page = (!empty($_GET['ipp'])) ? $_GET['ipp']:$this->default_ipp;
 	}
  
 	function paginate()
 	{
 		if(!isset($this->default_ipp)) $this->default_ipp=8;
-		if($_GET['ipp'] == 'All')
+		if($_GET['ipp'] == 'Todos')
 		{
 			$this->num_pages = 1;
 //			$this->items_per_page = $this->default_ipp;
@@ -54,9 +54,9 @@ class Paginator{
 				if($key != "page" And $key != "ipp") $this->querystring .= "&$key=$val";
 			}
 		}
-		if($this->num_pages > 10)
+		if($this->num_pages > 3)
 		{
-			$this->return = ($this->current_page > 1 And $this->items_total >= 10) ? "<a class=\"paginate\" href=\"$_SERVER[PHP_SELF]?page=$prev_page&ipp=$this->items_per_page$this->querystring\">&laquo; Previous</a> ":"<span class=\"inactive\" href=\"#\">&laquo; Previous</span> ";
+			$this->return = ($this->current_page > 1 And $this->items_total >= 10) ? "<a class=\"paginate\" href=\"$_SERVER[PHP_SELF]?page=$prev_page&ipp=$this->items_per_page$this->querystring\">&laquo; Anterior</a> ":"<span class=\"inactive\" href=\"#\">&laquo; Anterior</span> ";
  
 			$this->start_range = $this->current_page - floor($this->mid_range/2);
 			$this->end_range = $this->current_page + floor($this->mid_range/2);
@@ -79,12 +79,12 @@ class Paginator{
 				// loop through all pages. if first, last, or in range, display
 				if($i==1 Or $i==$this->num_pages Or in_array($i,$this->range))
 				{
-					$this->return .= ($i == $this->current_page And $_GET['page'] != 'All') ? "<a title=\"Go to page $i of $this->num_pages\" class=\"current\" href=\"#\">$i</a> ":"<a class=\"paginate\" title=\"Go to page $i of $this->num_pages\" href=\"$_SERVER[PHP_SELF]?page=$i&ipp=$this->items_per_page$this->querystring\">$i</a> ";
+					$this->return .= ($i == $this->current_page And $_GET['page'] != 'Todos') ? "<a title=\"Go to page $i of $this->num_pages\" class=\"current\" href=\"#\">$i</a> ":"<a class=\"paginate\" title=\"Go to page $i of $this->num_pages\" href=\"$_SERVER[PHP_SELF]?page=$i&ipp=$this->items_per_page$this->querystring\">$i</a> ";
 				}
 				if($this->range[$this->mid_range-1] < $this->num_pages-1 And $i == $this->range[$this->mid_range-1]) $this->return .= " ... ";
 			}
-			$this->return .= (($this->current_page < $this->num_pages And $this->items_total >= 10) And ($_GET['page'] != 'All') And $this->current_page > 0) ? "<a class=\"paginate\" href=\"$_SERVER[PHP_SELF]?page=$next_page&ipp=$this->items_per_page$this->querystring\">Next &raquo;</a>\n":"<span class=\"inactive\" href=\"#\">&raquo; Next</span>\n";
-			$this->return .= ($_GET['page'] == 'All') ? "<a class=\"current\" style=\"margin-left:10px\" href=\"#\">All</a> \n":"<a class=\"paginate\" style=\"margin-left:10px\" href=\"$_SERVER[PHP_SELF]?page=1&ipp=All$this->querystring\">All</a> \n";
+			$this->return .= (($this->current_page < $this->num_pages And $this->items_total >= 10) And ($_GET['page'] != 'Todos') And $this->current_page > 0) ? "<a class=\"paginate\" href=\"$_SERVER[PHP_SELF]?page=$next_page&ipp=$this->items_per_page$this->querystring\">Siguiente &raquo;</a>\n":"<span class=\"inactive\" href=\"#\">&raquo; Siguiente</span>\n";
+			// $this->return .= ($_GET['page'] == 'All') ? "<a class=\"current\" style=\"margin-left:10px\" href=\"#\">All</a> \n":"<a class=\"paginate\" style=\"margin-left:10px\" href=\"$_SERVER[PHP_SELF]?page=1&ipp=All$this->querystring\">All</a> \n";
 		}
 		else
 		{
@@ -92,11 +92,11 @@ class Paginator{
 			{
 				$this->return .= ($i == $this->current_page) ? "<a class=\"current\" href=\"#\">$i</a> ":"<a class=\"paginate\" href=\"$_SERVER[PHP_SELF]?page=$i&ipp=$this->items_per_page$this->querystring\">$i</a> ";
 			}
-			$this->return .= "<a class=\"paginate\" href=\"$_SERVER[PHP_SELF]?page=1&ipp=All$this->querystring\">All</a> \n";
+			$this->return .= "<a class=\"paginate\" href=\"$_SERVER[PHP_SELF]?page=1&ipp=All$this->querystring\">Todos</a> \n";
 		}
 		$this->low = ($this->current_page <= 0) ? 0:($this->current_page-1) * $this->items_per_page;
 		if($this->current_page <= 0) $this->items_per_page = 0;
-		$this->limit = ($_GET['ipp'] == 'All') ? "":" LIMIT $this->low,$this->items_per_page";
+		$this->limit = ($_GET['ipp'] == 'Todos') ? "":" LIMIT $this->low,$this->items_per_page";
 	}
 	function display_total_results(){
 		return "<span class=\"paginate\">Encontramos: ".$this->items_total." productos</span>\n";
