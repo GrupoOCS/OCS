@@ -4,7 +4,7 @@
 	<!-- <link rel="stylesheet" type="text/css" href="bootstrap.min.css"> -->
 	<script>
 		function addp(val,id_cli,id_pro){
-
+			console.log(val);
 			$.ajax({
 
 				type: "POST",
@@ -42,30 +42,33 @@
 			?>
 
 			<div class="tabla_carrito resumen">
-				<table class="carrito">
+				<center><table class="carrito">
 					<tr>
 						<td align="left">Subtotal: </td>
-						<td align="right" width="200"><?php echo "$ ".$total.".00" ?></td>
+
+						 
+						
+						<td align="right" width="200">$<?php echo number_format(round($total,2), 2); ?></td>
 					</tr>
 					<tr>
 						<td>IVA(16%):</td>
-						<td align="right" width="200"><?php echo "$ ".$iva ."0"?></td>
+						<td align="right" width="200">$<?php echo number_format(round($iva,2), 2);?></td>
 					</tr>
 					<tr>
 						<td>Descuento (0%):</td>
-						<td align="right" width="200"><?php echo "$ ".$total * $descuento .".00"?></td>
+						<td align="right" width="200">$<?php echo number_format(round($total*$descuento,2), 2);?></td>
 					</tr>
 					<tr>
 						<td>Total: </td>
-						<td align="right" width="200"><?php echo "$ ".($total + $iva)."0"?></td>
+						<td align="right" width="200">$<?php echo number_format(round($total+$iva,2), 2);?></td>
 					</tr>
 					<tr>
 						<td></td><td align="right">
 						<form action="direccion.php">
-							<button class="btn mediano" type="submit">Comprar</button>
+							<button class="btn mediano" type="submit" <?php if($res->rowCount()<=0) echo "disabled" ?>>Comprar</button>
 						</form></td>
 					</tr>
-				</table>
+				</table></center>
 			</div>
 
 
@@ -94,25 +97,34 @@
 									$max="SELECT cantidad FROM producto WHERE id='".$row["id_producto"]."'";
 									$resmax=$db->query($max);
 									foreach ($resmax->fetchAll(PDO::FETCH_ASSOC) as $row2) {
-										print "<td style='text-align: center;' class='tabla_carrito' width='100'><input type='number' max='".$row2['cantidad']."' onchange='addp(this.value, ".$_SESSION['id_usu'].", ".$row['id_producto'].")' min='1' value='".$row["cantidad"]."'></td>";
+										$max = $row2['cantidad'];
 									}
+									?>
+									<td style="text-align: center;	vertical-align: middle;">
+										<?php print "<select id='num' onchange='addp(this.value, ".$_SESSION['id_usu'].", ".$row['id_producto'].")'>"; ?>
+										<?php for ($i=1; $i <=$max; $i++) { ?>
+											<option value="<?php echo $i ?>" <?php if($i==$row["cantidad"]) echo "selected"?>><?php echo $i ?></option>
+										<?php } ?>
+										</select>
+									</td>
 									
+									<?php
 									//Falta realizar la consulta de la imagen
 									$query3 = "SELECT nombre FROM imagen WHERE id_producto = '".$row["id_producto"]."' limit 1";
 									$res3 = $db->query($query3);
 									foreach($res3->fetchAll(PDO::FETCH_ASSOC) as $row3) 
 									{
-										print '<td style="text-align: center;" ><a href="DescripcionProducto.php?id='.$row["id_producto"].'"><img class="imagen_resumen" src="'.$row3["nombre"].'" ></a></td>';
+										print '<td style="vertical-align: middle;text-align: center;" ><a href="DescripcionProducto.php?id='.$row["id_producto"].'"><img class="imagen_resumen" src="'.$row3["nombre"].'" ></a></td>';
 									}
 									$query2 = "SELECT nombre,precio FROM producto WHERE id = '".$row["id_producto"]."'";
 									$res2 = $db->query($query2);
 									foreach($res2->fetchAll(PDO::FETCH_ASSOC) as $row2) 
 									{
-										print '<td style="text-align: center;" class="tabla_carrito">'.$row2["nombre"].'</td>';
-										print '<td style="text-align: center;" class="tabla_carrito">$ '.$row2["precio"].'.00</td>';
-										print '<td style="text-align: center;" class="tabla_carrito">$'.$row["cantidad"] * $row2["precio"].'.00</td>';
+										print '<td style="vertical-align: middle;text-align: center;" class="tabla_carrito">'.$row2["nombre"].'</td>';
+										print '<td style="vertical-align: middle;text-align: center;" class="tabla_carrito">$ '.$row2["precio"].'.00</td>';
+										print '<td style="vertical-align: middle;text-align: center;" class="tabla_carrito">$'.$row["cantidad"] * $row2["precio"].'.00</td>';
 									
-										print '<td style="text-align: center;"><form method="POST" action="elim_carrito.php">
+										print '<td style="vertical-align: middle;text-align: center;"><form method="POST" action="elim_carrito.php">
 										<input type="hidden" name="id_p" value="'.$row["id_producto"].'">
 										<input type="hidden" name="id_c" value="'.$_SESSION['id_usu'].'">
 										<button type="submit"><img class="carro_compra" src="tache.png"></button>

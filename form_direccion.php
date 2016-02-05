@@ -65,7 +65,7 @@
 			    <tr>
 			    <td> 
 			    <form action="direccion.php">
-				<center><input type="submit" class="btn mediano cancelar" value="cancelar"> </center>
+				<center><input type="submit" class="btn mediano cancelar" value="Cancelar"> </center>
 				</form>
 			    </td>
 			    <td></td>
