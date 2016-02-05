@@ -24,7 +24,7 @@
                     <td><input id="contrasena" class="form-control" type="password"  placeholder="Contraseña" required=""></td>
                 </tr>
                 <tr>
-                    <td></td><td align="right"><input type="submit" class="btn" id="boton" value="Ingresar"  ></td>
+                    <td align="center" colspan="2"><input type="submit" class="btn" id="boton" value="Ingresar"  ></td>
                 </tr>
                 	</form>
             </table>

@@ -3,6 +3,7 @@
 	error_reporting(0);
 	include 'abrirConexion.php';
 ?>
+<!-- <!DOCTYPE html> -->
 <html>
 	<head>
 		<meta charset="UTF-8">
@@ -39,35 +40,20 @@
 			<!-- MENÚ PRINCIPAL DE NAVEGACIÓN -->
 			<?php if ($_SERVER["REQUEST_URI"] == "/OCS/carrito.php"
 						|| $_SERVER["REQUEST_URI"] == "/OCS/direccion.php"
-						|| $_SERVER["REQUEST_URI"] == "/OCS/pago.php"){
-				ECHO'<div class="menu">
-				<ul class="nav">';
+						|| $_SERVER["REQUEST_URI"] == "/OCS/pago.php"
+						|| $_SERVER["REQUEST_URI"] == "/OCS/direccion.php?"){
+					echo '<div class="menu">
+						<ul class="nav">';
 								//printf($_SERVER["REQUEST_URI"]);
 						$db = Conectar();
 
-						if ($_SERVER["REQUEST_URI"] == "/OCS/pago.php"){
-							echo'
-								<li>
-									<a class="principal-active" href="#"> Formas de Pago </a>
-								</li> 
-							 ';
-						}else{
-							echo'<li>
-									<a class="principal" href="pago.php"> Formas de Pago</a>
-								</li> ';
-						}
+						if ($_SERVER["REQUEST_URI"] == "/OCS/pago.php") 
+							echo '<li><a class="principal-active" href="#"> Formas de Pago </a></li> ';
+						else echo '<li><a class="principal" href="pago.php"> Formas de Pago</a></li> ';
 
-
-						if ($_SERVER["REQUEST_URI"] == "/OCS/direccion.php"){
-							echo'
-							<li>
-								<a class="principal-active" href="#"> Datos de Envío </a>
-							</li>';
-						}else{
-							 echo'<li>
-								<a class="principal" href="direccion.php"> Datos de Envío </a>
-							</li> ';
-						}
+						if ($_SERVER["REQUEST_URI"] == "/OCS/direccion.php" || $_SERVER["REQUEST_URI"] == "/OCS/direccion.php?")
+							echo '<li><a class="principal-active" href="#"> Datos de Envío </a></li>';
+						else echo'<li><a class="principal" href="direccion.php"> Datos de Envío </a></li>';
 
 						echo '<li> '; 
 						if ($_SERVER["REQUEST_URI"] == "/OCS/carrito.php"){
@@ -119,17 +105,28 @@
 						else echo '<a class="principal" href="ventas.php?id=All">Productos</a> ';
 
 						echo '<ul>';
-						$res = $db->query( "select *from categoria;" );
+						$res = $db->query( "select *from categoria order by nombre;" );
+						$i=0;
+						$max_menu=4;
 		                foreach ($res-> fetchAll(PDO::FETCH_NUM) as $row ){
-		                    printf ("<li><a  href=\"ventas.php?id=C".$row[0]."\"><br>%s</a>",$row[1]);
+		                	if ($i<$max_menu){
+			                    printf ("<li><a  href=\"ventas.php?id=C".$row[0]."\"><br>%s</a>",$row[1]);
 
-		                    $res1 = $db->query("select subcategoria.id, subcategoria.nombre from subcategoria where subcategoria.idcategoria=".$row[0].";");
-		                    echo '<ul>';
-		                    foreach ($res1-> fetchAll(PDO::FETCH_NUM) as $row1 ){
-		                      	printf ("<li><a href=\"ventas.php?id=S".$row1[0]."\"><br>%s</a> </li>",$row1[1]);
-		                  	}
-
-		                    echo "</ul></li>";
+			                    $res1 = $db->query("select subcategoria.id, subcategoria.nombre from subcategoria where subcategoria.idcategoria=".$row[0]." order by subcategoria.nombre;");
+			                    $j=0;
+			                    echo '<ul>';
+			                    foreach ($res1-> fetchAll(PDO::FETCH_NUM) as $row1 ){
+			                      	if ($j < $max_menu) 
+			                      		printf ("<li><a href=\"ventas.php?id=S".$row1[0]."\"><br>%s</a> </li>",$row1[1]);
+			                      	if ($j == $max_menu)
+			                      		echo '<li><a><br>...</a></li>';
+			                      	$j++;
+			                  	}
+			                    echo "</ul></li>";
+			                }
+			                if ($i==$max_menu)
+			                	echo '<li><a><br>...</a></li>';
+			                $i++;
 		                }
 		                echo '</ul>';
 
@@ -144,7 +141,12 @@
 			<div class="busqueda">
 				<form action="ventas.php">
 					<div class="tx_buscar">
-						<input type="text" class="form-control" name="buscador" placeholder="Buscar...">
+					<?php
+						if (isset($_GET['buscador']))
+						echo '<input type="text" class="form-control" name="buscador" placeholder="Buscar..." value="'.$_GET['buscador'].'">';
+						else echo '<input type="text" class="form-control" name="buscador" placeholder="Buscar...">';
+					?>
+
 					</div>
   					<div class="b_buscar">
 						<input type="submit" class="btn-buscar" value="Buscar"> 
