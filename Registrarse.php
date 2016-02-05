@@ -91,7 +91,7 @@ include('encabezado.php'); ?>
 				    </tr>
 				    	<tr>
 				      	<td align="right">Tel&eacutefono:</td>
-				      	<td><input  class="form-control"  placeholder="Teléfono" id="telefono" type="number" maxlength="10" required/></td>
+				      	<td><input  class="form-control" pattern="[0-9]{10}" title="Teclee su numero a 10 digitos" placeholder="Teléfono" id="telefono" type="text" required/></td>
 				    </tr>
 					<tr>
 				    	<td></td><td align="right"><input id="campo3"  id="Guardar" class="btn mediano" type="submit" value="Guardar"/></td>
