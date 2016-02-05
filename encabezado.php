@@ -39,6 +39,7 @@
 			
 			<!-- MENÚ PRINCIPAL DE NAVEGACIÓN -->
 			<?php if ($_SERVER["REQUEST_URI"] == "/OCS/carrito.php"
+						|| $_SERVER["REQUEST_URI"] == "/OCS/direccion.php?"
 						|| $_SERVER["REQUEST_URI"] == "/OCS/direccion.php"
 						|| $_SERVER["REQUEST_URI"] == "/OCS/pago.php"
 						|| $_SERVER["REQUEST_URI"] == "/OCS/direccion.php?"){
@@ -47,6 +48,7 @@
 								//printf($_SERVER["REQUEST_URI"]);
 						$db = Conectar();
 
+// <<<<<<< HEAD
 						if ($_SERVER["REQUEST_URI"] == "/OCS/pago.php") 
 							echo '<li><a class="principal-active" href="#"> Formas de Pago </a></li> ';
 						else echo '<li><a class="principal" href="pago.php"> Formas de Pago</a></li> ';
@@ -54,6 +56,44 @@
 						if ($_SERVER["REQUEST_URI"] == "/OCS/direccion.php" || $_SERVER["REQUEST_URI"] == "/OCS/direccion.php?")
 							echo '<li><a class="principal-active" href="#"> Datos de Envío </a></li>';
 						else echo'<li><a class="principal" href="direccion.php"> Datos de Envío </a></li>';
+
+						if ($_SERVER["REQUEST_URI"] == "/OCS/pago.php"){
+							echo'
+								<li>
+									<a class="principal-active" href="#"> Formas de Pago </a>
+								</li> 
+							 ';
+						}else{
+							if ($_SERVER["REQUEST_URI"] == "/OCS/carrito.php"){
+							echo'<li>
+									<a class="principal ina" > Formas de Pago</a>
+								</li> ';}
+								if ($_SERVER["REQUEST_URI"] == "/OCS/direccion.php"
+									|| $_SERVER["REQUEST_URI"] == "/OCS/direccion.php?"){
+							echo'<li>
+									<a class="principal ina" > Formas de Pago</a>
+								</li> ';}
+							
+						}
+
+
+						if ($_SERVER["REQUEST_URI"] == "/OCS/direccion.php"
+							|| $_SERVER["REQUEST_URI"] == "/OCS/direccion.php?"){
+							echo'
+							<li>
+								<a class="principal-active" href="#"> Datos de Envío </a>
+							</li>';
+						}else{
+							if ($_SERVER["REQUEST_URI"] == "/OCS/carrito.php"){
+							 echo'<li>
+								<a class="principal ina"> Datos de Envío </a>
+							</li> ';}
+							if ($_SERVER["REQUEST_URI"] == "/OCS/pago.php"){
+							 echo'<li>
+								<a class="principal" href="direccion.php"> Datos de Envío </a>
+							</li> ';}
+						}
+
 
 						echo '<li> '; 
 						if ($_SERVER["REQUEST_URI"] == "/OCS/carrito.php"){

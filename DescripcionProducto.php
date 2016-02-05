@@ -1,6 +1,11 @@
-<?php include('encabezado.php'); ?>
+<?php 
+
 	
+	include('encabezado.php'); 
+
+	?>
 	<script type="text/javascript">
+	var cantidadGlobal=0;
 		function insertarCarrito ( idCliente,idProducto, cantidad ) {
 			var xmlhttp;
 			if ( window.XMLHttpRequest ){
@@ -10,24 +15,49 @@
 			}
 			xmlhttp.onreadystatechange = function (){
 				if ( xmlhttp.readyState ==4 && xmlhttp.status==200 ){
-					document.getElementById('carrito').innerHTML = xmlhttp.responseText;
+					//document.getElementById('carrito').innerHTML = xmlhttp.responseText;
 				}
 			}
 			xmlhttp.open("GET","insertCarrito.php?idc="+idCliente+"&idp="+idProducto+"&n="+cantidad, true);
 			xmlhttp.send();
 
-			javascript:location.reload();
+			var agregado=document.getElementById('anuncio');
+			agregado.innerHTML = "<p class=\"alert alert-success\"> Se ha(n) agregado "+cantidad+" producto(s) </p>";
+
+			
+			setTimeout(function(){javascript:location.reload();},500);
 		}
 	</script>
 
 <?php
+
 	$id = $_GET['id'];
 	$db = Conectar();
 
 	$query = "select producto.id, producto.nombre, producto.descripcion, producto.precio, producto.marca, subcategoria.nombre, subcategoria.id from producto, subcategoria where producto.id=".$id." and subcategoria.id=producto.id_subcategoria;";
 	$res = $db->query($query);
+	$res2 = "select producto.cantidad as cantidad_producto,carrito.cantidad as cantidad_carrito FROM producto,carrito WHERE producto.id=".$id." and carrito.id_cliente=".$_SESSION['id_usu']." and carrito.id_producto=".$id;
+	$max_res2 = $db->query($res2);
+	if($max_res2->rowCount() > 0)
+	{
+		
+	foreach ($max_res2->fetchAll(PDO::FETCH_ASSOC) as $value) {
 
+	$max=$value["cantidad_producto"]-$value["cantidad_carrito"];
+		
+	}
+	}
+	else{
+		
+		$res3 = "select cantidad FROM producto WHERE producto.id=".$id;
+		$max_res3 = $db->query($res3);
+		foreach ($max_res3->fetchAll(PDO::FETCH_ASSOC) as $value) {
 
+		$max=$value["cantidad"];
+		}
+	}
+
+	
 	echo '<div class="contenido">';
 
 		foreach ($res-> fetchAll(PDO::FETCH_NUM) as $row ){
@@ -90,7 +120,7 @@
 			<?php
 				// echo '<img style="width:100%; height:100%;" src="'.$row[1].'">';
 			echo '</div>';
-
+			echo'<div id="anuncio"></div>';
 			echo '<div class="desc-texto">';
 			echo'	<h3><center>'.$row[1].'</center></h3>
 				<!-- <div style="color:green; text-align:center;"> Disponible  : 50</div> -->
@@ -120,7 +150,14 @@
 				<!-- <form> -->
 				<label style="position:relative; height:25%; padding:4%; float:left; width:42%;">
 					Cantidad:</label>
-				<input id="num" name="cantidad" value="1" style=" position:relative; float:left; width:50%" type="number" class="form-control" min="1">
+				<select id="num" >
+					<?php 
+						for ($i=1; $i <=$max; $i++) { 
+							print '<option value='.$i.'>'.$i.'</option>';
+						}
+					?>
+				</select>
+				<!-- <input id="num" name="cantidad" value="1" style=" position:relative; float:left; width:50%" type="number" class="form-control" min="1"> -->
 		</div>
 		<div class="d-agrega">
 				<?php
@@ -135,6 +172,7 @@
 	</div>
 
 </div>
+
 <?php include('pie_pagina.php'); ?>
 
 

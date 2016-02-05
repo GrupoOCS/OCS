@@ -42,11 +42,11 @@ echo $_POST["destinatario"];
 								</tr>
 								<tr>
 									<td><label>Autorizacion</label></td>
-									<td>	<input type="text" class="form-control" name="autorizacion" Placeholder="numAutorizacion"></td>
+									<td>	<input type="text" class="form-control" name="autorizacion" minlength="6" maxlength="6" onKeypress="if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;" Placeholder="numAutorizacion"></td>
 								</tr>
 								<tr>
 									<td>Referencia</td>
-									<td><input type="text" class="form-control" name="referencia" PlaceHolder="numReferencia"></td>
+									<td><input type="text" class="form-control" name="referencia" minlength="20" maxlength="30" PlaceHolder="numReferencia" onKeypress="if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;"></td>
 								</tr>
 								<tr>
 									<td>
@@ -90,27 +90,27 @@ echo $_POST["destinatario"];
 									
 										<tr>
 											<td><label>Nombre del titular de la tarjeta: </label></td>
-											<td>	<input type="text" class="form-control" name="titular_tarjeta" placeholder="Nombre"></td>
+											<td>	<input type="text" class="form-control" minlength="10"  maxlength="10" pattern="[a-zA-Z ]" name="titular_tarjeta" placeholder="Nombre"></td>
 										
 										</tr>
 										<tr>
 											<td><label><center>Número de tarjeta: </center> </label></td>
-											<td>    <input type="text" class="form-control" name="numero_tarjeta" placeholder="Numero de tarjeta"></td>
+											<td>    <input type="text" id="ccNo" minlength="16"  maxlength="16" onKeypress="if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;" title="Teclee los 16 digitos de su tarjeta" class="form-control" name="numero_tarjeta" placeholder="Numero de tarjeta"></td>
 										
 											</tr>
 										<tr>
 												<td><label >Mes de Vencimiento: </label></td>
 										<td>
-											<select id="mes" class="form-control" name="mes">
-												<option value="1">01</option>
-												<option value="2">02</option>
-												<option value="3">03</option>
-												<option value="4">04</option>
-												<option value="5">05</option>
-												<option value="6">06</option>
-												<option value="7">07</option>
-												<option value="8">08</option>
-												<option value="9">09</option>
+											<select  id="expMonth" class="form-control" name="mes">
+												<option value="01">01</option>
+												<option value="02">02</option>
+												<option value="03">03</option>
+												<option value="04">04</option>
+												<option value="05">05</option>
+												<option value="06">06</option>
+												<option value="07">07</option>
+												<option value="08">08</option>
+												<option value="09">09</option>
 												<option value="10">10</option>
 												<option value="11">11</option>
 												<option value="12">12</option>
@@ -120,7 +120,7 @@ echo $_POST["destinatario"];
 										<tr>
 											<td><label >Año de Vencimiento: </label></td>
 											<td>
-											<select id="anio" class="form-control" name="anio">
+											<select  id="expYear" class="form-control" name="anio">
 												<option value="2015">2015</option>
 												<option value="2016">2016</option>
 												<option value="2017">2017</option>
@@ -138,11 +138,11 @@ echo $_POST["destinatario"];
 									</tr>
 										<tr>
 											<td><label >Código de Seguridad: </label></td>
-										<td><input type="text" class="form-control" name="Codigo_tarjeta" placeholder="000" maxlength="3"></td>
+										<td><input id="cvv" type="text" class="form-control"  minlength="3"  maxlength="3" onKeypress="if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;" autocomplete="off" name="Codigo_tarjeta" placeholder="000" pattern="[0-9]{3}" title="teclea el número de seguridad de tu tarjeta. Son 3 digitos"></td>
 										</tr>
 										<tr >
 											<td colspan="2" align="center">	
-											<input type="submit" class="btn grande" value="Añadir a tu tarjeta">
+											<input type="submit" class="btn grande" value="Finalizar compra">
 										</td>
 									</tr>
 									
