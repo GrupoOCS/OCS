@@ -84,24 +84,24 @@ echo $_POST["destinatario"];
 					<tr>
 						<td>
 							<center><table  id="tabla_a_desplegar2"   style="display: none;">
-								<form action="Cuenta.php" method="POST">
+								<form id="myCCForm" action="Cuenta.php" method="POST">
 								
 									
-									
+										    <input id="token" name="token" type="hidden" value="">
 										<tr>
 											<td><label>Nombre del titular de la tarjeta: </label></td>
-											<td>	<input type="text" class="form-control" minlength="10"  maxlength="10" pattern="[a-zA-Z ]" name="titular_tarjeta" placeholder="Nombre"></td>
+											<td>	<input type="text" class="form-control" maxlength="35" name="titular_tarjeta" placeholder="Nombre"></td>
 										
 										</tr>
 										<tr>
 											<td><label><center>Número de tarjeta: </center> </label></td>
-											<td>    <input type="text" id="ccNo" minlength="16"  maxlength="16" onKeypress="if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;" title="Teclee los 16 digitos de su tarjeta" class="form-control" name="numero_tarjeta" placeholder="Numero de tarjeta"></td>
+											<td>    <input type="text" name="dato1" id="ccNo" minlength="16"  maxlength="16" onKeypress="if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;" title="Teclee los 16 digitos de su tarjeta" class="form-control" placeholder="Numero de tarjeta"></td>
 										
 											</tr>
 										<tr>
 												<td><label >Mes de Vencimiento: </label></td>
 										<td>
-											<select  id="expMonth" class="form-control" name="mes">
+											<select  id="expMonth" name="mes" class="form-control" >
 												<option value="01">01</option>
 												<option value="02">02</option>
 												<option value="03">03</option>
@@ -120,25 +120,25 @@ echo $_POST["destinatario"];
 										<tr>
 											<td><label >Año de Vencimiento: </label></td>
 											<td>
-											<select  id="expYear" class="form-control" name="anio">
-												<option value="2015">2015</option>
-												<option value="2016">2016</option>
-												<option value="2017">2017</option>
-												<option value="2018">2018</option>
-												<option value="2019">2019</option>
-												<option value="2020">2020</option>
-												<option value="2021">2021</option>
-												<option value="2022">2022</option>
-												<option value="2023">2023</option>
-												<option value="2024">2024</option>
-												<option value="2025">2025</option>
-												<option value="2026">2026</option>
+											<select  id="expYear" name="ano" class="form-control" >
+												<option value="15">2015</option>
+												<option value="16">2016</option>
+												<option value="17">2017</option>
+												<option value="18">2018</option>
+												<option value="19">2019</option>
+												<option value="20">2020</option>
+												<option value="21">2021</option>
+												<option value="22">2022</option>
+												<option value="23">2023</option>
+												<option value="24">2024</option>
+												<option value="25">2025</option>
+												<option value="26">2026</option>
 											</select>
 										</td>
 									</tr>
 										<tr>
 											<td><label >Código de Seguridad: </label></td>
-										<td><input id="cvv" type="text" class="form-control"  minlength="3"  maxlength="3" onKeypress="if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;" autocomplete="off" name="Codigo_tarjeta" placeholder="000" pattern="[0-9]{3}" title="teclea el número de seguridad de tu tarjeta. Son 3 digitos"></td>
+										<td><input id="cvv" type="text" name="codigo" class="form-control"  minlength="3"  maxlength="3" onKeypress="if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;" autocomplete="off" placeholder="000" pattern="[0-9]{3}" title="teclea el número de seguridad de tu tarjeta. Son 3 digitos"></td>
 										</tr>
 										<tr >
 											<td colspan="2" align="center">	
@@ -193,4 +193,51 @@ var estadOt = document.getElementById(estadoT);
 }
 }
 </script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="https://www.2checkout.com/checkout/api/2co.min.js"></script>
 
+<script>
+    // Called when token created successfully.
+    var successCallback = function(data) {
+        var myForm = document.getElementById('myCCForm');
+
+        // Set the token as the value for the token input
+        myForm.token.value = data.response.token.token;
+
+        // IMPORTANT: Here we call `submit()` on the form element directly instead of using jQuery to prevent and infinite token request loop.
+        myForm.submit();
+    };
+
+    // Called when token creation fails.
+    var errorCallback = function(data) {
+        if (data.errorCode === 200) {tokenRequest();} else {alert(data.errorMsg);}
+    };
+
+    var tokenRequest = function() {
+        // Setup token request arguments
+        var args = {
+            sellerId: "sandbox-seller-id",
+            publishableKey: "sandbox-publishable-key",
+            ccNo: $("#ccNo").val(),
+            cvv: $("#cvv").val(),
+            expMonth: $("#expMonth").val(),
+            expYear: $("#expYear").val()
+        };
+
+        // Make the token request
+        TCO.requestToken(successCallback, errorCallback, args);
+    };
+
+    $(function() {
+        // Pull in the public encryption key for our environment
+        TCO.loadPubKey('sandbox');
+
+        $("#myCCForm").submit(function(e) {
+            // Call our token request function
+            tokenRequest();
+
+            // Prevent form from submitting
+            return false;
+        });
+    });
+</script>
