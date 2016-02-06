@@ -106,6 +106,7 @@
 			    $query3->execute(array('idcliente' => $agregar2['idcliente'],'codigo' => $code));
 
 			    //aqui llamas a la funcion enviarmail($code);
+			    enviarmail();
 
 			    $_SESSION['nom_usu']=$row[0];
 				$_SESSION['email']=$row[1];
@@ -131,9 +132,13 @@
 	
 	}
 
-	function enviarmail($codigo)
+	function enviarmail()
 	{
-		//aqui va todo lo del mail
+		$message = "Codigo  de  verificacion Online  Computer  Shop";
+	    $headers = "From: onlineCSutm@gmail.com";
+	    $para="soto.vera.leticia@gmail.com";
+	    mail($para, "Este  es  un pinshi mensajito....", $message, $headers);
+	    echo "El  correo s e ha enviado  correctamente....<BR/>";
 	}
 
 ?>
