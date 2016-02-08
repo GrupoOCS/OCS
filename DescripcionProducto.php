@@ -36,24 +36,20 @@
 
 	$query = "select producto.id, producto.nombre, producto.descripcion, producto.precio, producto.marca, subcategoria.nombre, subcategoria.id from producto, subcategoria where producto.id=".$id." and subcategoria.id=producto.id_subcategoria;";
 	$res = $db->query($query);
-	$res2 = "select producto.cantidad as cantidad_producto,carrito.cantidad as cantidad_carrito FROM producto,carrito WHERE producto.id=".$id." and carrito.id_cliente=".$_SESSION['id_usu']." and carrito.id_producto=".$id;
-	$max_res2 = $db->query($res2);
-	if($max_res2->rowCount() > 0)
-	{
-		
-	foreach ($max_res2->fetchAll(PDO::FETCH_ASSOC) as $value) {
 
-	$max=$value["cantidad_producto"]-$value["cantidad_carrito"];
-		
-	}
-	}
-	else{
-		
-		$res3 = "select cantidad FROM producto WHERE producto.id=".$id;
-		$max_res3 = $db->query($res3);
-		foreach ($max_res3->fetchAll(PDO::FETCH_ASSOC) as $value) {
-
-		$max=$value["cantidad"];
+	if ($_SESSION['nom_usu']){
+		$res2 = "select producto.cantidad as cantidad_producto,carrito.cantidad as cantidad_carrito FROM producto,carrito WHERE producto.id=".$id." and carrito.id_cliente=".$_SESSION['id_usu']." and carrito.id_producto=".$id;
+		$max_res2 = $db->query($res2);
+		if($max_res2->rowCount() > 0){			
+			foreach ($max_res2->fetchAll(PDO::FETCH_ASSOC) as $value) {
+				$max=$value["cantidad_producto"]-$value["cantidad_carrito"];
+			}
+		}else{	
+			$res3 = "select cantidad FROM producto WHERE producto.id=".$id;
+			$max_res3 = $db->query($res3);
+			foreach ($max_res3->fetchAll(PDO::FETCH_ASSOC) as $value) {
+				$max=$value["cantidad"];
+			}
 		}
 	}
 

@@ -17,7 +17,7 @@ class Paginator{
 	{
 		$this->current_page = 1;
 		$this->mid_range = 7;
-		$this->ipp_array = array(8,16,24,32,40,48,'Todos');
+		$this->ipp_array = array(8,16,24,32,40,48);
 		$this->items_per_page = (!empty($_GET['ipp'])) ? $_GET['ipp']:$this->default_ipp;
 	}
  

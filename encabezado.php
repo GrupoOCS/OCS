@@ -48,14 +48,6 @@
 								//printf($_SERVER["REQUEST_URI"]);
 						$db = Conectar();
 
-// <<<<<<< HEAD
-						if ($_SERVER["REQUEST_URI"] == "/OCS/pago.php") 
-							echo '<li><a class="principal-active" href="#"> Formas de Pago </a></li> ';
-						else echo '<li><a class="principal" href="pago.php"> Formas de Pago</a></li> ';
-
-						if ($_SERVER["REQUEST_URI"] == "/OCS/direccion.php" || $_SERVER["REQUEST_URI"] == "/OCS/direccion.php?")
-							echo '<li><a class="principal-active" href="#"> Datos de Envío </a></li>';
-						else echo'<li><a class="principal" href="direccion.php"> Datos de Envío </a></li>';
 
 						if ($_SERVER["REQUEST_URI"] == "/OCS/pago.php"){
 							echo'
@@ -156,16 +148,16 @@
 			                    $j=0;
 			                    echo '<ul>';
 			                    foreach ($res1-> fetchAll(PDO::FETCH_NUM) as $row1 ){
-			                      	if ($j < $max_menu) 
+			                      	// if ($j < $max_menu) 
 			                      		printf ("<li><a href=\"ventas.php?id=S".$row1[0]."\"><br>%s</a> </li>",$row1[1]);
-			                      	if ($j == $max_menu)
-			                      		echo '<li><a><br>...</a></li>';
+			                      	// if ($j == $max_menu)
+			                      		// echo '<li><a><br>...</a></li>';
 			                      	$j++;
 			                  	}
 			                    echo "</ul></li>";
 			                }
-			                if ($i==$max_menu)
-			                	echo '<li><a><br>...</a></li>';
+			                // if ($i==$max_menu)
+			                	// echo '<li><a><br>...</a></li>';
 			                $i++;
 		                }
 		                echo '</ul>';
