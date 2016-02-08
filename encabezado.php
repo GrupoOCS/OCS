@@ -3,7 +3,8 @@
 	error_reporting(0);
 	include 'abrirConexion.php';
 ?>
-<!-- <!DOCTYPE html> -->
+<!DOCTYPE html>
+<html lang="es">
 <html>
 	<head>
 		<meta charset="UTF-8">

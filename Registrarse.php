@@ -1,5 +1,7 @@
 <?php 
-include('encabezado.php'); ?>
+include('encabezado.php'); 
+include_once 'DB.php';
+?>
 <head>
         <meta charset="UTF-8">
         <script src="js/login.js"></script>   
@@ -13,7 +15,7 @@ include('encabezado.php'); ?>
 				<form id="registrarse">
 
 				    <tr>
-				     	<td colspan="2" align="center"><h3>Registrate</h3></td>
+				     	<td colspan="2" align="center"><h3 name="#top" id="registro">Registrate</h3></td>
 
 				    </tr>
 				    <tr>
@@ -32,7 +34,7 @@ include('encabezado.php'); ?>
 	 				</tr>
 	 				<tr>
 	                    <td align="right">Correo:</td>
-	                    <td> <input id="correo" type="text" class="form-control" placeholder="e-mail" required/></td>
+	                    <td> <input id="correo" type="email" class="form-control" placeholder="e-mail" required/></td>
 	 				</tr>
 	 				<tr>
 	                 	<td align="right">Contraseña:</td> 
@@ -47,30 +49,34 @@ include('encabezado.php'); ?>
 	                </tr>
 	                 <tr>
 	                    <td align="right">Calle:</td>                         
-	                    <td><input id="calle" class="form-control" placeholder="Calle" required/></td>
+	                    <td><input id="calle" class="form-control" placeholder="Calle" type="text"required/></td>
 	                </tr>
 	                <tr>
 	                    <td align="right">Número:</td>                         
-	                    <td><input id="numero" class="form-control" placeholder="Número" required/></td>
+	                    <td><input id="numero" class="form-control" placeholder="Número" type="number"required/></td>
 	                </tr>
 	                             
 	               	<tr>
 	                    <td align="right">Colonia:</td>                         
-	                    <td><input id="colonia" class="form-control" placeholder="Colonia" required/></td>
+	                    <td><input id="colonia" class="form-control" placeholder="Colonia"type="text" required/></td>
 	                </tr>
 				    <tr>
 				     	<td align="right">Estado: </td>
 				      	<td>
 				      		<select id="estado"  class="form-control" required/>
-				         		<option value="1">Aguascalientes</option> 
-				         		<option value="2">Baja California</option> 
-				        		<option value="3">Baja California Sur</option>
-						        <option value="4">Campeche</option> 
-						        <option value="5">Coahuila</option> 
-						        <option value="6">Colima</option> 
-						        <option value="7">Chiapas</option> 
-						        <option value="8">Oaxaca</option> 
-				      		</select>
+				      		<?php 
+				      		$db = conectar();
+							if ( is_null($db) )
+								echo "Error al conectar a la db";
+							$db->query("SET NAMES utf8");
+				      		$consulta = $db->query("SELECT id,nombre FROM estados");
+				      		while ($row=$consulta->fetch(PDO::FETCH_NUM))
+				      		{
+				      		 echo"<option value=".$row[0].">".$row[1]."</option>";
+				      		}
+				      		?>php
+							</select>
+				      	
 				      	</td>
 				    </tr>
 				    <tr>
@@ -87,16 +93,19 @@ include('encabezado.php'); ?>
 				  	</tr>
 				  	<tr>
 				      	<td align="right">CP:</td>
-				      	<td><input  class="form-control"  placeholder="Código Postal" id="cp" type="text" required/></td>
+				      	<td><input  class="form-control"  placeholder="Código Postal" id="cp" type="text" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;"
+						minlength="5" maxlength="5" required/></td>
 				    </tr>
 				    	<tr>
 				      	<td align="right">Tel&eacutefono:</td>
-				      	<td><input  class="form-control" minlength="10"  maxlength="10" placeholder="Teléfono" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;" id="telefono" type="text" required/></td>
+				      	<td><input  class="form-control" maxlength="10" minlength="10" placeholder="Teléfono" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;" id="telefono" type="text" required/></td>
 				    </tr>
 					<tr>
 				    	<td></td><td align="right"><input id="campo3"  id="Guardar" class="btn mediano" type="submit" value="Guardar"/></td>
+				    
 				    </tr>
 				</form>
+
 			</table>
 		</div>
 	</div>

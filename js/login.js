@@ -1,3 +1,4 @@
+var N;
 $(document).ready(function(){
 
 
@@ -31,7 +32,16 @@ $(document).ready(function(){
     });
 
     $('#registrarse').submit(function(){
-     
+     		
+     	if($('#pass').val() != $('#repass').val()){
+     		console.log("Las contras no son iguales");
+     		$('#registro').html("Registrate<br><font color='red' size='3'>"+"La contraseña de verificación no coincide"+"</font>");
+     		location.href="#top";
+	        setInterval(function(){$('#registro').html("Registrate");},2500);
+     		$('#repass').focus();
+     		return false;
+     	}
+     	
        var valores= {
 			"nombre" : $('#nombre').val()+" "+$('#apellidoP').val()+" "+$('#apellidoM').val(),
 			"correo" : $('#correo').val(),
@@ -44,14 +54,25 @@ $(document).ready(function(){
 			"codigo" : $('#cp').val(),
 			"telefono" : $('#telefono').val(),
 				};
-
+		
 			$.ajax({
 			data:  valores, //aqui mando  la  varible
 	    	url:   'js/agregausu.php',
 	        type:  'post', //metodo  como acceder a  la  variable
 	 
-	        success:  function (response) {
-		    	$('#adduser').html(response);    		  
+	        success:  function (response) 
+	        {
+	        	
+	        	if(response=="true"){
+	        		N=5;
+	        		setInterval(redirigir,1000);
+	        	}
+	        	else{
+	        		//alert("Ya no :(");
+	        		$('#registro').html("Registrate<br><font color='red' size='3'>"+response+"</font>");
+	        		location.href="#top";
+	        		setInterval(function(){$('#registro').html("Registrate");},2500);
+	        	}		  
 	        }
 
 		});
@@ -60,6 +81,15 @@ $(document).ready(function(){
 	});
 
 });
+
+function redirigir(){
+	if(N>0){
+		$('#adduser').html("Tu cuenta ha sido registrada, sin embargo, esta requiere que la confirmes desde el correo  electronico  que ingresaste en el registro "+N);
+	}else{
+		location.href="index.php";
+	}
+	N--;
+}
 
 
 //===============FUNCION QUE  REALIZA  LA  VERIFICACION  DEL  CODIGO=============================
