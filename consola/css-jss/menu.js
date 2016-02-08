@@ -100,8 +100,7 @@ function pedidos()
        		$("#titulo").html("<span>Pedidos</span>");
 	    },
 	    success:  function (response) {
-      		if(response=="true")
-	           	$("#contenido").html("<p>Tabla de datos de Pdidos</p>");
+          	$("#contenido").html(response);
 	    }
 	});
 }
@@ -116,8 +115,7 @@ function usuarios()
        		$("#titulo").html("<span>Usuarios</span>");
         },
         success:  function (response) {
-       		if(response=="true")
-	           	$("#contenido").html("<p>Tabla de datos de Usuarios</p>");
+       		$("#contenido").html(response);
 	    }
 	});
 }
@@ -295,6 +293,7 @@ function agrproducto()
 	data.append("precio", $("#precio").val());
 	data.append("descripcion", $("#descripcion").val());
 	data.append("idsubcategoria", $("#idsubcategoria").val());
+	data.append("cantidad", $("#cantidad").val());
 	
 	$.ajax({
 		data: data,
@@ -417,19 +416,26 @@ function modproductos(id,sub)
 
 function updproductos(id,sub)
 {
-	var datos= {
-		"acc": "upd",
-		"id": id,
-		"nombre" :  $("#nombre").val(),
-		"marca":  $("#marca").val(),
-		"precio":  $("#precio").val(),
-		"descripcion":  $("#descripcion").val(),
-		"idsubcategoria" : $("#idsubcategoria").val(),
-		"sub" : sub	};
+	var data = new FormData();
+	jQuery.each(jQuery('#file')[0].files, function(i, file) {
+	    data.append(i, file);
+	});
+	data.append("id", id);
+	data.append("nombre", $("#nombre").val());
+	data.append("marca", $("#marca").val());
+	data.append("precio", $("#precio").val());
+	data.append("descripcion", $("#descripcion").val());
+	data.append("idsubcategoria", $("#idsubcategoria").val());
+	data.append("cantidad", $("#cantidad").val());
+	data.append("acc", "upd");
+	data.append("sub", 0);
+
 	$.ajax({
-		data: datos,
+		data: data,
 	  	url:   'producto/modificar.php',
 	    type:  'post',
+	    processData: false,
+		contentType: false,
 	    success:  function (response) {
 		   	$("#contenido").html(response);
 		}
@@ -634,23 +640,26 @@ function formaddsubcategoria(){
 
 function selectTodos(ele) {
     var checkboxes = document.getElementsByTagName('input');
-    if (ele.checked) {
-    	document.getElementById('eliminarP').removeAttribute("disabled");
-    	document.getElementById('modificarP').removeAttribute("disabled");
-        for (var i = 0; i < checkboxes.length; i++) {
-            if (checkboxes[i].type == 'checkbox') {
-                checkboxes[i].checked = true;
-            }
-        }
-    } else {
-    	document.getElementById('eliminarP').disabled = true;
-    	document.getElementById('modificarP').disabled = true;
-        for (var i = 0; i < checkboxes.length; i++) {
-            if (checkboxes[i].type == 'checkbox') {
-                checkboxes[i].checked = false;
-            }
-        }
-    }
+    //alert(checkboxes.length);
+    if(checkboxes.length>3)
+	    if (ele.checked ) {
+	    	document.getElementById('eliminarP').removeAttribute("disabled");
+	    	document.getElementById('modificarP').removeAttribute("disabled");
+	        for (var i = 0; i < checkboxes.length; i++) {
+	            if (checkboxes[i].type == 'checkbox') {
+	                checkboxes[i].checked = true;
+	            }
+	        }
+	    } else {
+	    	$("#cam").html('');
+	    	document.getElementById('eliminarP').disabled = true;
+	    	document.getElementById('modificarP').disabled = true;
+	        for (var i = 0; i < checkboxes.length; i++) {
+	            if (checkboxes[i].type == 'checkbox') {
+	                checkboxes[i].checked = false;
+	            }
+	        }
+	    }
     return false;
 }
 
@@ -670,6 +679,7 @@ function seleccion(ele) {
         {
         	document.getElementById('eliminarP').disabled = true;
     		document.getElementById('modificarP').disabled = true;
+    		$("#cam").html('');
     	}
     }
     return false;
@@ -677,14 +687,14 @@ function seleccion(ele) {
 
 function ModificarProductoSelec(sub)
 {
-	document.getElementById('modificarP').style.display = 'none';
-	document.getElementById('eliminarP').style.display = 'block';
+	document.getElementById('eliminarP').disabled = true;
+    document.getElementById('modificarP').disabled = true;
 	$.ajax({
 		data: null,
 	  	url:   'subcategoria/select.php',
 	    type:  'post',
 	    success:  function (response) {
-		   	$("#cam").html('<p>Seleccione la nueva categoria</p>'+response+"<BR><input type='submit' value='Aceptar' onclick='updProductoSelec("+sub+")' class='aceptar'/>");
+		   	$("#cam").html("<table><tr><td><p class='r'>Seleccione la nueva subcategoria</p></td><td>"+response+"</td></tr><tr><td><input type='submit' value='Aceptar' onclick='updProductoSelec("+sub+")' class='aceptar r'/></td><td><input type='button' value='Cancelar' onclick='activar()' class='cancelar l'/></tr></td></table>");
 		}
 	});
 	return false;
@@ -692,23 +702,25 @@ function ModificarProductoSelec(sub)
 
 function updProductoSelec(sub)
 {
-	alert("upd");
-	var datos= [$("#idcategoria").val()];
-	var checkboxes = document.getElementsByTagName('input'),i;
+	var pos=0,datos= [ {name:0, value:$("#idsubcategoria").val()} ];
+	var checkboxes = document.getElementsByTagName('input');
     for (i = 0; i < checkboxes.length; i++) 
     {
         if (checkboxes[i].type == 'checkbox') 
         	if(checkboxes[i].checked==true)
         		if(checkboxes[i].value>0)
-        			datos.push(checkboxes[i].value);
+        		{
+        			datos.push({name:pos+=1, value: ""+checkboxes[i].value});
+        		}
           		
 	}
+
 	$.ajax({
 		data: datos,
-	  	url:   'productos/modificarvarios.php',
+	  	url:   'producto/modificarvarios.php',
 	    type:  'post',
 	    success:  function (response) {
-		   	$("#contenido").html("<p>Se ha actualizado correctamente</p><input type='submit' value='Aceptar' onclick='verProductosSubcategoria("+sub+")' class='aceptar'/>");
+		   	$("#contenido").html(response+"<input type='submit' value='Aceptar' onclick='verProductosSubcategoria("+sub+")' class='aceptar'/>");
 		}
 	});
 	return false;
@@ -716,8 +728,44 @@ function updProductoSelec(sub)
 
 function EliminarProductoSelec(sub)
 {
-	document.getElementById('eliminarP').style.display = 'none';
-	document.getElementById('modificarP').style.display = 'block';
+	document.getElementById('eliminarP').disabled = true;
+    document.getElementById('modificarP').disabled = true;
+    $("#cam").html("<center><p>Desea eliminar los productos seleccionados</p><input type='submit' value='Aceptar' onclick='delProductoSelec("+sub+")' class='aceptar'/><input type='button' value='Cancelar' onclick='activar()' class='cancelar'/></center>");
+    return false;
+}
+
+function delProductoSelec(sub)
+{
+	var pos=-1,datos=[];
+	var checkboxes = document.getElementsByTagName('input');
+    for (i = 0; i < checkboxes.length; i++) 
+    {
+        if (checkboxes[i].type == 'checkbox') 
+        	if(checkboxes[i].checked==true)
+        		if(checkboxes[i].value>0)
+        		{
+        			datos.push({name:pos+=1, value: ""+checkboxes[i].value});
+        		}
+          		
+	}
+
+	$.ajax({
+		data: datos,
+	  	url:   'producto/eliminarvarios.php',
+	    type:  'post',
+	    success:  function (response) {
+		   	$("#contenido").html(response+"<input type='submit' value='Aceptar' onclick='verProductosSubcategoria("+sub+")' class='aceptar'/>");
+		}
+	});
+	return false;
+}
+
+function activar()
+{
+	$("#cam").html('');
+	document.getElementById('eliminarP').removeAttribute("disabled");
+    document.getElementById('modificarP').removeAttribute("disabled");
+    return false;
 }
 
 function formaddproducto(){
@@ -734,12 +782,88 @@ function formaddproducto(){
 				+"</td><td><input class='entrada-texto' id='nombre' type='text' placeholder='Nombre del producto' autofocus required />"
 				+"</td></tr><tr><td><span class='r'>Marca: </span></td><td><input class='entrada-texto' id='marca' type='text' placeholder='Marca' autofocus required />"
 				+"</td></tr><tr><td><span class='r'>Precio: </span></td><td><input class='entrada-texto' id='precio' min='1' type='number' placeholder='Precio' autofocus required />"
+				+"</td></tr><tr><td><span class='r'>Cantidad: </span></td><td><input class='entrada-texto' id='Cantidad' min='1' type='number' placeholder='Cantidad' autofocus required />"
 				+"</td></tr><tr><td><span class='r'>Descripcion: </span></td><td><textarea rows='5' id='descripcion' required></textarea></td></tr><tr><td><span class='r'>Subcategoria: </span>"
 				+"</td><td>"+response+"</td></tr>"
 				+"<tr><td><span class='r'>Imagen: </span></td><td><input class='entrada-texto' type='file' id='file'  multiple='' accept='image/jpeg, image/png' required>"
 				+"</td></tr></table>"
 				+"<center><input type='submit' value='Aceptar' class='aceptar'/> "
 				+"<input type='button' value='Cancelar' onclick='productos();' class='cancelar'/></center></form>");
+		}
+	});
+	return false;
+}
+
+function ModificarSucategoriasSelec(cat)
+{
+	document.getElementById('eliminarP').disabled = true;
+    document.getElementById('modificarP').disabled = true;
+	$.ajax({
+		data: null,
+	  	url:   'categoria/select.php',
+	    type:  'post',
+	    success:  function (response) {
+		   	$("#cam").html("<table><tr><td><p class='r'>Seleccione la nueva categoria</p></td><td>"+response+"</td></tr><tr><td><input type='submit' value='Aceptar' onclick='updCategoriaSelec("+cat+")' class='aceptar r'/></td><td><input type='button' value='Cancelar' onclick='activar()' class='cancelar l'/></tr></td></table>");
+		}
+	});
+	return false;
+}
+
+function updCategoriaSelec(cat)
+{
+	var pos=0,datos= [ {name:0, value:$("#idsubcategoria").val()} ];
+	var checkboxes = document.getElementsByTagName('input');
+    for (i = 0; i < checkboxes.length; i++) 
+    {
+        if (checkboxes[i].type == 'checkbox') 
+        	if(checkboxes[i].checked==true)
+        		if(checkboxes[i].value>0)
+        		{
+        			datos.push({name:pos+=1, value: ""+checkboxes[i].value});
+        		}
+          		
+	}
+
+	$.ajax({
+		data: datos,
+	  	url:   'subcategoria/modificarvarios.php',
+	    type:  'post',
+	    success:  function (response) {
+		   	$("#contenido").html(response+"<input type='submit' value='Aceptar' onclick='verSubcategoriasCategorias("+cat+")' class='aceptar'/>");
+		}
+	});
+	return false;
+}
+
+function EliminarSubcategoriasSelec(cat)
+{
+	document.getElementById('eliminarP').disabled = true;
+    document.getElementById('modificarP').disabled = true;
+    $("#cam").html("<center><p>Desea eliminar las subcategorias seleccionadas</p><input type='submit' value='Aceptar' onclick='delCategoriaSelec("+cat+")' class='aceptar'/><input type='button' value='Cancelar' onclick='activar()' class='cancelar'/></center>");
+    return false;
+}
+
+function delCategoriaSelec(cat)
+{
+	var pos=-1,datos=[];
+	var checkboxes = document.getElementsByTagName('input');
+    for (i = 0; i < checkboxes.length; i++) 
+    {
+        if (checkboxes[i].type == 'checkbox') 
+        	if(checkboxes[i].checked==true)
+        		if(checkboxes[i].value>0)
+        		{
+        			datos.push({name:pos+=1, value: ""+checkboxes[i].value});
+        		}
+          		
+	}
+
+	$.ajax({
+		data: datos,
+	  	url:   'subcategoria/eliminarvarios.php',
+	    type:  'post',
+	    success:  function (response) {
+		   	$("#contenido").html(response+"<input type='submit' value='Aceptar' onclick='verSubcategoriasCategorias("+cat+")' class='aceptar'/>");
 		}
 	});
 	return false;
@@ -754,8 +878,56 @@ function reportes()
 	        					+"<td class= 'col'><select id= 'nombre'><option value='Todos'>Todos</option><option value='Juan Robles'>Juan Robles</option><option value='Miguel Ponce'>Miguel Ponce</option><option value='Omar Bravo'>Omar Bravo</option>"
 								+"</select><br><br></td><td></td><td></td></tr>"
 	        					+"<tr><td class= 'col'><span><label>Productos</label></span><br><br></td><td class= 'col'><select id='marca'><option value='Asus'>Asus</option><option value='HP'>HP</option><option value='Toshiba'>Toshiba</option><option value='Sony'>Sony</option></select></td><td class= 'col'><select><option value='1'>Todo</option><option value='2'>Más vendidos</option></select><td class= 'col'></td></td></tr>"
-	        					+"<tr><td class= 'col'><span><label>Intervalo de fecha</label></span><br><br><td class= 'col'><input type='date' name='fecha'></td><td class= 'col'><input type='date' name='fechaf'></td><td class= 'col'><br><br><br><br><button onclick='genrep()'>Generar</button></td></tr></table>");
+	        					+"<tr><td class= 'col'><span><label>Intervalo de fecha</label></span><br><br><td class= 'col'><input type='date' name='fecha'></td><td class= 'col'><input type='date' name='fechaf'></td><td class= 'col'><br><br><br><br><button onclick='genrep()'>Generar PDF</button></td><td><br><br><br><br><button onclick='imprimir()'>Imprimir PDF</button></td></tr></table>");
 	
+}
+
+function EliminarImagen(id,ruta)
+{
+	document.getElementById(id).innerHTML="<span class='text'>Realmente desea eliminar esta Imagen?</span>"
+			+"<input type='button' value='Aceptar' onclick='DelImagen("+id+",\""+ruta+"\")' class='aceptarmini'/>"
+			+"<input type='button' value='Cancelar' onclick='vaciardiv("+id+")' class='cancelarmini'/></center>";
+}
+
+function DelImagen(id,ruta)
+{
+	var datos= {
+		"id" : id,
+		"ruta" : ruta
+	};
+	$.ajax({
+		data: datos,
+	  	url:   'producto/eliminarImgenes.php',
+	    type:  'post',
+	    success:  function (response) {
+		   	if(response == 'true')
+		   	{
+		   		$("#img"+id).html("");
+				$(id).html("<span class='text'>Se ha eliminado exitosamente</span>");
+		   	}
+		   	else
+		   	{
+		   		$(id).html("<span class='text'>"+response+"</span>");
+		   	}
+		   	setTimeout(vaciardiv(id),1000);
+		}
+	});
+	return false;
+}
+
+function vaciardiv(name)
+{
+	document.getElementById(name).innerHTML="";
+}
+
+function pdfpedido(id)
+{
+	alert("Generar PDF");
+}
+
+function imprimirpdfpedido(id)
+{
+	alert("Imprimir PDF");
 }
 
 function genrep()
@@ -763,4 +935,11 @@ function genrep()
 	var posicion=document.getElementById('marca').value;
 	var nombre=document.getElementById('nombre').value;
 	window.open("pdf2.php?productos="+posicion+"&&nombre="+nombre);
+}
+
+function imprimir()
+{
+	var posicion=document.getElementById('marca').value;
+	var nombre=document.getElementById('nombre').value;
+	window.open("imprimir.php?productos="+posicion+"&&nombre="+nombre);
 }

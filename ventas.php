@@ -208,9 +208,9 @@
 				}else{
 					echo '<div class="filtro_precio_input"><div class="marca">
 						Desde:<br>
-							<input type="number" class="input_precio" name="desde" id="desde" step="any" value="'.$row[0].'"> <br>
+							<input type="number" class="input_precio" name="desde" id="desde" step="any" value="'.$row[0].'" disabled> <br>
 						Hasta:<br>
-							<input type="number" class="input_precio" name="hasta" id="hasta" step="any" value="'.$row[1].'"> <br>';
+							<input type="number" class="input_precio" name="hasta" id="hasta" step="any" value="'.$row[1].'" disabled> <br>';
 					echo '</div><div class="marca_check"><input type="checkbox" name="precios[]" onClick="toggle(this)" value="1" onChange="enviarForm()"></div></div>';
 				}
 				echo '<input type="hidden" name="precio_maximo" value="'.$row[1].'">';

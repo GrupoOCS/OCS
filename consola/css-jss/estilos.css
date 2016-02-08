@@ -20,13 +20,16 @@ $gris = #DADADA;
 .producto{
 	width: 200px;
 	height: 200px;
-	background: #34495E;
 	padding-bottom: 5px;
 	padding-top: 5px;
 	padding-right: 10px;
 	padding-left: 10px;
 }
 
+.productoeli{
+	width: 200px;
+	height: 200px;
+}
 
 /*Acciones*/
 .ico-acciones{
@@ -72,9 +75,30 @@ $gris = #DADADA;
 	height:400px;
 	overflow:scroll;
 	background: #DADADA;
+	border-radius: 0px 0px 30px 0px;
+
 }
 
-.contenido span.r{
+.fr{
+	float: right;
+}
+
+.fl{
+	float: left;
+}
+.fc{
+	float: left;
+}
+
+.text{
+	color:#000000;
+	font-size: 120%;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	margin-right: 10px;
+}
+
+.r{
 	color:#000000;
 	font-size: 120%;
 	margin-top: 10px;
@@ -82,7 +106,7 @@ $gris = #DADADA;
 	margin-right: 10px;
 	float: right;
 }
-.contenido span.l{
+.l{
 	color:#000000;
 	font-size: 120%;
 	margin-top: 10px;
@@ -145,6 +169,13 @@ $gris = #DADADA;
 	padding-left: 2%;
 }
 
+.contenido table td.cliente
+{
+	width: 60%;
+	font-size: 120%;
+	padding-left: 2%;
+}
+
 .contenido table td.acciones
 {
 	width: 7%;
@@ -177,11 +208,13 @@ div.fakefile {
 /*MENU*/
 .menu{
 	width: 15%;
+	height: 500px;
 	background: #34495E;
 	margin-top: 1%;
 	margin-left: 1%;
 	padding-bottom: 10px;
 	float:left;
+	border-radius: 0px 0px 0px 30px;
 }
 
 .menu a{
@@ -214,7 +247,9 @@ div.fakefile {
 	background: #34495E url(../img/logo.png) top left no-repeat;
 	background-size: 300px ;
 	height: 100px;
-	width: 100%;
+	width: 98%;
+	margin-left: 1%;
+	border-radius: 30px 30px 0px 0px;
 }
 
 .encabezado a{
@@ -376,4 +411,38 @@ div.fakefile {
 .cancelar:hover
 {
 	font-size: 120%;
+}
+.aceptarmini
+{
+	font-size: 100%;
+	color: #ffffff;
+	width: 100px;
+	height: 32px;
+	margin-top: 5px;
+	margin-left: 5px;
+	background-color: #3498DB;
+	padding-bottom: 5px;
+	padding-top: 5px;
+	border: 0px;
+}
+.aceptarmini:hover
+{
+	font-size: 110%;
+}
+.cancelarmini
+{
+	font-size: 100%;
+	color: #ffffff;
+	width: 100px;
+	height: 32px;
+	margin-top: 5px;
+	margin-left: 5px;
+	background-color: #ff0000;
+	padding-bottom: 5px;
+	padding-top: 5px;
+	border: 0px;td
+}
+.cancelarmini:hover
+{
+	font-size: 110%;
 }
