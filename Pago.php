@@ -1,13 +1,45 @@
 <?php include('encabezado.php'); 
+$id=$_SESSION["id_usu"];
+if(isset($_GET["ciudad"]) && isset($_GET["calle"]) && isset($_GET["numero"]) && isset($_GET["telefono"]) && isset($_GET["colonia"]) && isset($_GET["municipio"]) && isset($_GET["estado"]) && isset($_GET["cp"]) && isset($_GET["destinatario"]))
+{
+	$ca=$_GET["calle"];
+	$tel=$_GET["telefono"];
+	$col=$_GET["colonia"];
+	$mun=$_GET["municipio"];
+	$num=$_GET["numero"];
+	$dest=$_GET["destinatario"];
+	$cp=$_GET["cp"];
+	$est=$_GET["estado"];
+	$ciudad=$_GET["ciudad"];
+	$calle=$ca." ".$num;
+}
+else{
+	$db = Conectar();
+	if($db!=null)
+		{
+						
+			$query = $db->prepare("SELECT calle,colonia,id_estado,municipio,ciudad,cp,telefono,destinatario FROM direccion WHERE id_cliente=".$id);
+			
+			try {
+				$query->execute($prepared);
+			    //echo "Se ha Modificado exitosamente";
+			} 
+			catch (Exception $e) {
+				//echo "ERROR:No se modifico excitosamente. Vuelva a intentarlo mas tarde<BR>";
+			}
+		}
 
-echo $_POST["calle"];
-echo $_POST["numero"];
-echo $_POST["colonia"];
-echo $_POST["estado"];
-echo $_POST["municipio"];
-echo $_POST["cp"];
-echo $_POST["destinatario"];
-
+		foreach($query->fetchAll(PDO::FETCH_ASSOC) as $row){
+			$calle=$row["calle"];
+			$tel=$row["telefono"];
+			$col=$row["colonia"];
+			$mun=$row["municipio"];
+			$dest=$row["destinatario"];
+			$cp=$row["cp"];
+			$est=$row["id_estado"];
+			$ciudad=$row["ciudad"];
+		}
+}
 ?>
 
 <div class="contenido">
@@ -48,6 +80,15 @@ echo $_POST["destinatario"];
 									<td>Referencia</td>
 									<td><input type="text" class="form-control" name="referencia" minlength="20" maxlength="30" PlaceHolder="numReferencia" onKeypress="if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;"></td>
 								</tr>
+								<input type="hidden" name="calle" value=<?php echo "'".$calle."'";?>>
+								<input type="hidden" name="col" value=<?php echo "'".$col."'";?>>
+								<input type="hidden" name="mun" value=<?php echo "'".$mun."'";?>>
+								<input type="hidden" name="ciudad" value=<?php echo "'".$ciudad."'";?>>
+								<input type="hidden" name="est" value=<?php echo "'".$est."'";?>>
+								<input type="hidden" name="dest" value=<?php echo "'".$dest."'";?>>
+								<input type="hidden" name="cp" value=<?php echo "'".$cp."'";?>>
+								<input type="hidden" name="tel" value=<?php echo "'".$tel."'";?>>
+								
 								<tr>
 									<td>
 										<label>Imagen</label>
