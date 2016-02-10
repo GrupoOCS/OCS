@@ -140,19 +140,35 @@
 	<body>
 
 		<header>
-			<?php 
-			$db = Conectar();
+			<?php
+				$db = Conectar();
 //-----------------------------------------------------------------------------------------------
+
+			// if ($_SESSION['nom_usu']){
+			// 	$query = "SELECT status FROM pedido where id_cliente=".$_SESSION['id_usu'];
+			// 	$res = $db->query($query);
+			// 	foreach($res->fetchAll(PDO::FETCH_ASSOC) as $row){	
+			// 		$id_direccion = $row['id'];
+			// 	}
+			// }
 			if ($_SESSION['nom_usu']){
-				$query = "SELECT status FROM pedido where id_cliente=".$_SESSION['id_usu'];
-				$res = $db->query($query);
-				foreach($res->fetchAll(PDO::FETCH_ASSOC) as $row){	
-					$id_direccion = $row['id'];
-				}
-			}
-				if ($_SESSION['nom_usu']) echo '<span class="usuario">'.$_SESSION['nom_usu'].' | </span><a class="enlace" href="funPHP/cerrarSesion.php">Cerrar Sesión</a>  ';
-				else echo '<a class="enlace" href="inicioSesion.php">Iniciar Sesión</a> | <a class="enlace" href="Registrarse.php">Registrarse</a> ';
-			?>
+				$query = "SELECT status FROM pedido where status='en proceso' and id_cliente=".$_SESSION['id_usu'];
+ 				$res = $db->query($query);
+ 				if($res->rowCount()<=0){
+  					if ($_SESSION['nom_usu']) echo '<span class="usuario">'.$_SESSION['nom_usu'].' | </span><a class="enlace" href="funPHP/cerrarSesion.php">Cerrar Sesión</a>  ';
+  					else echo '<a class="enlace" href="inicioSesion.php">Iniciar Sesión</a> | <a class="enlace" href="Registrarse.php">Registrarse</a> ';
+ 				}
+ 				else
+ 				{
+ 					echo'<a class="reg_pago" href="registrar_pago.php"> Registrar Pago </a>'; 
+ 					if ($_SESSION['nom_usu']) echo '<span class="usuario">'.$_SESSION['nom_usu'].' | </span><a class="enlace" href="funPHP/cerrarSesion.php">Cerrar Sesión</a>  ';
+ 					else echo '<a class="enlace" href="inicioSesion.php">Iniciar Sesión</a> | <a class="enlace" href="Registrarse.php">Registrarse</a> ';
+ 				}
+ 			}else {
+ 				if ($_SESSION['nom_usu']) echo '<span class="usuario">'.$_SESSION['nom_usu'].' | </span><a class="enlace" href="funPHP/cerrarSesion.php">Cerrar Sesión</a>  ';
+ 				else echo '<a class="enlace" href="inicioSesion.php">Iniciar Sesión</a> | <a class="enlace" href="Registrarse.php">Registrarse</a> ';
+ 			}
+ 			?>
 			  
 		</header> 
 	
@@ -205,9 +221,9 @@
 							 echo'<li>
 								<a class="principal ina"> Datos de Envío </a>
 							</li> ';}
-							if ($_SERVER["REQUEST_URI"] == "/OCS/pago.php"){
+							if ($_SERVER["REQUEST_URI"] == "/OCS/pago.php" || $_SERVER["REQUEST_URI"] == "/OCS/pago2.php"){
 							 echo'<li>
-								<a class="principal" href="direccion.php"> Datos de Envío </a>
+								<a class="principal" > Datos de Envío </a>
 							</li> ';}
 						}
 
@@ -223,6 +239,18 @@
 									}
 								}
 						}else{
+							if ($_SERVER["REQUEST_URI"] == "/OCS/pago.php" || $_SERVER["REQUEST_URI"] == "/OCS/pago2.php"){
+
+								echo '<a class="principal" > 
+								<img class="enlace icono" src="Iconos/CAR.png">';
+								$car = $db->query("select sum(cantidad) from carrito where id_cliente=".$_SESSION['id_usu'].";");
+								if ($car->rowCount() > 0){
+									foreach ($car-> fetchAll(PDO::FETCH_NUM) as $row ){
+						 				printf ("%s</a>",$row[0]);
+									}
+								}
+							}
+							else{
 							echo '<a class="principal" href="carrito.php"> 
 								<img class="enlace icono" src="Iconos/CAR.png">';
 								$car = $db->query("select sum(cantidad) from carrito where id_cliente=".$_SESSION['id_usu'].";");
@@ -232,6 +260,7 @@
 									}
 								}
 						}
+					}
 						echo '</li>';
 				
 				}else{

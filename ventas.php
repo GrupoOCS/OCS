@@ -6,7 +6,7 @@
 		if($_GET["NP"]=="si")
 		{
 			echo"<p class=\"alert alert-danger\" align=\"center\"> No tiene productos en su carrito </p>";	
-			echo"<script> setTimeout(function(){  location.href = \"ventas.php\"; }, 500); </script>";
+			echo"<script> setTimeout(function(){  location.href = \"ventas.php\"; }, 1000); </script>";
 			//header('location:ventas.php');			
 		}
 	}

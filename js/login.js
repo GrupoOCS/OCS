@@ -54,7 +54,7 @@ $(document).ready(function(){
 			"codigo" : $('#cp').val(),
 			"telefono" : $('#telefono').val(),
 				};
-		
+		  $("input[type=submit]").attr("disabled", "disabled");
 			$.ajax({
 			data:  valores, //aqui mando  la  varible
 	    	url:   'js/agregausu.php',
@@ -71,7 +71,8 @@ $(document).ready(function(){
 	        		//alert("Ya no :(");
 	        		$('#registro').html("Registrate<br><font color='red' size='3'>"+response+"</font>");
 	        		location.href="#top";
-	        		setInterval(function(){$('#registro').html("Registrate");},2500);
+	        		setInterval(function(){$('#registro').html("Registrate");$("input[type=submit]").removeAttr("disabled");},4000);
+	        		//$("input[type=submit]").removeAttr("disabled");
 	        	}		  
 	        }
 

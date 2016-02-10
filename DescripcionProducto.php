@@ -147,7 +147,7 @@
 		if ($max <= 0){ ?>
 			<script type="text/javascript">
 				var agregado=document.getElementById('anuncio');
-				agregado.innerHTML = "<p class=\"alert alert-danger\">No hay articulo disponibles para este producto</p>";
+				agregado.innerHTML = "<p class=\"alert alert-danger\">No hay productos disponibles</p>";
 			</script>
 		<?php
 		} else {

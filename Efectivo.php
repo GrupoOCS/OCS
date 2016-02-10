@@ -1,21 +1,48 @@
 <?php  
-session_start();
+include('encabezado.php');
+
 $id=$_SESSION["id_usu"];
-print'<html>
-<head class="reporte_final"> <title> Reporte De compra</title><meta charset="utf-8"></head>
-<body class="body_final">';
-if(isset($_POST["ciudad"]) && isset($_POST["calle"]) && isset($_POST["tel"]) && isset($_POST["col"]) && isset($_POST["mun"]) && isset($_POST["est"]) && isset($_POST["cp"]) && isset($_POST["dest"]))
-{	
-	$calle=$_POST["calle"];
-	$tel=$_POST["tel"];
-	$col=$_POST["col"];
-	$mun=$_POST["mun"];
-	$dest=$_POST["dest"];
-	$cp=$_POST["cp"];
-	$est=$_POST["est"];
-	$ciudad=$_POST["ciudad"];
+
+	
+
+
+	$idp=$_POST["idp"];
+$db = Conectar();
+$query = "SELECT calle,colonia,id_estado,municipio,ciudad,telefono,cp,destinatario FROM direccion_temp where id_pedido=".$idp;
+$res = $db->query($query);
+if($res->rowCount()>0)
+{
+	foreach($res->fetchAll(PDO::FETCH_ASSOC) as $row){	
+	$calle=$row["calle"];
+	$tel=$row["telefono"];
+	$col=$row["colonia"];
+	$mun=$row["municipio"];
+	$dest=$row["destinatario"];
+	$cp=$row["cp"];
+	$est=$row["id_estado"];
+	$ciudad=$row["ciudad"];
+	
+			   		
+	
+}
 
 }
+else{
+
+	$query = "SELECT calle,colonia,id_estado,municipio,ciudad,telefono,cp,destinatario FROM direccion where id_cliente=".$id;
+	$res = $db->query($query);
+	foreach($res->fetchAll(PDO::FETCH_ASSOC) as $row){	
+	$calle=$row["calle"];
+	$tel=$row["telefono"];
+	$col=$row["colonia"];
+	$mun=$row["municipio"];
+	$dest=$row["destinatario"];
+	$est=$row["id_estado"];
+	$cp=$row["cp"];
+	$ciudad=$row["ciudad"];
+}
+}
+
 
 	$archivoImagen=$_FILES['imagen']['tmp_name'];
 	//print $archivoImagen;
@@ -33,7 +60,7 @@ if(isset($_POST["ciudad"]) && isset($_POST["calle"]) && isset($_POST["tel"]) && 
 	if (copy($archivoImagen,$destino)){  
 
 
-		include('abrirConexion.php');
+		
 		$db = Conectar();
 
 		$res=$db->prepare("INSERT INTO imagen(nombre) VALUES (?)");
@@ -54,7 +81,7 @@ if(isset($_POST["ciudad"]) && isset($_POST["calle"]) && isset($_POST["tel"]) && 
 			$est=$row["nombre"];
 		}
 
-		$query = $db->prepare("select carrito.id_producto,carrito.cantidad,producto.precio,producto.nombre FROM carrito,producto WHERE carrito.id_cliente=".$id." and producto.id=carrito.id_producto");
+		$query = $db->prepare("select producto_pedido.id_producto,producto_pedido.cantidad,producto.precio,producto.nombre FROM producto_pedido,producto WHERE producto_pedido.id_pedido=".$idp." and producto.id=producto_pedido.id_producto");
 			
 			try {
 				$query->execute();
@@ -63,11 +90,12 @@ if(isset($_POST["ciudad"]) && isset($_POST["calle"]) && isset($_POST["tel"]) && 
 			catch (Exception $e) {
 				//echo "ERROR:No se modifico excitosamente. Vuelva a intentarlo mas tarde<BR>";
 			}
-			print'<table>
-			<tr><td> Nombre </td> <td> Cantidad </td><td> Precio unitario </td><td> Precio total </td></tr>';
+			print'<center><table class="carrito dir">
+			<tr> <td colspan="4"><h3> Tú compra ha sido finalizada </h3></td> </tr>
+			<tr><td style="font-weight: bold; text-align: center;" width="30%"> Nombre </td> <td style="font-weight: bold; text-align: center;" width="15%"> Cantidad </td><td style="font-weight: bold; text-align: center;" width="30%"> Precio unitario </td><td style="font-weight: bold; text-align: center;" width="20%"> Precio total </td></tr>';
 		foreach ($query->fetchAll(PDO::FETCH_ASSOC) as $row2) {
 			 print'<tr>
-				<td>'.$row2["nombre"].'</td><td>'.$row2["cantidad"].'</td><td>'.$row2["precio"].'</td><td>'.$row2["precio"]*$row2["cantidad"].'</td>
+				<td style="font-weight: bold; text-align: center;" width="30%"><label>'.$row2["nombre"].'</label></td><td style="font-weight: bold; text-align: center;" width="15%"><label>'.$row2["cantidad"].'</label></td><td style="font-weight: bold; text-align: center;" width="30%"><label>'.$row2["precio"].'</label></td><td style="font-weight: bold; text-align: center;" width="20%"><label>'.$row2["precio"]*$row2["cantidad"].'</label></td>
 				</tr>';
 
 				
@@ -83,7 +111,7 @@ if(isset($_POST["ciudad"]) && isset($_POST["calle"]) && isset($_POST["tel"]) && 
 
 		}
 
-print'</table>';
+print'</table></center>';
 	}
 
 			$query = $db->prepare("DELETE FROM carrito WHERE id_cliente=".$id);
@@ -103,18 +131,19 @@ print'</table>';
 
 
 <div class="contenido">
+<div class="carrito_dir">
 	<form action="index.php" method="post" enctype="multipart/form-data">
   <table class="carrito dir">
-  	<tr><th><label><h3> Tú compra ha sido finalizada </h3> </label></th></tr>
+  	<tr><th><label></label></th></tr>
 	<tr>
-		<td>Autorizacion: </td>
+		<td align="left"><label > Autorizacion:</label> </td>
 		<td>
 			<?php echo "".$autorizacion ?>
 		</td>
 	</tr>
 								
 	<tr>
-		<td>Referencia: </td>
+		<td><label> Referencia:</label> </td>
 		<td>
 			<?php echo "".$referencia ?>
 		</td>
@@ -164,6 +193,6 @@ print'</table>';
 
 </div>
 
-
+</div>
 
 

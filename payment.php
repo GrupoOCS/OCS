@@ -1,9 +1,6 @@
 <?php
-$TARJETA=$_POST["dato1"];
-$mes=$_POST["mes"];
-$ano=$_POST["ano"];
-$codi=$_POST["codigo"];
-
+// $IDPEDIDO=$_POST["idpedido"];
+// echo $IDPEDIDO;
 require_once("2checkout-php-master/lib/Twocheckout.php");
 Twocheckout::privateKey('C8217C30-D48B-44CD-B4D4-8E88CA82638C');
 Twocheckout::sellerId('901308282');

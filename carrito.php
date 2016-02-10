@@ -1,4 +1,4 @@
-<?php 	include('encabezado.php'); ?>
+<?php include('encabezado.php'); ?>
 
 	<!--.............................TERMINA NAVEGACIÓN...............................-->
 	<!-- <link rel="stylesheet" type="text/css" href="bootstrap.min.css"> -->
@@ -26,16 +26,21 @@
 		<div class="wholeCarrito">	
 
 			<?php
+
+       
         		$db = Conectar();
 				$query = "SELECT * FROM  carrito where id_cliente=".$_SESSION['id_usu'];
 				$res = $db->query($query);
 				$total = 0;
 				$iva=0;
 				$descuento = 0;
-				if($res->rowCount()<=0){ 
-
+				// print_r($res);
+				if($res->rowCount()<=0){
+					echo '<script type="text/javascript">
 						
-						header('location:ventas.php?NP=si'); }
+						window.location.assign("ventas.php?NP=si");
+						</script>';
+				}
 				foreach($res->fetchAll(PDO::FETCH_ASSOC) as $row){	
 
 					$query2 = "SELECT nombre,precio FROM producto WHERE id = '".$row["id_producto"]."'";
@@ -69,7 +74,8 @@
 					</tr>
 					<tr>
 						<td></td><td align="right">
-						<form action="direccion.php">
+						<form action="direccion.php" method="post">
+							<input type="hidden" name="bandera" value="pasar">
 							<button class="btn mediano" type="submit" <?php if($res->rowCount()<=0){ echo "disabled"; }?>>Comprar</button>
 						</form></td>
 					</tr>
