@@ -1,6 +1,15 @@
 <?php 
 	include('encabezado.php'); 
 	require_once('paginator.class.php');
+
+	if(isset($_GET["NP"])){
+		if($_GET["NP"]=="si")
+		{
+			echo"<p class=\"alert alert-danger\" align=\"center\"> No tiene productos en su carrito </p>";	
+			echo"<script> setTimeout(function(){  location.href = \"ventas.php\"; }, 500); </script>";
+			//header('location:ventas.php');			
+		}
+	}
 	// Referencia paginacion
 	// http://www.masquewordpress.com/paginacion-php-con-clase/
 	// http://www.catchmyfame.com/2007/07/28/finally-the-simple-pagination-class/

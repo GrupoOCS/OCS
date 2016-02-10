@@ -10,8 +10,6 @@
 
 ?>
 	<!--.............................TERMINA NAVEGACIÓN...............................-->
-	
-	
 
 <?php
 	
@@ -20,7 +18,7 @@
 
 			//alert('entra');
 			print'<div class="contenido">
-
+		<p class="alert alert-danger" align="center">Al dar clic en <b>Continuar</b> su pedido quedará registrado</p>
 		<div class="carrito_dir"><center><p colspan="2" ><h2>Domicilio Actual</h2></p></center>	
 
 			<table class="carrito dir">
@@ -83,7 +81,7 @@
 			<a class="enlace negro" href="form_direccion.php"><h4>Cambiar Dirección de envío</h4></a>
 				</div>
 
-		   
+
 	
 
 

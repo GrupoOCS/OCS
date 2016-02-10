@@ -3,30 +3,32 @@
 
 	print'  <div class="contenido"> 
 				<div align="center">
-				<center><p colspan="2" ><h2>Agregar dirección de envio</h2></p></center>	
+				<p class="alert alert-danger" align="center">Al dar clic en <b>Continuar</b> su pedido quedará registrado</p>
+				<center><p colspan="2" ><h2>Dirección de envio</h2></p></center>
+				
 			<table class="carrito"> 
-			 	<form id="formulari" >
+			 	<form id="formulari">
                     <td align="right">Calle:</td>                         
-                    <td><input name="calle" class="form-control" placeholder="Calle" ></td>
+                    <td><input name="calle" class="form-control" placeholder="Calle"  maxlength="25" onKeypress="soloLetras()" required></td>
                 </tr>
                 <tr>
                    	<td align="right">Número:</td>                         
-                    <td><input name="numero" class="form-control" placeholder="Número" ></td>
+                    <td><input name="numero" class="form-control" placeholder="Número" maxlength="5" onKeypress="if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;" required></td>
                 </tr>
                 <tr>
                     <td align="right">Colonia:</td>                         
-                    <td><input name="colonia" class="form-control" placeholder="Colonia" ></td>
+                    <td><input name="colonia" class="form-control" placeholder="Colonia" maxlength="30" onKeypress="soloLetras()" required></td>
                 </tr>
                 <tr>
 			    	<td align="right">Municipio:</td> 
 			    	<td>
-			      		<input type="text" class="form-control" name="municipio" >
+			      		<input type="text" class="form-control" name="municipio" maxlength="50" onKeypress="soloLetras()" required>
 			      	</td>
 			  	</tr>
 			  	<tr>
 			    	<td align="right">Ciudad:</td> 
 			    	<td>
-			      		<input type="text" class="form-control" name="ciudad" >
+			      		<input type="text" class="form-control" name="ciudad" maxlength="30" onKeypress="soloLetras()" required>
 			      	</td>
 			  	</tr>
 			    <tr>
@@ -47,25 +49,25 @@
 			    <tr>
 			    	<td align="right">Telefono:</td> 
 			    	<td>
-			      		<input type="text" class="form-control" name="tel" >
+			      		<input type="text" class="form-control" name="tel" maxlength="10" minlength="10" onKeypress="if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;" required>
 			      	</td>
 			  	</tr>
 			  	<tr>
 			      	<td align="right">CP:</td>
-			      	<td><input  placeholder="Código Postal" class="form-control"  name="cp" type="text" /></td>
+			      	<td><input  placeholder="Código Postal" class="form-control"  name="cp" type="text" maxlength="5" minlength="5" onKeypress="if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;" /></td>
 			    </tr>
 				<tr>
                     <td align="right">Destinatario:</td>                         
-                    <td><input name="destinatario" class="form-control" placeholder="Destinatario" ></td>
+                    <td><input name="destinatario" class="form-control" placeholder="Destinatario" onKeypress="soloLetras()"required></td>
                 </tr>
                 <tr style="padding:50px;">
                 <td colspan="3"> &nbsp; </td>
                 </tr>
                 
 				<tr>
-			     <td></td ><td rowspan="2" align="right"><button name="Guardar" onclick="guarda(calle.value,numero.value,colonia.value,estado.value,municipio.value,cp.value,destinatario.value,tel.value,ciudad.value)" class="btn mediano" > Guardar </button></td>
+			     <td></td ><td rowspan="2" align="right"><button name="Guardar" onclick=this.form.action="guardaNuevaDirec.php" class="btn grande" > Guardar y continuar</button></td>
 			     
-				<td rowspan="2" style="padding:10px;"  ><button class="btn mediano" onclick=this.form.action="pago.php"> Continuar </button></td>				
+				<td rowspan="2" style="padding:10px;"  ><button class="btn grande" onclick=this.form.action="pago.php">Continuar compra</button></td>				
 			    </tr>
 			    </form>
 			    <tr>
@@ -91,24 +93,9 @@
 
 ?>
 <script type="text/javascript">
-function guarda(calle,num,col,est,mun,cp,dest,tel,ciudad)
-{
-	$.ajax({
 
-				type: "POST",
-				url: "guardaNuevaDirec.php",
-				data: "calle="+ calle +"&num="+ num +"&col=" +col +"&est=" +est +"&mun=" +mun+"&cp=" +cp+"&dest=" +dest+"&tel=" +tel+"&ciudad=" +ciudad,
-				success: function(res)
-				{	
-					
-					window.location.href = 'direccion.php';
-				},
-				error: function(jqXHR, textStatus, error)
-				{
-					console.log("no se pudo mover");
-				}
-			});
-
+function soloLetras() {
+ 	if ((event.keyCode != 32) && (event.keyCode < 65) || (event.keyCode > 90) && (event.keyCode < 97) || (event.keyCode > 122))
+  	event.returnValue = false;
 }
-
 </script>

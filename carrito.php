@@ -32,7 +32,12 @@
 				$total = 0;
 				$iva=0;
 				$descuento = 0;
+				if($res->rowCount()<=0){ 
+
+						
+						header('location:ventas.php?NP=si'); }
 				foreach($res->fetchAll(PDO::FETCH_ASSOC) as $row){	
+
 					$query2 = "SELECT nombre,precio FROM producto WHERE id = '".$row["id_producto"]."'";
 					$res2 = $db->query($query2);
 					foreach($res2->fetchAll(PDO::FETCH_ASSOC) as $row2)
@@ -65,7 +70,7 @@
 					<tr>
 						<td></td><td align="right">
 						<form action="direccion.php">
-							<button class="btn mediano" type="submit" <?php if($res->rowCount()<=0) echo "disabled" ?>>Comprar</button>
+							<button class="btn mediano" type="submit" <?php if($res->rowCount()<=0){ echo "disabled"; }?>>Comprar</button>
 						</form></td>
 					</tr>
 				</table></center>
@@ -146,6 +151,7 @@
 		</div>
 
 	</div>
+
 
 	<!--................................................................. -->
 <?php include('pie_pagina.php'); ?>

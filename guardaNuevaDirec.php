@@ -6,18 +6,22 @@ include('abrirConexion.php');
 $db = Conectar();
 
 
-$calle=$_POST["calle"];
-$num =$_POST["num"];
-$col =$_POST["col"];
-$est= $_POST["est"];
-$mun= $_POST["mun"];
-$cp=$_POST["cp"];
-$dest= $_POST["dest"];
-$tel= $_POST["tel"];
-$ciudad= $_POST["ciudad"];
-echo $id;
+if(isset($_GET["ciudad"]) && isset($_GET["calle"]) && isset($_GET["numero"]) && isset($_GET["tel"]) && isset($_GET["colonia"]) && isset($_GET["municipio"]) && isset($_GET["estado"]) && isset($_GET["cp"]) && isset($_GET["destinatario"]))
+{
+	$calle=$_GET["calle"];
+	$tel=$_GET["tel"];
+	$col=$_GET["colonia"];
+	$mun=$_GET["municipio"];
+	$num=$_GET["numero"];
+	$dest=$_GET["destinatario"];
+	$cp=$_GET["cp"];
+	$est=$_GET["estado"];
+	$ciudad=$_GET["ciudad"];
+
+}
 if($db!=null)
 		{
+			
 			$prepared = array(
 				'calle' => $calle." ".$num,
 				'idc' => $id,
@@ -35,6 +39,7 @@ if($db!=null)
 			
 			try {
 				$query->execute($prepared);
+				header('location:direccion.php');
 			    //echo "Se ha Modificado exitosamente";
 			} 
 			catch (Exception $e) {

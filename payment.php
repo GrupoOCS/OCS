@@ -4,12 +4,11 @@ $mes=$_POST["mes"];
 $ano=$_POST["ano"];
 $codi=$_POST["codigo"];
 
-
-
 require_once("2checkout-php-master/lib/Twocheckout.php");
-Twocheckout::privateKey('sandbox-private-key');
-Twocheckout::sellerId('sandbox-seller-id');
+Twocheckout::privateKey('C8217C30-D48B-44CD-B4D4-8E88CA82638C');
+Twocheckout::sellerId('901308282');
 Twocheckout::sandbox(true);
+Twocheckout::verifySSL(false);
 try {
     $charge = Twocheckout_Charge::auth(array(
         "merchantOrderId" => "123",
@@ -29,12 +28,7 @@ try {
     ));
 
     if ($charge['response']['responseCode'] == 'APPROVED') {
-        echo "Thanks for your Order!";
-        echo "<h3>Return Parameters:</h3>";
-        echo "<pre>";
-        print_r($charge);
-        echo "</pre>";
-
+        echo "true";
     }
-} catch (Twocheckout_Error $e) {print_r($e->getMessage());}
+} catch (Twocheckout_Error $e) { print_r($e->getMessage());}
 ?>

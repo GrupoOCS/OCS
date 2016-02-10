@@ -1,9 +1,70 @@
 <?php include('encabezado.php'); 
 $id=$_SESSION["id_usu"];
-if(isset($_GET["ciudad"]) && isset($_GET["calle"]) && isset($_GET["numero"]) && isset($_GET["telefono"]) && isset($_GET["colonia"]) && isset($_GET["municipio"]) && isset($_GET["estado"]) && isset($_GET["cp"]) && isset($_GET["destinatario"]))
+
+$db = Conectar();
+//-----------------------------------------------------------------------------------------------
+$query = "SELECT id FROM direccion where id_cliente=".$_SESSION['id_usu'];
+$res = $db->query($query);
+foreach($res->fetchAll(PDO::FETCH_ASSOC) as $row){	
+	$id_direccion = $row['id'];
+}
+// echo $id_direccion;
+//-----------------------------------------------------------------------------------------------
+$status = "en proceso";
+//-----------------------------------------------------------------------------------------------
+
+if($db!=null)
+{
+	$prepared = array(
+		'id' => $id,
+		'id_direccion' => $id_direccion,
+		'status' => $status
+		);
+	$query = $db->prepare("INSERT INTO pedido (id_cliente,id_direccion,status) VALUES (:id,:id_direccion,:status)");
+    try {
+    	$query->execute($prepared);
+    	// echo "Sus datos se han guardado exitosamente";
+    } 
+    catch ( PDOException $e) 
+    {
+    	echo "ERROR: No se puede insertar en la base de datos\nIntente mas tarde";
+    }	
+    	
+}
+else
+	echo "ERROR:No se pudo conectar a la base de datos";
+//-----------------------------------------------------------------------------------------------
+$query = "SELECT id FROM pedido where id_cliente=".$_SESSION['id_usu'];
+$res = $db->query($query);
+foreach($res->fetchAll(PDO::FETCH_ASSOC) as $row){	
+	$id_pedido = $row['id'];
+}
+
+//-----------------------------------------------------------------------------------------------
+$query = "SELECT * FROM  carrito where id_cliente=".$_SESSION['id_usu'];
+$res = $db->query($query);
+foreach($res->fetchAll(PDO::FETCH_ASSOC) as $row){	
+	$prepared = array(
+		'id_pedido' => $id_pedido,
+		'id_producto' => $row['id_producto'],
+		'cantidad' => $row['cantidad']
+		);
+	$query = $db->prepare("INSERT INTO producto_pedido (id_pedido,id_producto,cantidad) VALUES (:id_pedido,:id_producto,:cantidad)");
+    try {
+    	$query->execute($prepared);
+    	// echo "Sus datos se han guardado exitosamente tabla producto pedido";
+    } 
+    catch ( PDOException $e) 
+    {
+    	echo "ERROR: No se puede insertar en la base de datos\nIntente mas tarde";
+    }	
+}
+//-----------------------------------------------------------------------------------------------
+
+if(isset($_GET["ciudad"]) && isset($_GET["calle"]) && isset($_GET["numero"]) && isset($_GET["tel"]) && isset($_GET["colonia"]) && isset($_GET["municipio"]) && isset($_GET["estado"]) && isset($_GET["cp"]) && isset($_GET["destinatario"]))
 {
 	$ca=$_GET["calle"];
-	$tel=$_GET["telefono"];
+	$tel=$_GET["tel"];
 	$col=$_GET["colonia"];
 	$mun=$_GET["municipio"];
 	$num=$_GET["numero"];
@@ -48,14 +109,9 @@ else{
 		
 			<p>
 			<center>
-			<center><h2> Proporciona tu información de pago </h2>
+			<center><h2> Registrar Pago </h2>
 			</center>
 			
-
-
-
-
-
 			<table >
 				<tr>
 					<th onClick="desplegar('tabla_a_desplegar','estadoT')" align="center">
@@ -74,11 +130,11 @@ else{
 								</tr>
 								<tr>
 									<td><label>Autorizacion</label></td>
-									<td>	<input type="text" class="form-control" name="autorizacion" minlength="6" maxlength="6" onKeypress="if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;" Placeholder="numAutorizacion"></td>
+									<td>	<input type="text" class="form-control" name="autorizacion" minlength="6" maxlength="6" onKeypress="if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;" Placeholder="numAutorizacion" required></td>
 								</tr>
 								<tr>
 									<td>Referencia</td>
-									<td><input type="text" class="form-control" name="referencia" minlength="20" maxlength="30" PlaceHolder="numReferencia" onKeypress="if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;"></td>
+									<td><input type="text" class="form-control" name="referencia" minlength="20" maxlength="30" PlaceHolder="numReferencia" onKeypress="if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;" required></td>
 								</tr>
 								<input type="hidden" name="calle" value=<?php echo "'".$calle."'";?>>
 								<input type="hidden" name="col" value=<?php echo "'".$col."'";?>>
@@ -125,18 +181,18 @@ else{
 					<tr>
 						<td>
 							<center><table  id="tabla_a_desplegar2"   style="display: none;">
-								<form id="myCCForm" action="Cuenta.php" method="POST">
+								<form id="myCCForm" action="payment.php" method="POST">
 								
 									
 										    <input id="token" name="token" type="hidden" value="">
 										<tr>
 											<td><label>Nombre del titular de la tarjeta: </label></td>
-											<td>	<input type="text" class="form-control" maxlength="35" name="titular_tarjeta" placeholder="Nombre"></td>
+											<td>	<input type="text" class="form-control" maxlength="35" name="titular_tarjeta" placeholder="Nombre" required></td>
 										
 										</tr>
 										<tr>
 											<td><label><center>Número de tarjeta: </center> </label></td>
-											<td>    <input type="text" name="dato1" id="ccNo" minlength="16"  maxlength="16" onKeypress="if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;" title="Teclee los 16 digitos de su tarjeta" class="form-control" placeholder="Numero de tarjeta"></td>
+											<td>    <input type="text" name="dato1" id="ccNo" minlength="16"  maxlength="16" onKeypress="if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;" title="Teclee los 16 digitos de su tarjeta" class="form-control" placeholder="Numero de tarjeta" required></td>
 										
 											</tr>
 										<tr>
@@ -179,7 +235,7 @@ else{
 									</tr>
 										<tr>
 											<td><label >Código de Seguridad: </label></td>
-										<td><input id="cvv" type="text" name="codigo" class="form-control"  minlength="3"  maxlength="3" onKeypress="if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;" autocomplete="off" placeholder="000" pattern="[0-9]{3}" title="teclea el número de seguridad de tu tarjeta. Son 3 digitos"></td>
+										<td><input id="cvv" type="text" name="codigo" class="form-control"  minlength="3"  maxlength="3" onKeypress="if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;" autocomplete="off" placeholder="000" pattern="[0-9]{3}" title="teclea el número de seguridad de tu tarjeta. Son 3 digitos" required></td>
 										</tr>
 										<tr >
 											<td colspan="2" align="center">	
@@ -257,8 +313,8 @@ var estadOt = document.getElementById(estadoT);
     var tokenRequest = function() {
         // Setup token request arguments
         var args = {
-            sellerId: "sandbox-seller-id",
-            publishableKey: "sandbox-publishable-key",
+            sellerId: "901308282",
+            publishableKey: "6E275F45-7F5E-414F-B781-2427480DA7E4",
             ccNo: $("#ccNo").val(),
             cvv: $("#cvv").val(),
             expMonth: $("#expMonth").val(),
