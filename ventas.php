@@ -274,7 +274,16 @@
 				printf('<div class="marca_producto">%s</div>',$row[3]);
 				printf ("<div class=\"precio_producto\">$%s</div>", $row[2]);
 				
-				if ($_SESSION['nom_usu']){
+				$resc = "select producto.cantidad as cantidad_producto,carrito.cantidad as cantidad_carrito FROM producto,carrito WHERE producto.id=".$row[0]." and carrito.id_producto=".$row[0];
+				$max_resc = $db->query($resc);
+				$max = 1;
+				if($max_resc->rowCount() > 0){			
+					foreach ($max_resc->fetchAll(PDO::FETCH_ASSOC) as $value) {
+						$max=$value["cantidad_producto"]-$value["cantidad_carrito"];
+					}
+				}
+
+				if ($_SESSION['nom_usu'] and $max > 0){
 					printf ("<a href=\"#\" onClick=\"insertarCarrito(".$_SESSION['id_usu'].",".$row[0].",1);\" class=\"agrega_carrito\"><img class=\"add_car\" src=\"Iconos/agregar.png\"></a>",$row[0]);
 				}
             echo "</div>";

@@ -58,7 +58,7 @@
 					clearInterval(stop);
 				});
 				$('.sube').mouseover(function(){
-					stop=setInterval(function mover() {carruselbaja();},20);
+					stop=setInterval(function mover() {carruselbaja();},15);
 				});
 				var ban1;
 				function carruselbaja(){
@@ -77,7 +77,7 @@
 					clearInterval(stop);
 				});
 				$('.baja').mouseover(function(){
-					stop=setInterval(function mover() {carrusel();},20);
+					stop=setInterval(function mover() {carrusel();},15);
 				});
 
 
@@ -110,7 +110,7 @@
 					clearInterval(stops);
 				});
 				$('.subes').mouseover(function(){
-					stops=setInterval(function mover() {carruselsbaja();},20);
+					stops=setInterval(function mover() {carruselsbaja();},15);
 				});
 				var ban1s=1;
 				function carruselsbaja(){
@@ -129,7 +129,7 @@
 					clearInterval(stops);
 				});
 				$('.bajas').mouseover(function(){
-					stops=setInterval(function mover() {carrusels();},20);
+					stops=setInterval(function mover() {carrusels();},15);
 				});
 
 			});
@@ -143,10 +143,12 @@
 			<?php 
 			$db = Conectar();
 //-----------------------------------------------------------------------------------------------
-			$query = "SELECT status FROM pedido where id_cliente=".$_SESSION['id_usu'];
-			$res = $db->query($query);
-			foreach($res->fetchAll(PDO::FETCH_ASSOC) as $row){	
-				$id_direccion = $row['id'];
+			if ($_SESSION['nom_usu']){
+				$query = "SELECT status FROM pedido where id_cliente=".$_SESSION['id_usu'];
+				$res = $db->query($query);
+				foreach($res->fetchAll(PDO::FETCH_ASSOC) as $row){	
+					$id_direccion = $row['id'];
+				}
 			}
 				if ($_SESSION['nom_usu']) echo '<span class="usuario">'.$_SESSION['nom_usu'].' | </span><a class="enlace" href="funPHP/cerrarSesion.php">Cerrar Sesión</a>  ';
 				else echo '<a class="enlace" href="inicioSesion.php">Iniciar Sesión</a> | <a class="enlace" href="Registrarse.php">Registrarse</a> ';

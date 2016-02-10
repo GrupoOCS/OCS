@@ -38,7 +38,7 @@
 	$res = $db->query($query);
 
 	if ($_SESSION['nom_usu']){
-		$res2 = "select producto.cantidad as cantidad_producto,carrito.cantidad as cantidad_carrito FROM producto,carrito WHERE producto.id=".$id." and carrito.id_cliente=".$_SESSION['id_usu']." and carrito.id_producto=".$id;
+		$res2 = "select producto.cantidad as cantidad_producto,carrito.cantidad as cantidad_carrito FROM producto,carrito WHERE producto.id=".$id." and carrito.id_producto=".$id;
 		$max_res2 = $db->query($res2);
 		if($max_res2->rowCount() > 0){			
 			foreach ($max_res2->fetchAll(PDO::FETCH_ASSOC) as $value) {
@@ -72,7 +72,6 @@
 			          	$query = "select imagen.nombre from imagen where imagen.id_producto=".$_GET['id'].";";
 			          	$resimg = $db->query( $query );
 			            $n=$resimg->rowCount();
-			            // for ($i=0; $i<$n; $i++){
 			            $i=0;
 			            foreach ($resimg-> fetchAll(PDO::FETCH_NUM) as $r ){
 			              if ($i==0) printf ("<li data-target=\"#carousel-example-generic\" data-slide-to=\"0\"  class=\"active\"><img  src=\"%s\" /></li>",$r[0]);
