@@ -130,7 +130,19 @@
 
 
 			try {
-				$query = $db->prepare("INSERT INTO cliente (nombre,email,contrasena) VALUES (:nombre,:correo,:contrasena)");
+				
+
+			    //$query2 = $db->prepare("INSERT INTO direccion (id_cliente,calle,colonia,municipio,ciudad,id_estado,telefono,cp,destinatario) VALUES (:idcliente,:calle,:colonia,:municipio,:ciudad,:edo,:telefono,:codigoP,:destino)");
+			    //$query2->execute($agregar2);
+				//crear codigo  de  verificacion  e  insertarlo a   la  base  de   datos
+			    $code = substr(md5(uniqid(rand())), 0,6);
+			    $codig=$code;
+			   // $query3 = $db->prepare("INSERT INTO codigo(id_cliente,codigo) VALUES (:idcliente,:codigo)");
+			   // $query3->execute(array('idcliente' => $agregar2['idcliente'],'codigo' => $code));
+			   $valor= enviarmail($cmails,$codig); 
+			   if($valor=="true")
+			   	{
+			   	$query = $db->prepare("INSERT INTO cliente (nombre,email,contrasena) VALUES (:nombre,:correo,:contrasena)");
 			    $query->execute($agregar);
 
 			    $agregar2 = array(
@@ -144,16 +156,14 @@
 						'codigoP' => $valores['codigo'],
 					    'destino' =>$valores['nombre']
 					);
-
-			    $query2 = $db->prepare("INSERT INTO direccion (id_cliente,calle,colonia,municipio,ciudad,id_estado,telefono,cp,destinatario) VALUES (:idcliente,:calle,:colonia,:municipio,:ciudad,:edo,:telefono,:codigoP,:destino)");
+			   	$query2 = $db->prepare("INSERT INTO direccion (id_cliente,calle,colonia,municipio,ciudad,id_estado,telefono,cp,destinatario) VALUES (:idcliente,:calle,:colonia,:municipio,:ciudad,:edo,:telefono,:codigoP,:destino)");
 			    $query2->execute($agregar2);
-				//crear codigo  de  verificacion  e  insertarlo a   la  base  de   datos
-			    $code = substr(md5(uniqid(rand())), 0,6);
-			    $codig=$code;
 			    $query3 = $db->prepare("INSERT INTO codigo(id_cliente,codigo) VALUES (:idcliente,:codigo)");
-			    $query3->execute(array('idcliente' => $agregar2['idcliente'],'codigo' => $code));
-			 	enviarmail($cmails,$codig); 
-			    return "true";
+			    $query3->execute(array('idcliente' => $agregar2['idcliente'],'codigo' => $code));	
+			   	}
+			   return $valor;
+			   
+			    //return "true";
 			    echo (" 
 			    	<form onSubmit='return verificacodigo(".$agregar2['idcliente'].");'>
 			    	<div  id='error'></div>
@@ -174,8 +184,13 @@
 	    $headers.= "To:".$cmails."\r\n";
         $headers.= "Usted solicitó un registro en Online Computer  Shop."."\r\n";
         $headers.=" Para confirmarlo debe hacer click en el siguiente enlace:"."\r\n".phpversion();  
-		$message.="http://ocs.net/funPHP/confirmar.php?codigo=".$codig."\r\n";
-		 if (!@mail($cmails,"Confirmacion de registro en Online  Computer  Shop",$message,$headers)) die ("No se pudo enviar el email de confirmacion.");
+		$message.="http://192.168.1.132/funPHP/confirmar.php?codigo=".$codig."\r\n";
+		 if (!@mail($cmails,"Confirmacion de registro en Online  Computer  Shop",$message,$headers))
+		 { 
+		 	die("No se pudo enviar el email de confirmacion.");
+		 	return "No se pudo enviar el email de confirmacion.";
+		 }
+		 	return "true";
 	}
 
 ?>

@@ -71,7 +71,8 @@ $(document).ready(function(){
 	        		//alert("Ya no :(");
 	        		$('#registro').html("Registrate<br><font color='red' size='3'>"+response+"</font>");
 	        		location.href="#top";
-	        		setInterval(function(){$('#registro').html("Registrate");},2500);
+	        		setInterval(function(){$('#registro').html("Registrate");},5000);
+
 	        	}		  
 	        }
 
