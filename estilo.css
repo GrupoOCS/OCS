@@ -230,12 +230,12 @@ div.logo {
 	
 div.busqueda {
     width: 25.4%;
-    height: 80%;
+    height: 60%;
     /*background-color: #34495e;*/
     float: right;
     text-align: right;
     position: relative;
-    margin-top: 1.4%;
+    margin-top: .5%;
 }
 .btn-buscar{
 	height: 100%;
@@ -251,14 +251,14 @@ div.busqueda {
 }
 .tx_buscar {
     width: 69%;
-    height: 50%;
+    height: 90%;
     position: relative;
     float: left;
     padding-top: 1%;
 }
 .b_buscar {
     width: 30%;
-    height: 60%;
+    height: 90%;
     position: relative;
     float: right;
     padding-right: 1%;
@@ -782,100 +782,194 @@ footer{
 }
 
 
+
+
+
+
+
+.bloque-subcategorias{
+	margin:0 0 0 0px;
+	padding:0;
+	/*right: -120px;*/
+}
+
+.bloque-categorias{
+	margin:0 0 0 12px;
+	padding:0;
+}
+.carrusel1{
+	height:206px;
+	width:206px;
+	margin-top: -22px;	
+	display: none;
+	overflow:hidden;
+	position: relative;
+
+/*	border-width: 1px;
+	border-style: solid;
+    border-color: #f00;*/
+}
+.carrusel2{	
+	width:200px;
+	height:206px;
+	overflow:hidden;	
+	position: fixed;
+	top: 15%;
+	right: 13.3%;
+
+	/*border-width: 1px;
+	border-style: solid;
+    border-color: #f00;*/
+}
+a.bajas{
+	width: 180px;
+	bottom: 40px;
+	/*left: 160px;*/
+	top: 306px;
+	right: 13.1%;
+
+	position: fixed;
+	display:none;
+}
+a.subes{
+	width: 190px;
+	bottom: 40px;
+	/*left: 160px;*/
+	top: 11.3%;
+	right: 13.1%;
+
+	position: fixed;
+	display:none;
+}
+a.baja{
+	width: 200px;
+	left: -41px;
+	top: 	205px;
+	/*top: 600px;*/
+	position: relative;
+	display:none;
+}
+a.sube{
+	width: 200px;
+	left: -41px;
+	top: 	-2px;
+	/*top: 600px;*/
+	position: relative;
+	display:none;
+}
+
+
+
+
+
+
+
+
+
+
+
 .nav ul, ol {
-				list-style:none;   /*hace que no se vea el punto */
-			}
-			
-			.nav > li {
-				float:right;  /*da el efecto */
-			}
-			
-			.nav li a { 				/*diseño de los bloques  */
-				width: 200px;
-				height: 40px;
-				color: white;
-				margin: .5%;
-				text-decoration: none;
-				background-color: #2a80a3;		
-				display:block;
-				
-				font-family: 'lato';
+	list-style:none;   /*hace que no se vea el punto */
+}
 
-				border-right-width: 0px;
-			    border-bottom-width: 0;
-			    border-left-width: 1px;
-			    border-top-width: 0;
-			    border-style: solid;
-			    border-color: #fff;
-			}
-			.nav li a.principal{ 				/*diseño de los bloques  */
-				width: 200px;
-				height: 30px;
-				color: white;
-				text-decoration: none;
-				background-color: #34495e;		
-				display:block;
-				overflow: visible;
-				text-decoration: none;
-				font-family: 'lato';
-				font-size:14pt;
-				position: relative;
-			}
+.nav > li {
+	float:right;  /*da el efecto */
+}
 
-			.nav li a.principal-active{ 				/*diseño de los bloques  */
-				width: 200px;
-				height: 28px;
-				color: #1abc9c;
-				text-decoration: none;
-				background-color: #34495e;		
-				display:block;
-				overflow: visible;
-				text-decoration: none;
-				font-family: 'lato';
-				font-size:14pt;
-				position: relative;
-				border-bottom: solid;
+.nav li a { 				/*diseño de los bloques  */
+	width: 200px;
+	height: 40px;
+	color: white;
+	margin: .5%;
+	text-decoration: none;
+	background-color: #2a80a3;		
+	display:block;
+	vertical-align:middle;
+	
+	font-family: 'lato';
 
-				border-width: 0px;
-				border-color: #1abc9c;
-			}
+	border-right-width: 0px;
+    border-bottom-width: 0;
+    border-left-width: 1px;
+    border-top-width: 0;
+    border-style: solid;
+    border-color: #fff;
+}
 
-			.nav li a.principal:hover {				/*hover diseño de los bloques  */
-				background-color: transparent;
-				color:#3dc8db;
-				text-decoration: none;
-			}
-			.nav li a.principal-active:hover {				/*hover diseño de los bloques  */
-				background-color: transparent;
-				color:#3dc8db;
-				text-decoration: none;
-			}
-			
-			.nav li a:hover {				/*hover diseño de los bloques  */
-				background-color:#1abc9c;
-			}
-			
-			.nav li ul {
-				display:none;
-				position:absolute;		/*esconde  los bloques  */
-				min-width:140px;
-			}	
-			
-			.nav li:hover > ul {  /*muestra  los bloques  */
-				display:block;
+.nav li a.principal{ 				/*diseño de los bloques  */
+	width: 200px;
+	height: 30px;
+	color: white;
+	text-decoration: none;
+	vertical-align:middle;
+	background-color: #34495e;		
+	display:block;
+	overflow: visible;
+	text-decoration: none;
+	font-family: 'lato';
+	font-size:14pt;
+	position: relative;
+}
 
-			}
-			
-			.nav li ul li {
-				position:relative;
-				left: -40px;
-				bottom: -20px;
-			}
-			
-			.nav li ul li ul {
-				right:-240px;
-				top:-20px;
-			}
+.nav li a.principal-active{ 				/*diseño de los bloques  */
+	width: 200px;
+	height: 28px;
+	color: #1abc9c;
+	text-decoration: none;
+	background-color: #34495e;		
+	vertical-align:middle;
+	display:block;
+	overflow: visible;
+	text-decoration: none;
+	font-family: 'lato';
+	font-size:14pt;
+	position: relative;
+	border-bottom: solid;
+
+	border-width: 0px;
+	border-color: #1abc9c;
+}
+
+.nav li a.principal:hover {				/*hover diseño de los bloques  */
+	background-color: transparent;
+	color:#3dc8db;
+	text-decoration: none;
+}
+.nav li a.principal-active:hover {				/*hover diseño de los bloques  */
+	background-color: transparent;
+	color:#3dc8db;
+	text-decoration: none;
+}
+
+.nav li a:hover {				/*hover diseño de los bloques  */
+	background-color:#1abc9c;
+}
+
+.nav li div {
+	display:none;
+	/*position:fixed;		esconde  los bloques  */
+	min-width:140px;
+}	
+
+.nav li:hover > div {  /*muestra  los bloques  */
+	display:block;
+}
+
+.nav li ul li {
+	position:relative;
+	left: -14px;
+	/*bottom: -20px;*/
+}
+
+.nav li ul li div {
+	/*left:0px;*/
+	/*right: 13%;*/
+}
+
+
+
+
+
 
 
 

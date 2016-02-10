@@ -25,7 +25,7 @@
 			agregado.innerHTML = "<p class=\"alert alert-success\"> Se ha(n) agregado "+cantidad+" producto(s) </p>";
 
 			
-			setTimeout(function(){javascript:location.reload();},500);
+			setTimeout(function(){javascript:location.reload();},1000);
 		}
 	</script>
 
@@ -116,7 +116,9 @@
 			<?php
 				// echo '<img style="width:100%; height:100%;" src="'.$row[1].'">';
 			echo '</div>';
-			echo'<div id="anuncio"></div>';
+			if ($_SESSION['nom_usu']) 
+				echo'<div id="anuncio"></div>';
+			else echo'<div id="anuncio"> <p class="alert alert-danger"> Para agregar productos al carrito es necesario iniciar sesión </p></div>';
 			echo '<div class="desc-texto">';
 			echo'	<h3><center>'.$row[1].'</center></h3>
 				<!-- <div style="color:green; text-align:center;"> Disponible  : 50</div> -->
@@ -141,28 +143,33 @@
 	if ($_SESSION['nom_usu']){
 	?>
 	<div class="desc-agregar">
-		<div class="d-cantidad">
-			<!-- <fieldset class="field"> -->
-				<!-- <form> -->
-				<label style="position:relative; height:25%; padding:4%; float:left; width:42%;">
-					Cantidad:</label>
-				<select id="num" >
-					<?php 
-						for ($i=1; $i <=$max; $i++) { 
-							print '<option value='.$i.'>'.$i.'</option>';
-						}
+
+		<?php
+		if ($max <= 0){ ?>
+			<script type="text/javascript">
+				var agregado=document.getElementById('anuncio');
+				agregado.innerHTML = "<p class=\"alert alert-danger\"> Este producto no está disponible </p>";
+			</script>
+		<?php
+		} else {
+		?>
+			<div class="d-cantidad">
+					<label style="position:relative; height:25%; padding:4%; float:left; width:42%;">
+						Cantidad:</label>
+					<select id="num" >
+						<?php 
+							for ($i=1; $i <=$max; $i++) { 
+								print '<option value='.$i.'>'.$i.'</option>';
+							}
+						?>
+					</select>
+			</div>
+			<div class="d-agrega">
+					<?php
+					printf ("<a href=\"#\" onClick=\"insertarCarrito(".$_SESSION['id_usu'].",".$id.",num.value);\"><input type=\"submit\" class=\"btn-buscar\" value=\"Agregar al carrito\"></a>");
 					?>
-				</select>
-				<!-- <input id="num" name="cantidad" value="1" style=" position:relative; float:left; width:50%" type="number" class="form-control" min="1"> -->
-		</div>
-		<div class="d-agrega">
-				<?php
-				// printf ("<a href=\"#\" onClick=\"insertarCarrito(".$_SESSION['id_usu'].",".$id.",num.value);\"><img class=\"b_add_car\" src=\"Iconos/bagregar.png\"></a>");
-				printf ("<a href=\"#\" onClick=\"insertarCarrito(".$_SESSION['id_usu'].",".$id.",num.value);\"><input type=\"submit\" class=\"btn-buscar\" value=\"Agregar al carrito\"></a>");
-				?>
-			<!-- </form> -->
-			<!-- </fieldset> -->
-		</div>
+			</div>
+		<?php } ?>
 	</div>
 	<?php } ?>
 	</div>
