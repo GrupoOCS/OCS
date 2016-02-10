@@ -1,4 +1,4 @@
-<?php 	include('encabezado.php'); ?>
+<?php include('encabezado.php'); ?>
 
 	<!--.............................TERMINA NAVEGACIÓN...............................-->
 	<!-- <link rel="stylesheet" type="text/css" href="bootstrap.min.css"> -->
@@ -26,15 +26,20 @@
 		<div class="wholeCarrito">	
 
 			<?php
+
+       
         		$db = Conectar();
 				$query = "SELECT * FROM  carrito where id_cliente=".$_SESSION['id_usu'];
 				$res = $db->query($query);
 				$total = 0;
 				$iva=0;
 				$descuento = 0;
-
-				if($res->rowCount()<=0){ 
-					header('Location:./ventas.php?NP=si');
+				// print_r($res);
+				if($res->rowCount()<=0){
+					echo '<script type="text/javascript">
+						
+						window.location.assign("ventas.php?NP=si");
+						</script>';
 				}
 				foreach($res->fetchAll(PDO::FETCH_ASSOC) as $row){	
 
