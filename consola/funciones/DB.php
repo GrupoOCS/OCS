@@ -29,9 +29,9 @@
 		    $query->execute($prepared);
 			if( $row=($query->fetch(PDO::FETCH_NUM)) )
 			{
-				$_SESSION['id_usu']=$row[0];
-				$_SESSION['nom_usu']=$row[1];
-				$_SESSION['usu']=$row[2];
+				$_SESSION['id_adm']=$row[0];
+				$_SESSION['nom_adm']=$row[1];
+				$_SESSION['adm']=$row[2];
 				return "true";
 			}
 			return "Usuario y/o contraseña incorrectos";
@@ -181,7 +181,7 @@
 				{
 					echo "<form onsubmit='return updcategoria(".$row[0].")'><table>
 						 	<tr>
-								<td width='30%'><span class='r'>Nombre:</span></td><td width='70%'><input class='entrada-texto' id='nombre' type='text' value='".$row[1]."' autofocus required /></td>
+								<td width='30%'><span class='r'>Nombre:</span></td><td width='70%'><input class='entrada-texto' id='nombre' type='text' value='".$row[1]."' maxlength='45' autofocus required /></td>
 							</tr></table>";
 					echo "<center><input type='submit' value='Aceptar' class='aceptar'/> <input type='button' value='Cancelar' onclick='categorias();' class='cancelar'/></center>";
 
@@ -502,7 +502,7 @@
 				{
 					echo "<form onsubmit='return updsubcategoria(".$row[0].",".$idcat.")'><table>";
 					echo 	"<tr>
-								<td width='30%'><span class='r'>Nombre:</span></td><td width='70%'><input class='entrada-texto' id='nombre' type='text' value='".$row[1]."' autofocus required /></td>
+								<td width='30%'><span class='r'>Nombre:</span></td><td width='70%'><input class='entrada-texto' id='nombre' type='text' value='".$row[1]."' maxlength='40' autofocus required /></td>
 							</tr>
 							<tr>
 								<td width='30%'><span class='r'>Categoria:</span></td><td width='70%'>".getSelectCategorias($row[2])."</td></tr>";
@@ -719,10 +719,10 @@
 					echo "<form onsubmit='return updproductos(".$row[0].",".$idsub.")'>
 							<table>
 								<tr>
-									<td width='30%'><span class='r'>Nombre:</span></td><td width='70%'><input class='entrada-texto' id='nombre' type='text' value='".$row[1]."' autofocus required /></td>
+									<td width='30%'><span class='r'>Nombre:</span></td><td width='70%'><input class='entrada-texto' id='nombre' type='text' value='".$row[1]."' maxlength='100' autofocus required /></td>
 								</tr>
 								<tr>
-									<td width='30%'><span class='r'>Marca:</span></td><td width='70%'><input class='entrada-texto' id='marca' type='text' value='".$row[2]."' autofocus required /></td>
+									<td width='30%'><span class='r'>Marca:</span></td><td width='70%'><input class='entrada-texto' id='marca' type='text' value='".$row[2]."' maxlength='45' autofocus required /></td>
 								</tr>
 								<tr>
 									<td width='30%'><span class='r'>Precio:</span></td><td width='70%'><input class='entrada-texto' id='precio' type='text' value='".$row[3]."' autofocus required /></td>
@@ -731,7 +731,7 @@
 									<td width='30%'><span class='r'>Cantidad:</span></td><td width='70%'><input class='entrada-texto' id='cantidad' type='text' value='".$row[7]."' autofocus required /></td>
 								</tr>
 								<tr>
-									<td width='30%'><span class='r'>Descripcion:</span></td><td width='70%'><textarea rows='5' id='descripcion' autofocus required >".$row[4]."</textarea></td>
+									<td width='30%'><span class='r'>Descripcion:</span></td><td width='70%'><textarea rows='5' id='descripcion' maxlength='500' autofocus required >".$row[4]."</textarea></td>
 								</tr>
 								<tr>
 									<td width='30%'><span class='r'>Subcategoria:</span></td><td width='70%'>".getselectSubcategorias($row[5])."</td></tr>
@@ -963,5 +963,59 @@
 		}
 		else
 			echo "ERROR:No se pudo conectar a la base de datos<BR>";
+	}
+
+	function getSelectClientes()
+	{
+		$db=conectar();
+		if($db!=null)
+		{
+			$query = $db->prepare("SELECT nombre FROM Cliente");
+		    $query->execute();
+		    echo "<select id='nombre'>";
+			while( $row=($query->fetch(PDO::FETCH_NUM)) )
+			{
+				echo "<option value='".$row[0]."'>".$row[0]."</option>";
+			}
+			echo "</select>";
+		}
+		else
+			echo "ERROR:No se pudo conectar a la base de datos";
+	}
+	function getSelectMarcas()
+	{
+		$db=conectar();
+		if($db!=null)
+		{
+			$query = $db->prepare("SELECT marca FROM producto GROUP BY marca");
+		    $query->execute();
+		    echo "<select id='marca'>";
+			while( $row=($query->fetch(PDO::FETCH_NUM)) )
+			{
+				echo "<option value='".$row[0]."'>".$row[0]."</option>";
+			}
+			echo "</select>";
+		}
+		else
+			echo "ERROR:No se pudo conectar a la base de datos";
+	}
+
+	function getSelectMarcasIn()
+	{
+		$db=conectar();
+		if($db!=null)
+		{
+			$query = $db->prepare("SELECT marca FROM producto GROUP BY marca");
+		    $query->execute();
+		    echo "<select id='marcas'>";
+		    echo "<option value='1'>Todas las marcas</option>";
+			while( $row=($query->fetch(PDO::FETCH_NUM)) )
+			{
+				echo "<option value='".$row[0]."'>".$row[0]."</option>";
+			}
+			echo "</select>";
+		}
+		else
+			echo "ERROR:No se pudo conectar a la base de datos";
 	}
 ?>

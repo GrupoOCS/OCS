@@ -1,6 +1,6 @@
 <?php
 	session_start();
-	if($_SESSION['nom_usu']==null)
+	if($_SESSION['nom_adm']==null)
 		header('Location: index.html');
 ?>
 <!DOCTYPE html>
@@ -20,7 +20,7 @@
 					<img class="encabezado-ico" src="img/l_usuario.png"/>
 				</td>
 				<td>
-					<label><?=$_SESSION['nom_usu'];?></label>
+					<label><?=$_SESSION['nom_adm'];?></label>
 				</td>
 		   	</tr>
 		   	<tr>
@@ -44,7 +44,7 @@
 			<span>Bienvenido</span>
 		</div>
 		<div id="contenido" class="contenido">
-			<p>Privilegios de administrador</p>
+			<h3>Ha ingresado a la consola del sistema OCS.<br>Si tiene alguna duda del funcionamiento de la consola, consultar el manual de usuario.<br>Si tiene algún problema técnico, favor de comunicarse con el soporte técnico.</h3>
 		</div>
 		
 

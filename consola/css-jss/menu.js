@@ -611,7 +611,7 @@ function updsubcategoria(id,cat)
 function formaddcategoria(){
 	$("#titulo").html("<span>Agregar Categorias</span>");
 	$("#contenido").html("<form onSubmit='return agrcategoria();'><table>"+
-				"<tr><td><span class='r'>Nombre: </span></td><td><input class='entrada-texto' name='nombre' id='nombre' type='text' placeholder='Nombre de la categoria' autofocus required /></td></tr></table>"+
+				"<tr><td><span class='r'>Nombre: </span></td><td><input class='entrada-texto' name='nombre' id='nombre' type='text' placeholder='Nombre de la categoria' maxlength='45' autofocus required /></td></tr></table>"+
 				"<center><input type='submit' value='Aceptar' class='aceptar'/> "+
 				"<input type='button' value='Cancelar' onclick='categorias()' class='cancelar'/></center></form>");	
 	return false;
@@ -628,7 +628,7 @@ function formaddsubcategoria(){
         success:  function (response) 
         {
 			$("#contenido").html("<form onSubmit='return agrsubcategoria();'><table>"+
-				"<tr><td><span class='r'>Nombre: </span></td><td><input class='entrada-texto' name='nombre' id='nombre' type='text' placeholder='Nombre de la subcategoria' autofocus required /></td><td>"+
+				"<tr><td><span class='r'>Nombre: </span></td><td><input class='entrada-texto' name='nombre' id='nombre' type='text' placeholder='Nombre de la subcategoria' maxlength='40' autofocus required /></td><td>"+
 				"<tr><td><span class='r'>Categoria: </span></td><td>"+response+"</td></tr></table>"+
 				"<center><input type='submit' value='Aceptar' class='aceptar'/> "+
 				"<input type='button' value='Cancelar' onclick='subcategorias()' class='cancelar'/></center></form>");
@@ -779,11 +779,11 @@ function formaddproducto(){
         success:  function (response) 
         {
 			$("#contenido").html(" <form enctype='multipart/form-data' method='post' id='formproducto' onSubmit='return agrproducto();' ><table><tr><td><span class='r'>Nombre: </span>"
-				+"</td><td><input class='entrada-texto' id='nombre' type='text' placeholder='Nombre del producto' autofocus required />"
-				+"</td></tr><tr><td><span class='r'>Marca: </span></td><td><input class='entrada-texto' id='marca' type='text' placeholder='Marca' autofocus required />"
+				+"</td><td><input class='entrada-texto' id='nombre' type='text' placeholder='Nombre del producto' maxlength='100' autofocus required />"
+				+"</td></tr><tr><td><span class='r'>Marca: </span></td><td><input class='entrada-texto' id='marca' type='text' placeholder='Marca' maxlength='45' autofocus required />"
 				+"</td></tr><tr><td><span class='r'>Precio: </span></td><td><input class='entrada-texto' id='precio' min='1' type='number' placeholder='Precio' autofocus required />"
 				+"</td></tr><tr><td><span class='r'>Cantidad: </span></td><td><input class='entrada-texto' id='Cantidad' min='1' type='number' placeholder='Cantidad' autofocus required />"
-				+"</td></tr><tr><td><span class='r'>Descripcion: </span></td><td><textarea rows='5' id='descripcion' required></textarea></td></tr><tr><td><span class='r'>Subcategoria: </span>"
+				+"</td></tr><tr><td><span class='r'>Descripcion: </span></td><td><textarea rows='5' id='descripcion' maxlength='500' required></textarea></td></tr><tr><td><span class='r'>Subcategoria: </span>"
 				+"</td><td>"+response+"</td></tr>"
 				+"<tr><td><span class='r'>Imagen: </span></td><td><input class='entrada-texto' type='file' id='file'  multiple='' accept='image/jpeg, image/png' required>"
 				+"</td></tr></table>"
@@ -869,19 +869,6 @@ function delCategoriaSelec(cat)
 	return false;
 }
 
-function reportes()
-{
-	
-       		$("#titulo").html("<span>Reportes</span>");
-       
-	        $("#contenido").html("<br><table><tr><td class= 'col'><span><label>Clientes</label></span></td>"
-	        					+"<td class= 'col'><select id= 'nombre'><option value='Todos'>Todos</option><option value='Juan Robles'>Juan Robles</option><option value='Miguel Ponce'>Miguel Ponce</option><option value='Omar Bravo'>Omar Bravo</option>"
-								+"</select><br><br></td><td></td><td></td></tr>"
-	        					+"<tr><td class= 'col'><span><label>Productos</label></span><br><br></td><td class= 'col'><select id='marca'><option value='Asus'>Asus</option><option value='HP'>HP</option><option value='Toshiba'>Toshiba</option><option value='Sony'>Sony</option></select></td><td class= 'col'><select><option value='1'>Todo</option><option value='2'>Más vendidos</option></select><td class= 'col'></td></td></tr>"
-	        					+"<tr><td class= 'col'><span><label>Intervalo de fecha</label></span><br><br><td class= 'col'><input type='date' name='fecha'></td><td class= 'col'><input type='date' name='fechaf'></td><td class= 'col'><br><br><br><br><button onclick='genrep()'>Generar PDF</button></td><td><br><br><br><br><button onclick='imprimir()'>Imprimir PDF</button></td></tr></table>");
-	
-}
-
 function EliminarImagen(id,ruta)
 {
 	document.getElementById(id).innerHTML="<span class='text'>Realmente desea eliminar esta Imagen?</span>"
@@ -922,24 +909,53 @@ function vaciardiv(name)
 
 function pdfpedido(id)
 {
-	alert("Generar PDF");
+	window.open("reporPedidos.php?id="+id);
 }
 
 function imprimirpdfpedido(id)
 {
-	alert("Imprimir PDF");
+	window.open("impPedidos.php?id="+id);
+}
+
+function reportes()
+{
+	$.ajax({
+		data: null,
+	  	url:   'getselectspedidos.php',
+	    type:  'post',
+	    beforeSend: function () {
+	   		$("#titulo").html("<span>Reportes</span>");
+	    },
+	    success:  function (response) {
+		   	$("#contenido").html(response);
+		}
+	});
 }
 
 function genrep()
 {
 	var posicion=document.getElementById('marca').value;
 	var nombre=document.getElementById('nombre').value;
-	window.open("pdf2.php?productos="+posicion+"&&nombre="+nombre);
+	var filtro=document.getElementById('filtro').value;
+	window.open("pdf2.php?productos="+posicion+"&&nombre="+nombre+"&&filtro="+filtro);
 }
 
 function imprimir()
 {
 	var posicion=document.getElementById('marca').value;
 	var nombre=document.getElementById('nombre').value;
-	window.open("imprimir.php?productos="+posicion+"&&nombre="+nombre);
+	var filtro=document.getElementById('filtro').value;
+	window.open("imprimir.php?productos="+posicion+"&&nombre="+nombre+"&&filtro="+filtro);
+}
+
+function genrepInven()
+{
+	var posicion=document.getElementById('marcas').value;
+	window.open("inventario.php?productos="+posicion);
+}
+
+function imprimirInven()
+{
+	var posicion=document.getElementById('marcas').value;
+	window.open("imprimirIn.php?productos="+posicion);
 }

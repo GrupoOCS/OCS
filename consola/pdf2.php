@@ -3,6 +3,7 @@
     include ('fpdf/fpdf.php');
     $marca= $_GET['productos'];
     $cliente= $_GET['nombre'];
+    $filtro= $_GET['filtro'];
     //$fechai= $_GET['fechai'];
     //$fechaf= $_GET['fechaf'];
 
@@ -139,15 +140,15 @@
             for($i=0;$i<count($header);$i++)
             {
                 if($i== 0)
-                    $this->Cell(100,7,$header[$i],0,0,'C',1);
+                    $this->Cell(100,7,$header[$i],0,0,'L',1);
                 else
-                    $this->Cell(40,7,$header[$i],0,0,'C',1);
+                    $this->Cell(40,7,$header[$i],0,0,'L',1);
             }
             $this->Ln();
 
             $num= count($header);
             //Restauración de colores y fuentes
-            $this->SetFillColor(233, 237, 242);
+            $this->SetFillColor(223, 227, 232);
             $this->SetTextColor(0);
             $this->SetFont('');
             //Datos
@@ -160,9 +161,9 @@
                 {
                     $this->SetFillColor(255, 255, 255);
                     if($i % $num == 0) 
-                        $this->Cell(100,7,$datos[$i],0,0,'C',1);
+                        $this->Cell(100,7,$datos[$i],0,0,'L',1);
                     else
-                        $this->Cell(40,7,$datos[$i],0,0,'C',1);
+                        $this->Cell(40,7,$datos[$i],0,0,'L',1);
                     $salto++;
                     if($salto == $num)
                     {    
@@ -173,11 +174,11 @@
                 }
                 else
                 {
-                    $this->SetFillColor(233, 237, 242);
+                    $this->SetFillColor(223, 227, 232);
                         if($i % $num == 0) 
-                        $this->Cell(100,7,$datos[$i],0,0,'C',1);
+                        $this->Cell(100,7,$datos[$i],0,0,'L',1);
                     else
-                        $this->Cell(40,7,$datos[$i],0,0,'C',1);
+                        $this->Cell(40,7,$datos[$i],0,0,'L',1);
                         $salto++;
                         if($salto == $num)
                         {    
@@ -191,22 +192,16 @@
         }
     }
 
-    $dsn='mysql:host=localhost;dbname=ocs';
-    $username='root';
-    $password='';
+    $client=new SoapClient(null,array('uri'=>'http://localhost/','location'=>'http://localhost/p/OCS/consola/web/webservice.php'));
+    $idCliente= $client->id_cliente($cliente);
 
-    $db= new PDO($dsn, $username,$password);
-    $query= "SELECT nombre, marca, precio FROM producto WHERE marca LIKE '$marca'";
-    $res= $db->query($query);
-    $i=0;
-
-    foreach($res->fetchAll(PDO::FETCH_ASSOC) as $row)
+    if($filtro == 1 || $filtro == 2)
     {
-        foreach ($row as $clave => $valor)
-        { 
-            $datos[$i]= $valor;
-            $i++;
-        }
+        $datos= $client->consulta_mas($idCliente[0], $marca);
+    }
+    if($filtro == 3)
+    {
+        $datos= $client->consulta_menos($id_cliente[0], $marca);
     }
 
     $nombre= "<b>Descripción del reporte</b>";
@@ -260,6 +255,14 @@
     $pdf->SetFontSize(10);
     $pdf->SetLeftMargin(15);
     $pdf->TablaSimple($header, $datos);
+
+    if(empty($datos))
+    {
+        $pdf->SetFontSize(18);
+        $mensaje= "<br><br>No se pudo generar el reporte porque no hay datos con esos filtros";
+        $mensaje = html_entity_decode($mensaje);
+        $pdf->WriteHTML(utf8_decode($mensaje));
+    }
     $pdf->SetLeftMargin(10);
     //$pdf->Image($img, 55, 70, 100, 80);
     $pdf->Ln(-28);

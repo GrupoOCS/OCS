@@ -1,18 +1,15 @@
 <?php
     /* incluimos primeramente el archivo que contiene la clase fpdf */
     include ('fpdf/fpdf.php');
-    $marca= $_GET['productos'];
-    $cliente= $_GET['nombre'];
-    $filtro= $_GET['filtro'];
-    //$fechai= $_GET['fechai'];
-    //$fechaf= $_GET['fechaf'];
+
+    $pedido= $_GET['id'];
 
     // Cabecera para solucionar el problema de los acentos y las ñ
     header("Content-Type: text/html; charset=iso-8859-1 ");
 
     class PDF extends FPDF
     {
-        var $B;
+       var $B;
         var $I;
         var $U;
         var $HREF;
@@ -79,7 +76,7 @@
             $script .= "print(pp);";
             $this->IncludeJS($script);
         }
-
+        
         //Funciones para crear el PDF
         function PDF($orientation='P', $unit='mm', $size='A4')
         {
@@ -189,7 +186,7 @@
             // Arial italic 8
             $this->SetFont('Arial','',8);
             // Número de página
-            $this->Cell(0,10, $this->PageNo(),0,0,'C');
+            $this->Cell(0,0, $this->PageNo(),0,0,'C');
         }
 
         function TablaSimple($header, $datos)
@@ -199,13 +196,16 @@
             $this->SetDrawColor(0,0,0);
             $this->SetFont('','B');
             //Cabecera
-
+            $numero= count($header);
+            $tam1= (180/$numero) * 2;
+            $tam1= $tam1+20;
+            $tam2= (180-$tam1)/($numero-1);
             for($i=0;$i<count($header);$i++)
             {
                 if($i== 0)
-                    $this->Cell(100,7,$header[$i],0,0,'L',1);
+                    $this->Cell($tam1,7,$header[$i],0,0,'L',1);
                 else
-                    $this->Cell(40,7,$header[$i],0,0,'L',1);
+                    $this->Cell($tam2,7,$header[$i],0,0,'L',1);
             }
             $this->Ln();
 
@@ -224,9 +224,9 @@
                 {
                     $this->SetFillColor(255, 255, 255);
                     if($i % $num == 0) 
-                        $this->Cell(100,7,$datos[$i],0,0,'L',1);
+                        $this->Cell($tam1,7,$datos[$i],0,0,'L',1);
                     else
-                        $this->Cell(40,7,$datos[$i],0,0,'L',1);
+                        $this->Cell($tam2,7,$datos[$i],0,0,'L',1);
                     $salto++;
                     if($salto == $num)
                     {    
@@ -239,9 +239,9 @@
                 {
                     $this->SetFillColor(223, 227, 232);
                         if($i % $num == 0) 
-                        $this->Cell(100,7,$datos[$i],0,0,'L',1);
+                        $this->Cell($tam1,7,$datos[$i],0,0,'L',1);
                     else
-                        $this->Cell(40,7,$datos[$i],0,0,'L',1);
+                        $this->Cell($tam2,7,$datos[$i],0,0,'L',1);
                         $salto++;
                         if($salto == $num)
                         {    
@@ -253,25 +253,41 @@
             }
                
         }
+
+        function precioTotal($header, $total)
+        {
+            $this->SetFillColor(74, 102, 110);
+            $this->SetTextColor(255);
+            $this->SetDrawColor(0,0,0);
+            $this->SetFont('','B');
+            //Cabecera
+            $numero= count($header);
+            $tama1= (180/$numero) * 2;
+            $tama1= $tama1+20;
+            $tama2= (180-$tama1)/($numero-1);
+            $tama1= $tama1+($tama2*($numero-2));
+
+            $this->Cell($tama1,7,'Total',0,0,'C',1);
+            $this->Cell($tama2,7,'$'.$total[0],0,0,'L',1);               
+        }
     }
 
     $client=new SoapClient(null,array('uri'=>'http://localhost/','location'=>'http://localhost/p/ocs/consola/web/webservice.php'));
-    $idCliente= $client->id_cliente($cliente);
+    $datos= $client->pedido($pedido);
 
-    if($filtro == 1 || $filtro == 2)
-    {
-        $datos= $client->consulta_mas($idCliente[0], $marca);
-    }
-    if($filtro == 3)
-    {
-        $datos= $client->consulta_menos($id_cliente[0], $marca);
-    }
+    $total= $client->total($pedido);
 
-    $nombre= "<b>Descripción del reporte</b>";
-    $descripcion= "<b>Marca: </b>".$marca;
-    $cliente= "<b>Cliente: </b>".$cliente;
+    $nombreCliente= $client->nombreCliente($pedido);
+
+    $direccionCliente= $client->direccionCliente($pedido);
+
+    $nombre= "<b>Descripción de la venta</b>";
+    $descripcion= "<b>Dirección: </b>".$direccionCliente[0].' Colonia '.$direccionCliente[1].' '.$direccionCliente[2].', '.$direccionCliente[3];
+    $cliente= "<b>Cliente: </b>".$nombreCliente[0];
+    $codigo= "<b>Código postal: </b>".$direccionCliente[4];
+    $telefono= "<b>Teléfono: </b>".$direccionCliente[5];
     $img= "imagenes/log.jpg";
-    $header=array('Nombre','Marca', 'Precio');
+    $header=array('Concepto', 'Marca', 'Precio', 'Cantidad', 'Importe');
 
     //Antes de pasar los datos al PDF, hay que pasar las variables por la función html_entity_decode para decodificar los caracteres especiales, los acentos y las ñ 
     // Siempre y cuando los datos extraídos de la BD sean UTF8 (no lo probe con otra codificación)
@@ -279,6 +295,8 @@
     $nombre = html_entity_decode($nombre);
     $descripcion = html_entity_decode($descripcion);
     $cliente = html_entity_decode($cliente);
+    $codigo = html_entity_decode($codigo);
+    $telefono = html_entity_decode($telefono);
 
 
     //Creamos una nueva instancia de la clase
@@ -309,33 +327,34 @@
     $pdf->WriteHTML(utf8_decode($cliente));
     $pdf->WriteHTML("<br>");
     $pdf->WriteHTML(utf8_decode($descripcion));
+    $pdf->WriteHTML("<br>");
+    $pdf->WriteHTML(utf8_decode($codigo));
+    $pdf->WriteHTML("<br>");
+    $pdf->WriteHTML(utf8_decode($telefono));
     //La función WriteHTML es la que creamos anteriormente para que lea las etiquetas html como <br>, <b>, <i>, <p>, etc.
 
-    $pdf->Line(10,59, 200, 59);
+    $pdf->Line(10,69, 200, 69);
 
     $pdf->WriteHTML("<br>");
     $pdf->Ln(25);
     $pdf->SetFontSize(10);
     $pdf->SetLeftMargin(15);
     $pdf->TablaSimple($header, $datos);
-    if(empty($datos))
-    {
-        $pdf->SetFontSize(18);
-        $mensaje= "<br><br>No se pudo generar el reporte porque no hay datos con esos filtros";
-        $mensaje = html_entity_decode($mensaje);
-        $pdf->WriteHTML(utf8_decode($mensaje));
-    }
+    $pdf->precioTotal($header, $total);
     $pdf->SetLeftMargin(10);
     //$pdf->Image($img, 55, 70, 100, 80);
     $pdf->Ln(-28);
     $pdf->SetLeftMargin(43);
     $pdf->Line(40, 270, 170, 270);
-    $pdf->SetY(-26);
+    $pdf->SetTextColor(0);
+    $pdf->SetFontSize(8);
+    $pdf->SetLeftMargin(50);
+    $pdf->Ln(181);
     $pdf->WriteHTML("Reporte generado por Online Computer Shop. Todos los derechos reservados");
 
     //Lo mismo que en la variable anterior, decodificamos la variable $html para que el texto se vea correctamente con los acentos y las ñ correspondientes.
-    $pdf->SetLeftMargin(10);
-    //Con OutPut hacemos que se visualice el PDF que acabamos de crear
+    //$pdf->SetLeftMargin(10);
     $pdf->AutoPrint(true);
+    //Con OutPut hacemos que se visualice el PDF que acabamos de crear
     $pdf->OutPut();
 ?>
