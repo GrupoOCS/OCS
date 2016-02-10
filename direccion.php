@@ -1,16 +1,17 @@
 <?php 
 
-if(isset($_GET["conti"])){
-
-}
-else if(!isset($_POST["bandera"])  )
+if(isset($_GET["bandera"]) )
+{}
+if(isset($_POST["bandera"]))
 {
+	
+}
+else{
 	echo '<script type="text/javascript">
 						
 						window.location.assign("ventas.php");
 						</script>';
 }
-
 	
 
 include('encabezado.php'); 

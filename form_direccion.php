@@ -72,7 +72,8 @@
 			    </form>
 			    <tr>
 			    <td> 
-			    <form action="direccion.php?conti=si">
+			    <form action="direccion.php" method="post">
+			    <input type="hidden" name="bandera" value="pasar">
 				<center><input type="submit" class="btn mediano cancelar" value="Cancelar"> </center>
 				</form>
 			    </td>

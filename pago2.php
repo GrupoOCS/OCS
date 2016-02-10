@@ -64,6 +64,16 @@ foreach($res->fetchAll(PDO::FETCH_ASSOC) as $row){
 }
 //-----------------------------------------------------------------------------------------------
 
+$query = $db->prepare("DELETE FROM carrito WHERE id_cliente=".$id);
+				
+			try {
+				$query->execute();
+			    //echo "Se ha Modificado exitosamente";
+			} 
+			catch (Exception $e) {
+				//echo "ERROR:No se modifico excitosamente. Vuelva a intentarlo mas tarde<BR>";
+			}
+
 if(isset($_GET["ciudad"]) && isset($_GET["calle"]) && isset($_GET["numero"]) && isset($_GET["tel"]) && isset($_GET["colonia"]) && isset($_GET["municipio"]) && isset($_GET["estado"]) && isset($_GET["cp"]) && isset($_GET["destinatario"]))
 {
 	$ca=$_GET["calle"];
