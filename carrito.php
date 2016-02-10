@@ -32,10 +32,10 @@
 				$total = 0;
 				$iva=0;
 				$descuento = 0;
-				if($res->rowCount()<=0){ 
 
-						
-						header('location:ventas.php?NP=si'); }
+				if($res->rowCount()<=0){ 
+					header('Location:./ventas.php?NP=si');
+				}
 				foreach($res->fetchAll(PDO::FETCH_ASSOC) as $row){	
 
 					$query2 = "SELECT nombre,precio FROM producto WHERE id = '".$row["id_producto"]."'";
