@@ -109,6 +109,13 @@ div.nombre_producto{
 	position: relative;
 
 }
+.reg_pago{
+	color: yellow;
+	font-size: 12pt;
+}
+.reg_pago:hover{
+	color: blue;
+}
 a.agrega_carrito {
     width: 20%;
     height: 15%;
@@ -723,6 +730,10 @@ table.sesion{
 
 }
 .btn.mediano.cancelar{
+	  background-color: #cf2430;
+  	border-color: #cf2430;
+}
+.btn.grande.cancelar{
 	  background-color: #cf2430;
   	border-color: #cf2430;
 }

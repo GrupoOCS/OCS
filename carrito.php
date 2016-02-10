@@ -74,7 +74,8 @@
 					</tr>
 					<tr>
 						<td></td><td align="right">
-						<form action="direccion.php">
+						<form action="direccion.php" method="post">
+							<input type="hidden" name="bandera" value="pasar">
 							<button class="btn mediano" type="submit" <?php if($res->rowCount()<=0){ echo "disabled"; }?>>Comprar</button>
 						</form></td>
 					</tr>

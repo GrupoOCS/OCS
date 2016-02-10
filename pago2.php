@@ -1,18 +1,148 @@
 <?php include('encabezado.php'); 
 $id=$_SESSION["id_usu"];
-$idp=$_GET["idp"];
-$db = Conectar();
-?>
 
+$db = Conectar();
+//-----------------------------------------------------------------------------------------------
+$query = "SELECT id FROM direccion where id_cliente=".$_SESSION['id_usu'];
+$res = $db->query($query);
+foreach($res->fetchAll(PDO::FETCH_ASSOC) as $row){	
+	$id_direccion = $row['id'];
+}
+// echo $id_direccion;
+//-----------------------------------------------------------------------------------------------
+$status = "en proceso";
+$fecha=date("Y-m-d");
+
+//-----------------------------------------------------------------------------------------------
+
+if($db!=null)
+{
+	$prepared = array(
+		'id' => $id,
+		'id_direccion' => $id_direccion,
+		'status' => $status,
+		'fecha' => $fecha
+		);
+	$query = $db->prepare("INSERT INTO pedido (id_cliente,id_direccion,status,fecha) VALUES (:id,:id_direccion,:status,:fecha)");
+    try {
+    	$query->execute($prepared);
+    	// echo "Sus datos se han guardado exitosamente";
+    } 
+    catch ( PDOException $e) 
+    {
+    	echo "ERROR: No se puede insertar en la base de datos\nIntente mas tarde";
+    }	
+    	
+}
+else
+	echo "ERROR:No se pudo conectar a la base de datos";
+//-----------------------------------------------------------------------------------------------
+$query = "SELECT id FROM pedido where id_cliente=".$id." order by id ASC";
+$res = $db->query($query);
+foreach($res->fetchAll(PDO::FETCH_NUM) as $row){	
+
+	$id_pedido = $row[0];
+}
+//-----------------------------------------------------------------------------------------------
+$query = "SELECT * FROM  carrito where id_cliente=".$_SESSION['id_usu'];
+$res = $db->query($query);
+foreach($res->fetchAll(PDO::FETCH_ASSOC) as $row){	
+	$prepared = array(
+		'id_pedido' => $id_pedido,
+		'id_producto' => $row['id_producto'],
+		'cantidad' => $row['cantidad']
+		);
+	$query = $db->prepare("INSERT INTO producto_pedido (id_pedido,id_producto,cantidad) VALUES (:id_pedido,:id_producto,:cantidad)");
+    try {
+    	$query->execute($prepared);
+    	// echo "Sus datos se han guardado exitosamente tabla producto pedido";
+    } 
+    catch ( PDOException $e) 
+    {
+    	echo "ERROR: No se puede insertar en la base de datos\nIntente mas tarde";
+    }	
+}
+//-----------------------------------------------------------------------------------------------
+
+if(isset($_GET["ciudad"]) && isset($_GET["calle"]) && isset($_GET["numero"]) && isset($_GET["tel"]) && isset($_GET["colonia"]) && isset($_GET["municipio"]) && isset($_GET["estado"]) && isset($_GET["cp"]) && isset($_GET["destinatario"]))
+{
+	$ca=$_GET["calle"];
+	$tel=$_GET["tel"];
+	$col=$_GET["colonia"];
+	$mun=$_GET["municipio"];
+	$num=$_GET["numero"];
+	$dest=$_GET["destinatario"];
+	$cp=$_GET["cp"];
+	$est=$_GET["estado"];
+	$ciudad=$_GET["ciudad"];
+	$calle=$ca." ".$num;
+
+	if($db!=null)
+	{
+	$prepared = array(
+		'id' => $id,
+		'id_pedido' => $id_pedido,
+		'calle' => $calle,
+		'tel' => $tel,
+		'col' => $col,
+		'mun' => $mun,
+		'dest' => $dest,
+		'cp' => $cp,
+		'est' => $est,
+		'ciudad' => $ciudad
+		);
+	$query = $db->prepare("INSERT INTO direccion_temp (id_cliente,id_pedido,calle,colonia,municipio,id_estado,ciudad,telefono,cp,destinatario) VALUES (:id,:id_pedido,:calle,:tel,:col,:mun,:dest,:cp,:est,:ciudad)");
+    try {
+    	$query->execute($prepared);
+    	// echo "Sus datos se han guardado exitosamente";
+    } 
+    catch ( PDOException $e) 
+    {
+    	echo "ERROR: No se puede insertar en la base de datos\nIntente mas tarde";
+    }	
+    	
+}
+else
+	echo "ERROR:No se pudo conectar a la base de datos";
+
+}
+else{
+	$db = Conectar();
+	if($db!=null)
+		{
+						
+			$query = $db->prepare("SELECT calle,colonia,id_estado,municipio,ciudad,cp,telefono,destinatario FROM direccion WHERE id_cliente=".$id);
+			
+			try {
+				$query->execute($prepared);
+			    //echo "Se ha Modificado exitosamente";
+			} 
+			catch (Exception $e) {
+				//echo "ERROR:No se modifico excitosamente. Vuelva a intentarlo mas tarde<BR>";
+			}
+		}
+
+		foreach($query->fetchAll(PDO::FETCH_ASSOC) as $row){
+			$calle=$row["calle"];
+			$tel=$row["telefono"];
+			$col=$row["colonia"];
+			$mun=$row["municipio"];
+			$dest=$row["destinatario"];
+			$cp=$row["cp"];
+			$est=$row["id_estado"];
+			$ciudad=$row["ciudad"];
+		}
+}
+?>
 
 <div class="contenido">
 	<div class="wholeTipoPago">
 		
 		
-			
+			<p>
 			<center>
-			<center><h2> Registrar Pago </h2></center>
-			
+			<center><h2> Registrar Pago </h2>
+			</center>
 			
 			<table >
 				<tr>
@@ -24,39 +154,20 @@ $db = Conectar();
 				<tr>
 					<td>
 						<table  id="tabla_a_desplegar" style="display: none;">		
-							<form action="Efectivo.php" method="post" enctype="multipart/form-data">
+							
 								<tr>
-									<th align="center">
-										<h5>CuentaX: 1548-64       CuentaY:65498-5</h5>
-									</th>
+									<td align="center">
+										<h5>Cuenta Banamex: 1548-64 </h5>   
+									</td>
 								</tr>
 								<tr>
-									<td><label>Autorizacion</label></td>
-									<td>	<input type="text" class="form-control" name="autorizacion" minlength="6" maxlength="6" onKeypress="if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;" Placeholder="numAutorizacion" required></td>
+									<td align="center">
+										 <h5>Cuenta HSBC:65498-5</h5>  
+									</td>
 								</tr>
-								<tr>
-									<td>Referencia</td>
-									<td><input type="text" class="form-control" name="referencia" minlength="20" maxlength="20" PlaceHolder="numReferencia" onKeypress="if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;" required></td>
-								</tr>
+
 								
-								<input type="hidden" name="idp" value=<?php echo "'".$idp."'";?> >
-								<tr>
-									<td>
-										<label>Imagen</label>
-									</td>
-									<td>
-										<input type="file"  name="imagen" required>
-									</td>
-								</tr>
-								<tr>
-									<td></td>
-									<td align="right"><input type="submit" class="btn grande" value="Enviar"></td>
-								</tr>
-								<tr>
-									<td></td>
-									<td><h5>Si aun no tiene el comprobante del deposito, puede volver mas tarde, el pedido y la cantidad de pago se guardaran temporalmente hasta que usted pague o cancele el pedido</h5></td>
-								</tr>
-							</form>
+							
 						</table>	
 
 					</td>
@@ -90,7 +201,6 @@ $db = Conectar();
 											<td>    <input type="text" name="dato1" id="ccNo" minlength="16"  maxlength="16" onKeypress="if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;" title="Teclee los 16 digitos de su tarjeta" class="form-control" placeholder="Numero de tarjeta" required></td>
 										
 											</tr>
-											<input type="hidden" name="idp" value=<?php echo "'".$idp."'";?> >
 										<tr>
 												<td><label >Mes de Vencimiento: </label></td>
 										<td>
@@ -170,7 +280,6 @@ $db = Conectar();
 
 
 <script type="teXt/javascript">
-
 function desplegar(tabla_a_desplegar,estadoT) {
 var tablA = document.getElementById(tabla_a_desplegar);
 var estadOt = document.getElementById(estadoT);

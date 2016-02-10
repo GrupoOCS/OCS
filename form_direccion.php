@@ -67,12 +67,12 @@
 				<tr>
 			     <td></td ><td rowspan="2" align="right"><button name="Guardar" onclick=this.form.action="guardaNuevaDirec.php" class="btn grande" > Guardar y continuar</button></td>
 			     
-				<td rowspan="2" style="padding:10px;"  ><button class="btn grande" onclick=this.form.action="pago.php">Continuar compra</button></td>				
+				<td rowspan="2" style="padding:10px;"  ><button class="btn grande" onclick=this.form.action="pago2.php">Continuar compra</button></td>				
 			    </tr>
 			    </form>
 			    <tr>
 			    <td> 
-			    <form action="direccion.php">
+			    <form action="direccion.php?conti=si">
 				<center><input type="submit" class="btn mediano cancelar" value="Cancelar"> </center>
 				</form>
 			    </td>

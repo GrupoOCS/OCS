@@ -1,4 +1,19 @@
-<?php include('encabezado.php'); 
+<?php 
+
+if(isset($_GET["conti"])){
+
+}
+else if(!isset($_POST["bandera"])  )
+{
+	echo '<script type="text/javascript">
+						
+						window.location.assign("ventas.php");
+						</script>';
+}
+
+	
+
+include('encabezado.php'); 
 // include 'abrirConexion.php';
 	$db = Conectar();
 	$query = "SELECT * FROM  direccion where id_cliente=".$_SESSION['id_usu'];
@@ -22,7 +37,7 @@
 		<div class="carrito_dir"><center><p colspan="2" ><h2>Domicilio Actual</h2></p></center>	
 
 			<table class="carrito dir">
-			 	<form id="formulario" action="pago.php" method="post">
+			 	<form id="formulario" action="pago2.php" method="post">
                     <td align="right">Calle y Número:</td>                         
                     <td><label for="calle" >&nbsp '.$row["calle"].'</label></td>
                 </tr>
