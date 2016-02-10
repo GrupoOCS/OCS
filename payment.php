@@ -1,5 +1,5 @@
 <?php
-// $IDPEDIDO=$_POST["idpedido"];
+$idp=$_POST["idp"];
 // echo $IDPEDIDO;
 require_once("2checkout-php-master/lib/Twocheckout.php");
 Twocheckout::privateKey('C8217C30-D48B-44CD-B4D4-8E88CA82638C');
@@ -25,7 +25,7 @@ try {
     ));
 
     if ($charge['response']['responseCode'] == 'APPROVED') {
-        echo "true";
+        header('Location:tarjeta.php?idp='.$idp);
     }
 } catch (Twocheckout_Error $e) { print_r($e->getMessage());}
 ?>

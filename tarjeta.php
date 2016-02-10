@@ -1,11 +1,11 @@
 <?php  
 include('encabezado.php');
 
-if(isset($_POST["idp"]))
-{
-	$idp=$_POST["idp"];
-}
 
+if(isset($_GET["idp"]))
+{
+	$idp=$_GET["idp"];
+}
 
 
 
@@ -54,29 +54,6 @@ else{
 }
 
 
-	$archivoImagen=$_FILES['imagen']['tmp_name'];
-	//print $archivoImagen;
-	$nombreImagen=$_FILES['imagen']['name'];
-    $autorizacion=$_POST['autorizacion'];
-    $referencia=$_POST['referencia'];
-	//$descripcion=$_POST['description'];
-	if($nombreImagen!=''){
-		$prefijo=substr(md5(uniqid(rand())), 0,6);
-
-		$destino="img/comprobantes/".$prefijo."_".$nombreImagen;
-
-
-	}
-	if (copy($archivoImagen,$destino)){  
-
-
-		
-		$db = Conectar();
-
-		$res=$db->prepare("INSERT INTO imagen(nombre) VALUES (?)");
-		$res->execute(array($destino));
-		//$id=$db->lastInsertId();
-		
 		$query = $db->prepare("SELECT nombre FROM estados WHERE id=".$est);
 			
 			try {
@@ -91,19 +68,19 @@ else{
 			$est=$row["nombre"];
 		}
 
-		$query2 = $db->prepare("select producto_pedido.id_producto,producto_pedido.cantidad,producto.precio,producto.nombre FROM producto_pedido,producto WHERE producto_pedido.id_pedido=".$idp." and producto.id=producto_pedido.id_producto");
+		$query = $db->prepare("select producto_pedido.id_producto,producto_pedido.cantidad,producto.precio,producto.nombre FROM producto_pedido,producto WHERE producto_pedido.id_pedido=".$idp." and producto.id=producto_pedido.id_producto");
 			
 			try {
-				$query2->execute();
+				$query->execute();
 			    //echo "Se ha Modificado exitosamente";
 			} 
 			catch (Exception $e) {
 				//echo "ERROR:No se modifico excitosamente. Vuelva a intentarlo mas tarde<BR>";
 			}
-			print'<div class="contenido"><center><table class="carrito dir">
+			print'<div class="contenido"><table class="carrito dir">
 			<tr> <td colspan="4"><h3> Tú compra ha sido finalizada </h3></td> </tr>
 			<tr><td style="font-weight: bold; text-align: center;" width="30%"> Nombre </td> <td style="font-weight: bold; text-align: center;" width="15%"> Cantidad </td><td style="font-weight: bold; text-align: center;" width="30%"> Precio unitario </td><td style="font-weight: bold; text-align: center;" width="20%"> Precio total </td></tr>';
-		foreach ($query2->fetchAll(PDO::FETCH_ASSOC) as $row2) {
+		foreach ($query->fetchAll(PDO::FETCH_ASSOC) as $row2) {
 			 print'<tr>
 				<td style="font-weight: bold; text-align: center;" width="30%"><label>'.$row2["nombre"].'</label></td><td style="font-weight: bold; text-align: center;" width="15%"><label>'.$row2["cantidad"].'</label></td><td style="font-weight: bold; text-align: center;" width="30%"><label>'.$row2["precio"].'</label></td><td style="font-weight: bold; text-align: center;" width="20%"><label>'.$row2["precio"]*$row2["cantidad"].'</label></td>
 				</tr>';
@@ -121,9 +98,10 @@ else{
 
 		}
 
-print'</table></center>';
-	}
+print'</table>';
+	
 
+			
 
 
 ?>
@@ -136,19 +114,9 @@ print'</table></center>';
 	<form action="index.php" method="post" enctype="multipart/form-data">
   <table class="carrito dir">
   	<tr><th><label></label></th></tr>
-	<tr>
-		<td align="left"><label > Autorizacion:</label> </td>
-		<td>
-			<?php echo "".$autorizacion ?>
-		</td>
-	</tr>
+	
 								
-	<tr>
-		<td><label> Referencia:</label> </td>
-		<td>
-			<?php echo "".$referencia ?>
-		</td>
-	</tr>
+	
 	<tr>
 		<td colspan="2">Dirección de envío</td>
 		
@@ -196,6 +164,4 @@ print'</table></center>';
 
 </div>
 
-<?php
-include('pie_pagina.php');
-?>
+
