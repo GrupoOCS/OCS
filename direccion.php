@@ -21,8 +21,9 @@
 			//alert('entra');
 			print'<div class="contenido">
 
-		<div align="center"><center><p colspan="2" ><h2>Domicilio Actual</h2></p></center>	
-			<table class="carrito">
+		<div class="carrito_dir"><center><p colspan="2" ><h2>Domicilio Actual</h2></p></center>	
+
+			<table class="carrito dir">
 			 	<form id="formulario" action="pago.php" method="post">
                     <td align="right">Calle y Número:</td>                         
                     <td><label for="calle" >&nbsp '.$row["calle"].'</label></td>
@@ -31,6 +32,10 @@
                 <tr>
                     <td align="right">Colonia:</td>                         
                     <td><label for="colonia" >&nbsp '.$row["colonia"].'</label></td>
+                </tr>
+                <tr>
+                    <td align="right">Ciudad:</td>                         
+                    <td><label for="ciudad" >&nbsp '.$row["ciudad"].'</label></td>
                 </tr>
 			    <tr>
 			      	<td align="right">Estado: </td>';
@@ -75,7 +80,7 @@
 
 	   ?>
 			</div>
-			<a class="enlace negro" href="form_direccion.php"><h5>Cambiar Dirección de envío</h5></a>
+			<a class="enlace negro" href="form_direccion.php"><h4>Cambiar Dirección de envío</h4></a>
 				</div>
 
 		   
