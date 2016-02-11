@@ -86,7 +86,6 @@ if(isset($_GET["ciudad"]) && isset($_GET["calle"]) && isset($_GET["numero"]) && 
 	$est=$_GET["estado"];
 	$ciudad=$_GET["ciudad"];
 	$calle=$ca." ".$num;
-
 	if($db!=null)
 	{
 	$prepared = array(
@@ -101,7 +100,7 @@ if(isset($_GET["ciudad"]) && isset($_GET["calle"]) && isset($_GET["numero"]) && 
 		'est' => $est,
 		'ciudad' => $ciudad
 		);
-	$query = $db->prepare("INSERT INTO direccion_temp (id_cliente,id_pedido,calle,colonia,municipio,id_estado,ciudad,telefono,cp,destinatario) VALUES (:id,:id_pedido,:calle,:tel,:col,:mun,:dest,:cp,:est,:ciudad)");
+	$query = $db->prepare("INSERT INTO direccion_temp (id_cliente,id_pedido,calle,colonia,municipio,id_estado,ciudad,telefono,cp,destinatario) VALUES (:id,:id_pedido,:calle,:col,:mun,:est,:ciudad,:tel,:cp,:dest)");
     try {
     	$query->execute($prepared);
     	// echo "Sus datos se han guardado exitosamente";
@@ -229,6 +228,7 @@ else{
 												<option value="12">12</option>
 											</select>
 										</td>
+										<input type="hidden" name="idp" value=<?php echo "'".$id_pedido."'";?> >
 									</tr>
 										<tr>
 											<td><label >Año de Vencimiento: </label></td>
@@ -330,7 +330,7 @@ var estadOt = document.getElementById(estadoT);
         // Setup token request arguments
         var args = {
             sellerId: "901308282",
-            publishableKey: "6E275F45-7F5E-414F-B781-2427480DA7E4",
+            publishableKey: "41FB44B8-3CB6-4B58-8134-B9B146E39EE6",
             ccNo: $("#ccNo").val(),
             cvv: $("#cvv").val(),
             expMonth: $("#expMonth").val(),

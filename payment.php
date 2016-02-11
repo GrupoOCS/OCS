@@ -2,7 +2,7 @@
 $idp=$_POST["idp"];
 // echo $IDPEDIDO;
 require_once("2checkout-php-master/lib/Twocheckout.php");
-Twocheckout::privateKey('C8217C30-D48B-44CD-B4D4-8E88CA82638C');
+Twocheckout::privateKey('422AEC8E-9A5E-4963-AE4C-52C3BEE3FBFF');
 Twocheckout::sellerId('901308282');
 Twocheckout::sandbox(true);
 Twocheckout::verifySSL(false);

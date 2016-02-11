@@ -76,7 +76,7 @@ else{
 		$res=$db->prepare("INSERT INTO imagen(nombre) VALUES (?)");
 		$res->execute(array($destino));
 		//$id=$db->lastInsertId();
-		
+		}
 		$query = $db->prepare("SELECT nombre FROM estados WHERE id=".$est);
 			
 			try {
@@ -121,9 +121,18 @@ else{
 
 		}
 
-print'</table></center>';
-	}
+		$query = $db->prepare("DELETE FROM pedido WHERE id=".$idp);
+				
+			try {
+				$query->execute();
+			    //echo "Se ha Modificado exitosamente";
+			} 
+			catch (Exception $e) {
+				//echo "ERROR:No se modifico excitosamente. Vuelva a intentarlo mas tarde<BR>";
+			}
 
+print'</table></center>';
+	
 
 
 ?>

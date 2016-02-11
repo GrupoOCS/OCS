@@ -52,8 +52,8 @@ else{
 	$ciudad=$row["ciudad"];
 }
 }
-
-
+		
+		
 		$query = $db->prepare("SELECT nombre FROM estados WHERE id=".$est);
 			
 			try {
@@ -67,6 +67,7 @@ else{
 		foreach ($query->fetchAll(PDO::FETCH_ASSOC) as $row) {
 			$est=$row["nombre"];
 		}
+
 
 		$query = $db->prepare("select producto_pedido.id_producto,producto_pedido.cantidad,producto.precio,producto.nombre FROM producto_pedido,producto WHERE producto_pedido.id_pedido=".$idp." and producto.id=producto_pedido.id_producto");
 			
@@ -98,6 +99,15 @@ else{
 
 		}
 
+			$query = $db->prepare("DELETE FROM pedido WHERE id=".$idp);
+				
+			try {
+				$query->execute();
+			    //echo "Se ha Modificado exitosamente";
+			} 
+			catch (Exception $e) {
+				//echo "ERROR:No se modifico excitosamente. Vuelva a intentarlo mas tarde<BR>";
+			}
 print'</table>';
 	
 
